@@ -1,6 +1,8 @@
 project(agl CXX ASM)
 
 add_library(agl OBJECT
+  include/agl/Utils/aglAtomicPtrArray.h
+  src/Utils/aglAtomicPtrArray.cpp
   include/agl/Utils/aglParameter.h
   src/Utils/aglParameter.cpp
 )
