@@ -30,7 +30,7 @@ public:
 
     void erase(s32 position) { erase(position, 1); }
     void erase(s32 position, s32 count);
-    void clear() { mPtrNum = 0; }
+    void clear() { mPtrNum.exchange(0); }
 
     void swap(s32 pos1, s32 pos2) {
         auto* ptr = mPtrs[pos1];
