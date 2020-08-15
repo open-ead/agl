@@ -61,11 +61,10 @@ protected:
     void* back() const { return mPtrs[mPtrNum - 1]; }
 
     void pushBack(void* ptr) {
-        if (isFull()) {
-            SEAD_ASSERT_MSG(false, "list is full.");
-            return;
-        }
-        mPtrs[mPtrNum++] = ptr;
+        const s32 idx = mPtrNum++;
+        const s32 num_max = mPtrNumMax;
+        SEAD_ASSERT_MSG(idx < num_max, "index = %d, mPtrNumMax = %d", idx, num_max);
+        mPtrs[idx] = ptr;
     }
 
     void* popBack() { return isEmpty() ? nullptr : mPtrs[--mPtrNum]; }
