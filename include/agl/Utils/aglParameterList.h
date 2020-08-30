@@ -18,30 +18,31 @@ public:
     IParameterList();
     virtual ~IParameterList();
 
-    void addList(IParameterList* list, const sead::SafeString& name);
-    void addObj(IParameterObj* obj, const sead::SafeString& name);
+    void addList(IParameterList* child, const sead::SafeString& name);
+    void addObj(IParameterObj* child, const sead::SafeString& name);
     void clearList();
     void clearObj();
-    void removeList(IParameterList* list);
-    void removeObj(IParameterObj* obj);
+    void removeList(IParameterList* child);
+    void removeObj(IParameterObj* child);
+
+    sead::SafeString getName() const;
+    u32 getNameHash() const { return mNameHash; }
 
     void applyResParameterList(ResParameterList list);
+    void applyResParameterList(ResParameterList list1, ResParameterList list2, f32 t);
 
-    bool isComplete(ResParameterList res_list, bool) const;
+    bool isComplete(ResParameterList res, bool) const;
 
+    const char* getTagName();
     void createAttribute(sead::XmlElement* element, sead::Heap* heap) const;
-
-    sead::SafeString getTagName();
-    sead::SafeString getParameterListName() const;
-
     void writeToXML(sead::XmlElement* element, sead::Heap* heap);
     bool readFromXML(const sead::XmlElement& element, bool x);
 
-    void verify() const;
-    void verifyList() const;
-    void verifyObj() const;
-    void verifyObj(IParameterObj* obj1, IParameterObj* obj2) const;
-    void verifyList(IParameterList* list1, IParameterList* list2) const;
+    bool verify() const;
+    bool verifyList() const;
+    bool verifyObj() const;
+    bool verifyList(IParameterList* p_check, IParameterList* other) const;
+    bool verifyObj(IParameterObj* obj1, IParameterObj* obj2) const;
 
     void sortByHash();
 
@@ -56,22 +57,32 @@ protected:
     virtual void postWrite_() const {}
     virtual bool preRead_() { return true; }
     virtual void postRead_() {}
-    virtual bool isApply_(ResParameterList list) const;
-    virtual void callbackNotAppliable_(IParameterObj* obj, ParameterBase* param1,
-                                       ResParameterObj res_obj);
-    virtual void callbackNotInterpolatable_(IParameterObj* obj, ParameterBase* param,
-                                            ResParameterObj res_obj1, ResParameterObj res_obj2,
-                                            ResParameter res_param1, ResParameter res_param2,
-                                            f32 t);
+    virtual bool isApply_(ResParameterList list) const {
+        return list.getParameterListNameHash() == mNameHash;
+    }
+    virtual void callbackNotAppliable_(IParameterObj*, ParameterBase*, ResParameterObj) {}
+    virtual void callbackNotInterpolatable_(IParameterObj*, ParameterBase*, ResParameterObj,
+                                            ResParameterObj, ResParameter, ResParameter, f32) {}
 
     void setParameterListName_(const sead::SafeString& name);
-    void applyResParameterList_(bool, ResParameterList list1, ResParameterList list2, f32 t);
-    ResParameterObj searchResParameterObj_(ResParameterList list, const IParameterObj& obj) const;
-    void searchChildParameterObj_(ResParameterObj res_obj, IParameterObj* obj) const;
-    void applyResParameterObjB_(bool, ResParameterList list, f32 t);
-    void searchResParameterList_(ResParameterList res_list, const IParameterList& list) const;
-    void searchChildParameterList_(ResParameterList res_list) const;
-    void applyResParameterListB_(bool, ResParameterList res_list, f32 t);
+    void applyResParameterList_(bool interpolate, ResParameterList l1, ResParameterList l2, f32 t);
+    ResParameterObj searchResParameterObj_(ResParameterList res, const IParameterObj& obj) const;
+    IParameterObj* searchChildParameterObj_(ResParameterObj res, IParameterObj* obj) const;
+    void applyResParameterObjB_(bool interpolate, ResParameterList res, f32 t);
+    ResParameterList searchResParameterList_(ResParameterList res, const IParameterList& list) const;
+    IParameterList* searchChildParameterList_(ResParameterList res) const;
+    void applyResParameterListB_(bool interpolate, ResParameterList res, f32 t);
+
+    IParameterObj* mpChildObjHead = nullptr;
+    IParameterObj* mpChildObjTail = nullptr;
+    IParameterList* mpChildListHead = nullptr;
+    IParameterList* mpChildListTail = nullptr;
+    u32 mNameHash;
+    IParameterList* mNext = nullptr;
+    IParameterList* mParent = nullptr;
+#ifdef SEAD_DEBUG
+    const char* mName;
+#endif
 };
 
 }  // namespace agl::utl

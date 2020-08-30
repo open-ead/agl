@@ -21,7 +21,8 @@ public:
     void pushBackListNode(ParameterBase* p_node);
     void sortByHash();
 
-    sead::SafeString getParameterObjName() const;
+    sead::SafeString getName() const;
+    u32 getNameHash() const { return mNameHash; }
 
     void writeToXML(sead::XmlElement* element, sead::Heap* heap);
     bool readFromXML(const sead::XmlElement& element, bool x);
@@ -76,7 +77,7 @@ protected:
     ParameterBase* mParamListTail = nullptr;
     u32 mParamListSize = 0;
     u32 mNameHash = 0;
-    void* _20 = nullptr;
+    IParameterObj* mNext = nullptr;
     const char* mName = nullptr;
 };
 

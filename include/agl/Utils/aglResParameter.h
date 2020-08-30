@@ -122,6 +122,12 @@ struct ResParameterList {
         return {reinterpret_cast<ResParameterListData*>(ptrBytes() + offset) + index};
     }
 
+    ResParameterList getResParameterList() const {
+        if (getResParameterListNum() == 0)
+            return {};
+        return getResParameterList(0, ptr()->getListsOffset());
+    }
+
     /// Get a parameter object by index. The index must be valid.
     ResParameterObj getResParameterObj(s32 index) const {
         SEAD_ASSERT(0 <= index && index < getResParameterObjNum());
@@ -130,6 +136,12 @@ struct ResParameterList {
 
     ResParameterObj getResParameterObj(s32 index, u32 offset) const {
         return {reinterpret_cast<ResParameterObjData*>(ptrBytes() + offset) + index};
+    }
+
+    ResParameterObj getResParameterObj() const {
+        if (getResParameterObjNum() == 0)
+            return {};
+        return getResParameterObj(0, ptr()->getObjectsOffset());
     }
 
     /// @returns the index of the specified list, or -1 if not found.

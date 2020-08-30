@@ -31,7 +31,7 @@ const char* IParameterObj::getTagName() {
     return "param_array";
 }
 
-sead::SafeString IParameterObj::getParameterObjName() const {
+sead::SafeString IParameterObj::getName() const {
     return mName;
 }
 
@@ -57,7 +57,7 @@ bool IParameterObj::isComplete(ResParameterObj obj, bool check_values) const {
     ParameterBase* param = mParamListHead;
 
     while (param) {
-        const auto idx = obj.searchIndex(param->getParameterNameHash());
+        const auto idx = obj.searchIndex(param->getNameHash());
         if (idx == -1)
             return false;
 
@@ -92,10 +92,10 @@ bool IParameterObj::verify(ParameterBase* p_check, ParameterBase* other) const {
     auto* param = other;
     bool ok = true;
     while (param) {
-        if (p_check->getParameterNameHash() == param->getParameterNameHash()) {
+        if (p_check->getNameHash() == param->getNameHash()) {
             sead::BufferingPrintFormatter ss;
             ss << "Same hash code at [%s] and [%s]. Please change.\n"
-               << p_check->getParameterName().cstr() << param->getParameterName().cstr()
+               << p_check->getName().cstr() << param->getName().cstr()
                << sead::flush;
             ok = false;
         }
@@ -106,7 +106,7 @@ bool IParameterObj::verify(ParameterBase* p_check, ParameterBase* other) const {
 
 ParameterBase* IParameterObj::searchParameter_(u32 hash) {
     for (auto* param = mParamListHead; param; param = param->mNext) {
-        if (param->getParameterNameHash() == hash)
+        if (param->getNameHash() == hash)
             return param;
     }
     return nullptr;
@@ -114,7 +114,7 @@ ParameterBase* IParameterObj::searchParameter_(u32 hash) {
 
 ParameterBase* IParameterObj::searchParameter_(u32 hash) const {
     for (auto* param = mParamListHead; param; param = param->mNext) {
-        if (param->getParameterNameHash() == hash)
+        if (param->getNameHash() == hash)
             return param;
     }
     return nullptr;
@@ -150,7 +150,7 @@ void IParameterObj::copy(const IParameterObj& obj) {
     SEAD_ASSERT(mpHead != nullptr);
 
     auto* src = obj.mParamListHead;
-    while (src && src->getParameterNameHash() != mpHead->getParameterNameHash())
+    while (src && src->getNameHash() != mpHead->getNameHash())
         src = src->mNext;
 
     while (src && mpHead) {
@@ -189,14 +189,14 @@ void IParameterObj::copyLerp(const IParameterObj& obj1, const IParameterObj& obj
     auto mpHead = mParamListHead;
     SEAD_ASSERT(mpHead);
 
-    const u32 hash = mpHead->getParameterNameHash();
+    const u32 hash = mpHead->getNameHash();
 
     auto* it1 = obj1.mParamListHead;
-    while (it1 && it1->getParameterNameHash() != hash)
+    while (it1 && it1->getNameHash() != hash)
         it1 = it1->mNext;
 
     auto* it2 = obj2.mParamListHead;
-    while (it2 && it2->getParameterNameHash() != hash)
+    while (it2 && it2->getNameHash() != hash)
         it2 = it2->mNext;
 
     while (it1 && it2 && mpHead) {
