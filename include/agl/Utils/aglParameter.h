@@ -51,6 +51,7 @@ public:
     void initializeListNode(const sead::SafeString& name, const sead::SafeString& label,
                             const sead::SafeString& meta, IParameterObj* param_obj);
 
+    u32 getParameterNameHash() const { return mNameHash; }
     sead::SafeString getParameterName() const;
     sead::SafeString getLabel() const;
     sead::SafeString getMeta() const;

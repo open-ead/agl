@@ -18,27 +18,29 @@ public:
     IParameterObj();
     virtual ~IParameterObj();
 
-    void pushBackListNode(ParameterBase* param);
+    void pushBackListNode(ParameterBase* p_node);
     void sortByHash();
 
-    void createAttribute(sead::XmlElement* element, sead::Heap* heap) const;
-    sead::SafeString getTagName();
     sead::SafeString getParameterObjName() const;
 
     void writeToXML(sead::XmlElement* element, sead::Heap* heap);
     bool readFromXML(const sead::XmlElement& element, bool x);
+    void createAttribute(sead::XmlElement* element, sead::Heap* heap) const;
+    static const char* getTagName();
 
     void applyResParameterObj(ResParameterObj obj1, ResParameterObj obj2, f32 t,
                               IParameterList* list);
     bool isComplete(ResParameterObj obj, bool) const;
-    void verify() const;
-    void verify(ParameterBase* param1, ParameterBase* param2) const;
+    bool verify() const;
+    bool verify(ParameterBase* p_check, ParameterBase* other) const;
 
-    bool copy(ParameterBase* param1, ParameterBase* param2, const ParameterBase* param3,
-              const ParameterBase* param4);
-    bool copy(const IParameterObj& obj);
-    bool copyLerp(ParameterBase* param1, ParameterBase* param2, const ParameterBase* param3,
-                  const ParameterBase* param4, f32 t);
+    void copy(ParameterBase* first, ParameterBase* last, const ParameterBase* src_first,
+              const ParameterBase* src_last);
+    void copy(const IParameterObj& obj);
+    void copyLerp(ParameterBase* first, ParameterBase* last, const ParameterBase* src1_first,
+                  const ParameterBase* src1_last, const ParameterBase* src2_first,
+                  const ParameterBase* src2_last, f32 t);
+    void copyLerp(const IParameterObj& obj1, const IParameterObj& obj2, f32 t);
 
 #ifdef SEAD_DEBUG
     void genMessageParameter(sead::hostio::Context* context);
@@ -55,24 +57,27 @@ protected:
     virtual void postRead_() {}
     virtual bool preCopy_() { return true; }
     virtual void postCopy_() {}
-    virtual bool isApply_(ResParameterObj obj) const;
+    virtual bool isApply_(ResParameterObj obj) const {
+        return obj.getParameterObjNameHash() == mNameHash;
+    }
 
-    void applyResParameterObj_(bool, ResParameterObjData obj1, ResParameterObj obj2, f32 t,
+    void applyResParameterObj_(bool interpolate, ResParameterObj obj1, ResParameterObj obj2, f32 t,
                                IParameterList* list);
     ParameterBase* searchParameter_(u32 hash);
-    const ParameterBase* searchParameter_(u32 hash) const;
+    ParameterBase* searchParameter_(u32 hash) const;
 
-    bool copy_(ParameterBase* param1, ParameterBase* param2, const ParameterBase* param3,
-               const ParameterBase* param4);
-    bool copyLerp_(ParameterBase* param1, ParameterBase* param2, const ParameterBase* param3,
-                   const ParameterBase* param4, f32 t);
+    void copy_(ParameterBase* first, ParameterBase* last, const ParameterBase* src_first,
+               const ParameterBase* src_last);
+    void copyLerp_(ParameterBase* first, ParameterBase* last, const ParameterBase* src1_first,
+                   const ParameterBase* src1_last, const ParameterBase* src2_first,
+                   const ParameterBase* src2_last, f32 t);
 
-    ParameterBase* mParam;
-    void* _10;
-    u32 _18;
-    u32 mNameHash;
-    void* _20;
-    void* _28;
+    ParameterBase* mParamListHead = nullptr;
+    ParameterBase* mParamListTail = nullptr;
+    u32 mParamListSize = 0;
+    u32 mNameHash = 0;
+    void* _20 = nullptr;
+    const char* mName = nullptr;
 };
 
 }  // namespace agl::utl

@@ -35,7 +35,12 @@ struct ResParameter {
 
     template <typename T>
     T* getData() const {
-        return reinterpret_cast<T*>(ptrBytes() + ptr()->getOffset());
+        return getData<T>(ptr()->getOffset());
+    }
+
+    template <typename T>
+    T* getData(u32 offset) const {
+        return reinterpret_cast<T*>(ptrBytes() + offset);
     }
 
     /// Get the data size in bytes.
