@@ -133,9 +133,9 @@ bool ParameterBase::verifyType(ParameterType type) const {
         return true;
 
     sead::BufferingPrintFormatter ss;
-    (ss << "!!! AGL ERROR !!! Instance ParameterType = %s Resource ParameterType = %s\n"
-        << sParameterTypeNames[u32(getParameterType())] << sParameterTypeNames[u32(type)])
-        .flush();
+    ss << "!!! AGL ERROR !!! Instance ParameterType = %s Resource ParameterType = %s\n"
+       << sParameterTypeNames[u32(getParameterType())] << sParameterTypeNames[u32(type)]
+       << sead::flush;
     return false;
 }
 
