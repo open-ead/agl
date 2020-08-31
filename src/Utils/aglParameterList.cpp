@@ -215,18 +215,16 @@ bool IParameterList::verifyObj(IParameterObj* p_check, IParameterObj* other) con
     return ok;
 }
 
-// NON_MATCHING: the useless ternary gets optimized out (n cannot be 0 when it is reached)
 ResParameterObj IParameterList::searchResParameterObj_(ResParameterList res,
                                                        const IParameterObj& obj) const {
     if (!res.ptr())
         return {};
 
     const auto n = res.getResParameterObjNum();
-    auto ret = n != 0 ? res.getResParameterObj() : ResParameterObj();
-    for (s32 i = 0; i != n; ++i) {
+    auto ret = res.getResParameterObj();
+    for (s32 i = 0; i != n; ++i, ++ret.mPtr) {
         if (obj.isApply_(ret))
             return ret;
-        ++ret.mPtr;
     }
     return {};
 }
@@ -249,18 +247,16 @@ IParameterObj* IParameterList::searchChildParameterObj_(ResParameterObj res,
     return child;
 }
 
-// NON_MATCHING: same issue with the ternary
 ResParameterList IParameterList::searchResParameterList_(ResParameterList res,
                                                          const IParameterList& list) const {
     if (!res.ptr())
         return {};
 
     const auto n = res.getResParameterListNum();
-    auto ret = n != 0 ? res.getResParameterList() : ResParameterList();
-    for (s32 i = 0; i != n; ++i) {
+    auto ret = res.getResParameterList();
+    for (s32 i = 0; i != n; ++i, ++ret.mPtr) {
         if (list.isApply_(ret))
             return ret;
-        ++ret.mPtr;
     }
     return {};
 }
@@ -276,13 +272,12 @@ IParameterList* IParameterList::searchChildParameterList_(ResParameterList res) 
     return nullptr;
 }
 
-// NON_MATCHING: the ternary, again...
 void IParameterList::applyResParameterObjB_(bool interpolate, ResParameterList res, f32 t) {
     if (!res.ptr())
         return;
 
     const auto n = res.getResParameterObjNum();
-    auto r = n != 0 ? res.getResParameterObj() : ResParameterObj();
+    auto r = res.getResParameterObj();
     IParameterObj* obj = nullptr;
     for (s32 i = 0; i != n; ++i, ++r.mPtr) {
         auto* result = searchChildParameterObj_(r, obj);
@@ -293,14 +288,15 @@ void IParameterList::applyResParameterObjB_(bool interpolate, ResParameterList r
     }
 }
 
-// NON_MATCHING: the ternary, again...
-[[gnu::noinline]] void IParameterList::applyResParameterListB_(bool interpolate,
-                                                               ResParameterList res, f32 t) {
+#ifdef MATCHING_HACK_NX_CLANG
+[[gnu::noinline]]
+#endif
+void IParameterList::applyResParameterListB_(bool interpolate, ResParameterList res, f32 t) {
     if (!res.ptr())
         return;
 
     const auto n = res.getResParameterListNum();
-    auto r = n != 0 ? res.getResParameterList() : ResParameterList();
+    auto r = res.getResParameterList();
     for (s32 i = 0; i != n; ++i, ++r.mPtr) {
         auto* list = searchChildParameterList_(r);
         if (list)
@@ -308,7 +304,6 @@ void IParameterList::applyResParameterObjB_(bool interpolate, ResParameterList r
     }
 }
 
-// WIP
 void IParameterList::applyResParameterList_(bool interpolate, ResParameterList l1,
                                             ResParameterList l2, f32 t) {
     if (!preRead_())

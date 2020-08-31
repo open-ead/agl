@@ -9,14 +9,6 @@
 
 namespace agl::utl {
 
-namespace detail {
-struct OffsetNumPair {
-    constexpr u16 offset() const { return static_cast<u16>(value); }
-    constexpr u16 num() const { return static_cast<u16>(value >> 16); }
-    u32 value;
-};
-}  // namespace detail
-
 struct ResParameterData {
     constexpr u32 getParameterNameHash() const { return name_hash; }
     constexpr u32 getOffset() const { return 4 * (offset_and_type & 0xFFFFFF); }
@@ -60,11 +52,11 @@ struct ResParameter {
 
 struct ResParameterObjData {
     constexpr u32 getParameterObjNameHash() const { return name_hash; }
-    constexpr u32 getParametersOffset() const { return 4 * param_offset_and_num.offset(); }
-    constexpr u16 getNumParameters() const { return param_offset_and_num.num(); }
+    constexpr u32 getParametersOffset() const { return 4 * u16(param_offset_and_num); }
+    constexpr u16 getNumParameters() const { return param_offset_and_num >> 16; }
 
     u32 name_hash;
-    detail::OffsetNumPair param_offset_and_num;
+    u32 param_offset_and_num;
 };
 static_assert(sizeof(ResParameterObjData) == 8);
 
@@ -93,14 +85,14 @@ struct ResParameterObj {
 
 struct ResParameterListData {
     constexpr u32 getParameterListNameHash() const { return name_hash; }
-    constexpr u32 getListsOffset() const { return 4 * list_offset_and_num.offset(); }
-    constexpr u32 getNumLists() const { return list_offset_and_num.num(); }
-    constexpr u32 getObjectsOffset() const { return 4 * obj_offset_and_num.offset(); }
-    constexpr u32 getNumObjects() const { return obj_offset_and_num.num(); }
+    constexpr u32 getListsOffset() const { return 4 * u16(list_offset_and_num); }
+    constexpr u32 getNumLists() const { return list_offset_and_num >> 16; }
+    constexpr u32 getObjectsOffset() const { return 4 * u16(obj_offset_and_num); }
+    constexpr s32 getNumObjects() const { return obj_offset_and_num >> 16; }
 
     u32 name_hash;
-    detail::OffsetNumPair list_offset_and_num;
-    detail::OffsetNumPair obj_offset_and_num;
+    u32 list_offset_and_num;
+    u32 obj_offset_and_num;
 };
 static_assert(sizeof(ResParameterListData) == 0xc);
 
@@ -123,9 +115,9 @@ struct ResParameterList {
     }
 
     ResParameterList getResParameterList() const {
-        if (getResParameterListNum() == 0)
-            return {};
-        return getResParameterList(0, ptr()->getListsOffset());
+        return {ptr()->list_offset_and_num >> 16 != 0 ?
+                    reinterpret_cast<ResParameterListData*>(ptrBytes() + ptr()->getListsOffset()) :
+                    nullptr};
     }
 
     /// Get a parameter object by index. The index must be valid.
@@ -139,9 +131,9 @@ struct ResParameterList {
     }
 
     ResParameterObj getResParameterObj() const {
-        if (getResParameterObjNum() == 0)
-            return {};
-        return getResParameterObj(0, ptr()->getObjectsOffset());
+        return {ptr()->obj_offset_and_num >> 16 != 0 ?
+                    reinterpret_cast<ResParameterObjData*>(ptrBytes() + ptr()->getObjectsOffset()) :
+                    nullptr};
     }
 
     /// @returns the index of the specified list, or -1 if not found.
