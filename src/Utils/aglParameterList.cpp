@@ -335,8 +335,8 @@ void IParameterList::applyResParameterList_(bool interpolate, ResParameterList l
 
     // Now recursively apply all parameter lists.
     if (l1.ptr()) {
+        auto r = l1.getResParameterList();
         const auto n = l1.getResParameterListNum();
-        auto r = n != 0 ? l1.getResParameterList() : ResParameterList();
         for (s32 i = 0; i != n; ++i, ++r.mPtr) {
             auto* child = searchChildParameterList_(r);
             if (l2.ptr()) {
@@ -348,7 +348,7 @@ void IParameterList::applyResParameterList_(bool interpolate, ResParameterList l
                 }
             } else {
                 if (child)
-                    applyResParameterList_(interpolate, r, {}, t);
+                    child->applyResParameterList_(interpolate, r, {}, t);
                 else
                     applyResParameterListB_(interpolate, {}, t);
             }
