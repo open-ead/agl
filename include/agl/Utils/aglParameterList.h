@@ -16,7 +16,7 @@ class ParameterBase;
 class IParameterList {
 public:
     IParameterList();
-    virtual ~IParameterList();
+    virtual ~IParameterList() { ; }
 
     void addList(IParameterList* child, const sead::SafeString& name);
     void addObj(IParameterObj* child, const sead::SafeString& name);
@@ -69,7 +69,8 @@ protected:
     ResParameterObj searchResParameterObj_(ResParameterList res, const IParameterObj& obj) const;
     IParameterObj* searchChildParameterObj_(ResParameterObj res, IParameterObj* obj) const;
     void applyResParameterObjB_(bool interpolate, ResParameterList res, f32 t);
-    ResParameterList searchResParameterList_(ResParameterList res, const IParameterList& list) const;
+    ResParameterList searchResParameterList_(ResParameterList res,
+                                             const IParameterList& list) const;
     IParameterList* searchChildParameterList_(ResParameterList res) const;
     void applyResParameterListB_(bool interpolate, ResParameterList res, f32 t);
 

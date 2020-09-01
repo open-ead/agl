@@ -11,13 +11,13 @@ namespace agl::utl {
 class IParameterIO : public IParameterList {
 public:
     IParameterIO();
-    IParameterIO(const sead::SafeString& name, u32);
-    ~IParameterIO() override;
+    IParameterIO(const sead::SafeString& name, u32 version);
+    ~IParameterIO() override = default;
 
     virtual bool save(const sead::SafeString& path, u32) const;
-    virtual void applyResParameterArchive(ResParameterArchive archive);
-    virtual void applyResParameterArchiveLerp(ResParameterArchive archive1,
-                                              ResParameterArchive archive2, f32 t);
+    virtual void applyResParameterArchive(ResParameterArchive arc);
+    virtual void applyResParameterArchiveLerp(ResParameterArchive arc_a, ResParameterArchive arc_b,
+                                              f32 t);
 
     void load(const sead::SafeString& path, bool);
     void loadText(const void* data, u32 size, bool);
@@ -29,10 +29,17 @@ public:
                                sead::hostio::PropertyEvent* event);
 
 protected:
-    virtual void callbackInvalidVersion_(ResParameterArchive archive);
+    virtual void callbackInvalidVersion_(ResParameterArchive) {}
 
     virtual void writeHeader_(sead::XmlElement* element, sead::Heap* heap) const;
     void save_(const sead::SafeString& path, const sead::XmlDocument* document) const;
+
+    sead::FixedSafeString<64> mType;
+    u32 mVersion;
+    void* _a8 = nullptr;
+    sead::FixedSafeString<256> _b0 = sead::SafeString::cEmptyString;
+    u32 mResFileSize = 0;
+    u32 _1cc;
 };
 
 }  // namespace agl::utl

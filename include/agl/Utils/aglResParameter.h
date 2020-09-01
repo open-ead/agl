@@ -177,6 +177,11 @@ static_assert(sizeof(ResParameterArchiveData) == 0x30);
 
 struct ResParameterArchive : ResCommon<ResParameterArchiveData> {
     explicit ResParameterArchive(const void* p_data);
+
+    ResParameterList getRootList() const {
+        return {reinterpret_cast<ResParameterListData*>(
+            ptrBytes() + sizeof(ResParameterArchiveData) + mPtr->offset_to_pio)};
+    }
 };
 
 }  // namespace agl::utl

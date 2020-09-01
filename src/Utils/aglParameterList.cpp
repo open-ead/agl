@@ -23,10 +23,6 @@ void IParameterList::setParameterListName_(const sead::SafeString& name) {
     mNameHash = ParameterBase::calcHash(name);
 }
 
-IParameterList::~IParameterList() {
-    ;
-}
-
 void IParameterList::addList(IParameterList* child, const sead::SafeString& name) {
     SEAD_ASSERT(child != nullptr);
     child->setParameterListName_(name);
