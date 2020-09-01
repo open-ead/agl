@@ -12,7 +12,7 @@ class IParameterIO : public IParameterList {
 public:
     IParameterIO();
     IParameterIO(const sead::SafeString& name, u32 version);
-    ~IParameterIO() override = default;
+    ~IParameterIO() override { ; }
 
     virtual bool save(const sead::SafeString& path, u32) const;
     virtual void applyResParameterArchive(ResParameterArchive arc);

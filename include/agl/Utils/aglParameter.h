@@ -46,7 +46,7 @@ public:
                   IParameterObj* param_obj);
     ParameterBase(const sead::SafeString& name, const sead::SafeString& label,
                   const sead::SafeString& meta, IParameterObj* param_obj);
-    virtual ~ParameterBase() = default;
+    virtual ~ParameterBase() { ; }
 
     void initializeListNode(const sead::SafeString& name, const sead::SafeString& label,
                             const sead::SafeString& meta, IParameterObj* param_obj);

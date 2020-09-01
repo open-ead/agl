@@ -147,7 +147,11 @@ bool IParameterList::isComplete(ResParameterList res, bool) const {
 }
 
 sead::SafeString IParameterList::getName() const {
+#ifdef SEAD_DEBUG
     return mName;
+#else
+    return sead::SafeString::cEmptyString;
+#endif
 }
 
 const char* IParameterList::getTagName() {

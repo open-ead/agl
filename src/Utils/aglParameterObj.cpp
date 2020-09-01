@@ -32,7 +32,11 @@ const char* IParameterObj::getTagName() {
 }
 
 sead::SafeString IParameterObj::getName() const {
+#ifdef SEAD_DEBUG
     return mName;
+#else
+    return sead::SafeString::cEmptyString;
+#endif
 }
 
 void IParameterObj::applyResParameterObj(ResParameterObj obj1, ResParameterObj obj2, f32 t,

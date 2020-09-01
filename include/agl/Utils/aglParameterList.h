@@ -81,9 +81,7 @@ protected:
     u32 mNameHash;
     IParameterList* mNext = nullptr;
     IParameterList* mParent = nullptr;
-#ifdef SEAD_DEBUG
     const char* mName;
-#endif
 };
 
 }  // namespace agl::utl
