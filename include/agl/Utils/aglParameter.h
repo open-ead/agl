@@ -1,8 +1,10 @@
 #pragma once
 
+#include <array>
 #include <basis/seadRawPrint.h>
 #include <basis/seadTypes.h>
 #include <gfx/seadColor.h>
+#include <hostio/seadHostIOCurve.h>
 #include <hostio/seadHostIOReflexible.h>
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
@@ -57,7 +59,8 @@ public:
                             const sead::SafeString& meta, IParameterObj* param_obj);
 
     u32 getNameHash() const { return mNameHash; }
-    sead::SafeString getName() const;
+    sead::SafeString getParameterName() const;
+    sead::SafeString getName() const { return getParameterName(); }
     sead::SafeString getLabel() const;
     sead::SafeString getMeta() const;
 
@@ -307,4 +310,48 @@ public:
                                       const sead::hostio::PropertyEvent* event) override;
 #endif
 };
+
+template <u32 N>
+class ParameterCurve : public ParameterBase {
+public:
+    ParameterCurve(const sead::SafeString& name, const sead::SafeString& label,
+                   IParameterObj* param_obj);
+
+    void reset();
+
+    bool copy(const ParameterBase& other) override;
+    void copyUnsafe(const ParameterBase& other) override;
+
+    void writeToXML(sead::XmlElement* element, sead::Heap* heap) override;
+    bool readFromXML(const sead::XmlElement& element, bool x) override;
+
+    ParameterType getParameterType() const override;
+
+    const void* ptr() const override { return mCurveData.data(); }
+    void* ptr() override { return mCurveData.data(); }
+    const void* typePtr() const override { return mCurveData.data(); }
+    void* typePtr() override { return mCurveData.data(); }
+    u32 size() const override { return sizeof(mCurveData); }
+
+    ParameterBase* clone(sead::Heap* heap, IParameterObj* obj) const override;
+
+    void postApplyResource_(const void*, size_t size) override;
+
+#ifdef SEAD_DEBUG
+    void genMessageParameter(sead::hostio::Context* context) override;
+    virtual void genMessageParameterUnit(sead::hostio::Context* context, s32,
+                                         const sead::SafeString&, const sead::SafeString&);
+#endif
+
+    static constexpr u32 cUnitCurveParamNum = 30;
+
+protected:
+    std::array<sead::hostio::Curve<f32>, N> mCurves;
+    std::array<sead::hostio::CurveData, N> mCurveData;
+};
+
 }  // namespace agl::utl
+
+#define AGL_UTILS_PARAMETER_H_
+#include "agl/Utils/aglParameterCurve.hpp"
+#undef AGL_UTILS_PARAMETER_H_

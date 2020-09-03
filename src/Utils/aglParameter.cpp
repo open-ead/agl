@@ -56,7 +56,7 @@ void ParameterBase::initializeListNode(const sead::SafeString& name, const sead:
         param_obj->pushBackListNode(this);
 }
 
-sead::SafeString ParameterBase::getName() const {
+sead::SafeString ParameterBase::getParameterName() const {
 #ifdef SEAD_DEBUG
     return mName;
 #else

@@ -3,6 +3,7 @@ project(agl CXX ASM)
 add_library(agl OBJECT
   include/agl/Utils/aglAtomicPtrArray.h
   include/agl/Utils/aglParameter.h
+  include/agl/Utils/aglParameterCurve.hpp
   include/agl/Utils/aglParameterIO.h
   include/agl/Utils/aglParameterList.h
   include/agl/Utils/aglParameterObj.h
