@@ -31,7 +31,9 @@ public:
 protected:
     virtual void callbackInvalidVersion_(ResParameterArchive) {}
 
+#ifdef SEAD_DEBUG
     virtual void writeHeader_(sead::XmlElement* element, sead::Heap* heap) const;
+#endif
     void save_(const sead::SafeString& path, const sead::XmlDocument* document) const;
 
     sead::FixedSafeString<64> mType;
