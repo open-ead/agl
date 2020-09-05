@@ -264,6 +264,9 @@ public:
         initializeParameter(value, name, label, meta, obj);
     }
 
+    T& ref() { return mValue; }
+    const T& ref() const { return mValue; }
+
 protected:
     T mValue;
 };
