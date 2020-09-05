@@ -196,8 +196,8 @@ public:
         if constexpr (std::is_same<T, sead::SafeString>()) {
             SEAD_ASSERT_MSG(false, "Can't access.");
             return nullptr;
-        } else if constexpr (std::is_base_of<sead::SafeString, T>()) {
-            return mValue.cstr();
+        } else if constexpr (std::is_base_of<sead::BufferedSafeString, T>()) {
+            return mValue.getBuffer();
         } else {
             return &mValue;
         }
