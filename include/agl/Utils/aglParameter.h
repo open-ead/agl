@@ -240,6 +240,12 @@ public:
         }
     }
 
+    /// Alias of initializeParameter.
+    void init(const T& value, const sead::SafeString& name, const sead::SafeString& label,
+              const sead::SafeString& meta, IParameterObj* obj) {
+        initializeParameter(value, name, label, meta, obj);
+    }
+
 protected:
     T mValue;
 };
