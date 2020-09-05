@@ -84,4 +84,10 @@ protected:
     const char* mName;
 };
 
+class ParameterList : public IParameterList {
+public:
+    using IParameterList::IParameterList;
+    ~ParameterList() override { ; }
+};
+
 }  // namespace agl::utl

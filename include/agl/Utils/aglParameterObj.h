@@ -81,4 +81,10 @@ protected:
     const char* mName = nullptr;
 };
 
+class ParameterObj : public IParameterObj {
+public:
+    using IParameterObj::IParameterObj;
+    ~ParameterObj() override { ; }
+};
+
 }  // namespace agl::utl
