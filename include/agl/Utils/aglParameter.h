@@ -141,6 +141,8 @@ using ParameterType = ParameterBase::ParameterType;
 template <typename T>
 class Parameter : public ParameterBase {
 public:
+    Parameter() = default;
+
     Parameter(const T& value, const sead::SafeString& name, const sead::SafeString& label,
               const sead::SafeString& meta, IParameterObj* obj) {
         initializeParameter(value, name, label, meta, obj);
