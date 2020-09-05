@@ -16,7 +16,7 @@ class ParameterBase;
 class IParameterObj {
 public:
     IParameterObj();
-    virtual ~IParameterObj();
+    virtual ~IParameterObj() { ; }
 
     void pushBackListNode(ParameterBase* p_node);
     void sortByHash();

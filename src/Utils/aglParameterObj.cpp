@@ -7,10 +7,6 @@ namespace agl::utl {
 
 IParameterObj::IParameterObj() = default;
 
-IParameterObj::~IParameterObj() {
-    ;
-}
-
 void IParameterObj::pushBackListNode(ParameterBase* p_node) {
     SEAD_ASSERT(p_node != nullptr);
 
