@@ -4,6 +4,7 @@
 #include <basis/seadRawPrint.h>
 #include <basis/seadTypes.h>
 #include <container/seadTreeMap.h>
+#include <prim/seadPtrUtil.h>
 #include <prim/seadTypedBitFlag.h>
 #include "agl/Utils/aglResCommon.h"
 
@@ -32,7 +33,7 @@ struct ResParameter {
 
     template <typename T>
     T* getData(u32 offset) const {
-        return reinterpret_cast<T*>(ptrBytes() + offset);
+        return static_cast<T*>(sead::PtrUtil::addOffset(ptr(), offset));
     }
 
     /// Get the data size in bytes.
@@ -74,7 +75,8 @@ struct ResParameterObj {
     }
 
     ResParameter getResParameter(s32 index, u32 offset) const {
-        return {reinterpret_cast<ResParameterData*>(ptrBytes() + offset) + index};
+        return {reinterpret_cast<ResParameterData*>(ptrBytes() + offset +
+                                                    sizeof(ResParameterData) * index)};
     }
 
     /// @returns the index of the specified parameter, or -1 if not found.
@@ -127,7 +129,8 @@ struct ResParameterList {
     }
 
     ResParameterObj getResParameterObj(s32 index, u32 offset) const {
-        return {reinterpret_cast<ResParameterObjData*>(ptrBytes() + offset) + index};
+        return {reinterpret_cast<ResParameterObjData*>(ptrBytes() + offset +
+                                                       sizeof(ResParameterObjData) * index)};
     }
 
     ResParameterObj getResParameterObj() const {
