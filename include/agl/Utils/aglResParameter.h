@@ -55,6 +55,7 @@ struct ResParameterObjData {
     constexpr u32 getParameterObjNameHash() const { return name_hash; }
     constexpr u32 getParametersOffset() const { return 4 * u16(param_offset_and_num); }
     constexpr u16 getNumParameters() const { return param_offset_and_num >> 16; }
+    constexpr bool hasParameters() const { return getNumParameters() != 0; }
 
     u32 name_hash;
     u32 param_offset_and_num;
@@ -62,6 +63,30 @@ struct ResParameterObjData {
 static_assert(sizeof(ResParameterObjData) == 8);
 
 struct ResParameterObj {
+    class Iterator {
+    public:
+        Iterator(ResParameterData* ptr, s32 idx) : mIdx(idx), mPtr(ptr) {}
+        bool operator==(const Iterator& rhs) const { return getIndex() == rhs.getIndex(); }
+        bool operator!=(const Iterator& rhs) const { return !operator==(rhs); }
+        s32 getIndex() const { return mIdx; }
+        ResParameter getParam() const { return {mPtr}; }
+        ResParameter operator*() const { return getParam(); }
+        Iterator& operator++() {
+            ++mIdx;
+            ++mPtr;
+            return *this;
+        }
+
+    private:
+        s32 mIdx;
+        ResParameterData* mPtr;
+    };
+
+    Iterator begin() const {
+        return {reinterpret_cast<ResParameterData*>(ptrBytes() + ptr()->getParametersOffset()), 0};
+    }
+    Iterator end() const { return {nullptr, s32(ptr()->getNumParameters())}; }
+
     ResParameterObjData* ptr() const { return mPtr; }
     u8* ptrBytes() const { return reinterpret_cast<u8*>(mPtr); }
 
