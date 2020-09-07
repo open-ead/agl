@@ -251,12 +251,9 @@ ResParameterList IParameterList::searchResParameterList_(ResParameterList res,
                                                          const IParameterList& list) const {
     if (!res.ptr())
         return {};
-
-    const auto n = res.getResParameterListNum();
-    auto ret = res.getResParameterList();
-    for (s32 i = 0; i != n; ++i, ++ret.mPtr) {
-        if (list.isApply_(ret))
-            return ret;
+    for (auto it = res.listBegin(), end = res.listEnd(); it != end; ++it) {
+        if (list.isApply_(it.getList()))
+            return it.getList();
     }
     return {};
 }
@@ -294,13 +291,10 @@ void IParameterList::applyResParameterObjB_(bool interpolate, ResParameterList r
 void IParameterList::applyResParameterListB_(bool interpolate, ResParameterList res, f32 t) {
     if (!res.ptr())
         return;
-
-    const auto n = res.getResParameterListNum();
-    auto r = res.getResParameterList();
-    for (s32 i = 0; i != n; ++i, ++r.mPtr) {
-        auto* list = searchChildParameterList_(r);
+    for (auto it = res.listBegin(), end = res.listEnd(); it != end; ++it) {
+        auto* list = searchChildParameterList_(*it);
         if (list)
-            list->applyResParameterList_(interpolate, {}, r, t);
+            list->applyResParameterList_(interpolate, {}, *it, t);
     }
 }
 
@@ -330,20 +324,18 @@ void IParameterList::applyResParameterList_(bool interpolate, ResParameterList l
 
     // Now recursively apply all parameter lists.
     if (l1.ptr()) {
-        auto r = l1.getResParameterList();
-        const auto n = l1.getResParameterListNum();
-        for (s32 i = 0; i != n; ++i, ++r.mPtr) {
-            auto* child = searchChildParameterList_(r);
+        for (auto it = l1.listBegin(), end = l1.listEnd(); it != end; ++it) {
+            auto* child = searchChildParameterList_(*it);
             if (l2.ptr()) {
                 if (child) {
                     const auto other_list = searchResParameterList_(l2, *child);
-                    child->applyResParameterList_(interpolate, r, other_list, t);
+                    child->applyResParameterList_(interpolate, *it, other_list, t);
                 } else {
                     applyResParameterListB_(interpolate, l2, t);
                 }
             } else {
                 if (child)
-                    child->applyResParameterList_(interpolate, r, {}, t);
+                    child->applyResParameterList_(interpolate, *it, {}, t);
                 else
                     applyResParameterListB_(interpolate, {}, t);
             }

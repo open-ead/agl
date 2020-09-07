@@ -88,9 +88,11 @@ struct ResParameterObj {
 struct ResParameterListData {
     constexpr u32 getParameterListNameHash() const { return name_hash; }
     constexpr u32 getListsOffset() const { return 4 * u16(list_offset_and_num); }
-    constexpr u32 getNumLists() const { return list_offset_and_num >> 16; }
     constexpr u32 getObjectsOffset() const { return 4 * u16(obj_offset_and_num); }
+    constexpr u32 getNumLists() const { return list_offset_and_num >> 16; }
     constexpr s32 getNumObjects() const { return obj_offset_and_num >> 16; }
+    constexpr bool hasLists() const { return getNumLists() != 0; }
+    constexpr bool hasObjects() const { return getNumObjects() != 0; }
 
     u32 name_hash;
     u32 list_offset_and_num;
@@ -99,6 +101,32 @@ struct ResParameterListData {
 static_assert(sizeof(ResParameterListData) == 0xc);
 
 struct ResParameterList {
+    class ListIterator {
+    public:
+        ListIterator(ResParameterListData* ptr, s32 idx) : mIdx(idx), mPtr(ptr) {}
+        bool operator==(const ListIterator& rhs) const { return getIndex() == rhs.getIndex(); }
+        bool operator!=(const ListIterator& rhs) const { return !operator==(rhs); }
+        s32 getIndex() const { return mIdx; }
+        ResParameterList getList() const { return {mPtr}; }
+        ResParameterList operator*() const { return getList(); }
+        ListIterator& operator++() {
+            ++mIdx;
+            ++mPtr;
+            return *this;
+        }
+
+    private:
+        s32 mIdx;
+        ResParameterListData* mPtr;
+    };
+
+    ListIterator listBegin() const {
+        if (!ptr()->hasLists())
+            return {nullptr, 0};
+        return {reinterpret_cast<ResParameterListData*>(ptrBytes() + ptr()->getListsOffset()), 0};
+    }
+    ListIterator listEnd() const { return {nullptr, s32(ptr()->getNumLists())}; }
+
     ResParameterListData* ptr() const { return mPtr; }
     u8* ptrBytes() const { return reinterpret_cast<u8*>(mPtr); }
 
@@ -115,12 +143,6 @@ struct ResParameterList {
     ResParameterList getResParameterList(s32 index, u32 offset) const {
         return {reinterpret_cast<ResParameterListData*>(ptrBytes() + offset +
                                                         sizeof(ResParameterListData) * index)};
-    }
-
-    ResParameterList getResParameterList() const {
-        return {ptr()->list_offset_and_num >> 16 != 0 ?
-                    reinterpret_cast<ResParameterListData*>(ptrBytes() + ptr()->getListsOffset()) :
-                    nullptr};
     }
 
     /// Get a parameter object by index. The index must be valid.
