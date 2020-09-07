@@ -377,6 +377,33 @@ protected:
     std::array<sead::hostio::CurveData, N> mCurveData;
 };
 
+inline ResParameter getResParameter(const agl::utl::ResParameterObj& obj,
+                                    const sead::SafeString& name) {
+    const s32 idx = obj.searchIndex(ParameterBase::calcHash(name));
+    if (idx == -1)
+        return {};
+
+    return obj.getResParameter(idx);
+}
+
+inline ResParameterObj getResParameterObj(const agl::utl::ResParameterList& list,
+                                          const sead::SafeString& name) {
+    const s32 idx = list.searchObjIndex(ParameterBase::calcHash(name));
+    if (idx == -1)
+        return {};
+
+    return list.getResParameterObj(idx);
+}
+
+inline ResParameterList getResParameterList(const agl::utl::ResParameterList& list,
+                                            const sead::SafeString& name) {
+    const s32 idx = list.searchListIndex(ParameterBase::calcHash(name));
+    if (idx == -1)
+        return {};
+
+    return list.getResParameterList(idx);
+}
+
 }  // namespace agl::utl
 
 #define AGL_UTILS_PARAMETER_H_
