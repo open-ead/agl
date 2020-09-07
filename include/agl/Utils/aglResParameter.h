@@ -127,6 +127,32 @@ struct ResParameterList {
     }
     ListIterator listEnd() const { return {nullptr, s32(ptr()->getNumLists())}; }
 
+    class ObjIterator {
+    public:
+        ObjIterator(ResParameterObjData* ptr, s32 idx) : mIdx(idx), mPtr(ptr) {}
+        bool operator==(const ObjIterator& rhs) const { return getIndex() == rhs.getIndex(); }
+        bool operator!=(const ObjIterator& rhs) const { return !operator==(rhs); }
+        s32 getIndex() const { return mIdx; }
+        ResParameterObj getObj() const { return {mPtr}; }
+        ResParameterObj operator*() const { return getObj(); }
+        ObjIterator& operator++() {
+            ++mIdx;
+            ++mPtr;
+            return *this;
+        }
+
+    private:
+        s32 mIdx;
+        ResParameterObjData* mPtr;
+    };
+
+    ObjIterator objBegin() const {
+        if (!ptr()->hasObjects())
+            return {nullptr, 0};
+        return {reinterpret_cast<ResParameterObjData*>(ptrBytes() + ptr()->getObjectsOffset()), 0};
+    }
+    ObjIterator objEnd() const { return {nullptr, s32(ptr()->getNumObjects())}; }
+
     ResParameterListData* ptr() const { return mPtr; }
     u8* ptrBytes() const { return reinterpret_cast<u8*>(mPtr); }
 
@@ -154,12 +180,6 @@ struct ResParameterList {
     ResParameterObj getResParameterObj(s32 index, u32 offset) const {
         return {reinterpret_cast<ResParameterObjData*>(ptrBytes() + offset +
                                                        sizeof(ResParameterObjData) * index)};
-    }
-
-    ResParameterObj getResParameterObj() const {
-        return {ptr()->obj_offset_and_num >> 16 != 0 ?
-                    reinterpret_cast<ResParameterObjData*>(ptrBytes() + ptr()->getObjectsOffset()) :
-                    nullptr};
     }
 
     /// @returns the index of the specified list, or -1 if not found.

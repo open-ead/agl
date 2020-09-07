@@ -219,12 +219,9 @@ ResParameterObj IParameterList::searchResParameterObj_(ResParameterList res,
                                                        const IParameterObj& obj) const {
     if (!res.ptr())
         return {};
-
-    const auto n = res.getResParameterObjNum();
-    auto ret = res.getResParameterObj();
-    for (s32 i = 0; i != n; ++i, ++ret.mPtr) {
-        if (obj.isApply_(ret))
-            return ret;
+    for (auto it = res.objBegin(), end = res.objEnd(); it != end; ++it) {
+        if (obj.isApply_(*it))
+            return *it;
     }
     return {};
 }
@@ -272,14 +269,11 @@ IParameterList* IParameterList::searchChildParameterList_(ResParameterList res) 
 void IParameterList::applyResParameterObjB_(bool interpolate, ResParameterList res, f32 t) {
     if (!res.ptr())
         return;
-
-    const auto n = res.getResParameterObjNum();
-    auto r = res.getResParameterObj();
     IParameterObj* obj = nullptr;
-    for (s32 i = 0; i != n; ++i, ++r.mPtr) {
-        auto* result = searchChildParameterObj_(r, obj);
+    for (auto it = res.objBegin(), end = res.objEnd(); it != end; ++it) {
+        auto* result = searchChildParameterObj_(*it, obj);
         if (result) {
-            result->applyResParameterObj_(interpolate, {}, r, t, this);
+            result->applyResParameterObj_(interpolate, {}, *it, t, this);
             obj = result;
         }
     }
@@ -302,14 +296,12 @@ void IParameterList::applyResParameterList_(bool interpolate, ResParameterList l
 
     // Recursively apply all parameter objects.
     if (l1.ptr()) {
-        const auto n = l1.getResParameterObjNum();
-        auto r = n != 0 ? l1.getResParameterObj() : ResParameterObj();
         IParameterObj* obj = nullptr;
-        for (s32 i = 0; i != n; ++i, ++r.mPtr) {
-            auto* child = searchChildParameterObj_(r, obj);
+        for (auto it = l1.objBegin(), end = l1.objEnd(); it != end; ++it) {
+            auto* child = searchChildParameterObj_(*it, obj);
             if (child) {
                 const auto obj2 = searchResParameterObj_(l2, *child);
-                child->applyResParameterObj_(interpolate, r, obj2, t, this);
+                child->applyResParameterObj_(interpolate, *it, obj2, t, this);
                 obj = child;
             } else {
                 applyResParameterObjB_(interpolate, l2, t);
