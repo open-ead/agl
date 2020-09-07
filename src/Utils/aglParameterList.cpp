@@ -285,9 +285,6 @@ void IParameterList::applyResParameterObjB_(bool interpolate, ResParameterList r
     }
 }
 
-#ifdef MATCHING_HACK_NX_CLANG
-[[gnu::noinline]]
-#endif
 void IParameterList::applyResParameterListB_(bool interpolate, ResParameterList res, f32 t) {
     if (!res.ptr())
         return;
