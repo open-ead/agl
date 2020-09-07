@@ -113,7 +113,8 @@ struct ResParameterList {
     }
 
     ResParameterList getResParameterList(s32 index, u32 offset) const {
-        return {reinterpret_cast<ResParameterListData*>(ptrBytes() + offset) + index};
+        return {reinterpret_cast<ResParameterListData*>(ptrBytes() + offset +
+                                                        sizeof(ResParameterListData) * index)};
     }
 
     ResParameterList getResParameterList() const {
