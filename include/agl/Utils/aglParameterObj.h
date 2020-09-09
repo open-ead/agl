@@ -31,6 +31,11 @@ public:
 
     void applyResParameterObj(ResParameterObj obj1, ResParameterObj obj2, f32 t,
                               IParameterList* list);
+
+    void applyResParameterObj(ResParameterObj obj, IParameterList* list) {
+        applyResParameterObj_(false, obj, {}, 0.0, list);
+    }
+
     bool isComplete(ResParameterObj obj, bool) const;
     bool verify() const;
     bool verify(ParameterBase* p_check, ParameterBase* other) const;
