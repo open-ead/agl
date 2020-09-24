@@ -153,7 +153,7 @@ public:
         initializeParameter(value, name, label, meta, obj);
     }
 
-    ~Parameter() override = default;
+    ~Parameter() override { ; }
 
     ParameterType getParameterType() const override {
         if constexpr (std::is_pointer<T>())
