@@ -414,4 +414,6 @@ bool ParameterBase::makeZero() {
     return false;
 }
 
+template class Parameter<bool>;
+
 }  // namespace agl::utl
