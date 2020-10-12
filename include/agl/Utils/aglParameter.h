@@ -238,7 +238,12 @@ public:
 
     void initializeParameter(const T& value, const sead::SafeString& name,
                              const sead::SafeString& label, IParameterObj* obj) {
-        initializeParameter(value, name, label, "", obj);
+        initializeListNode(name, label, "", obj);
+        mValue = value;
+
+        if constexpr (std::is_same<T, sead::SafeString>()) {
+            SEAD_ASSERT_MSG(!sead::MemUtil::isStack(value.cstr()), "%p is in stack", value.cstr());
+        }
     }
 
     void initializeParameter(const T& value, const sead::SafeString& name,
