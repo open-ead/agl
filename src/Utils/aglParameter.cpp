@@ -414,6 +414,23 @@ bool ParameterBase::makeZero() {
     return false;
 }
 
+// TODO: Remove these explicit instantiations once ParameterBase::createByTypeName is implemented.
 template class Parameter<bool>;
+template class Parameter<f32>;
+template class Parameter<s32>;
+template class Parameter<sead::Vector2f>;
+template class Parameter<sead::Vector3f>;
+template class Parameter<sead::Vector4f>;
+template class Parameter<sead::Color4f>;
+template class Parameter<sead::FixedSafeString<32>>;
+template class Parameter<sead::FixedSafeString<64>>;
+template class Parameter<sead::FixedSafeString<256>>;
+template class Parameter<sead::Quatf>;
+template class Parameter<u32>;
+template class Parameter<sead::SafeString>;
+template class ParameterCurve<1>;
+template class ParameterCurve<2>;
+template class ParameterCurve<3>;
+template class ParameterCurve<4>;
 
 }  // namespace agl::utl
