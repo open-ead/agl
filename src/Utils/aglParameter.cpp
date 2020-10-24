@@ -17,7 +17,7 @@ static constexpr const char* sParameterTypeNames[] = {
 };
 
 u32 ParameterBase::calcHash(const sead::SafeString& key) {
-    return sead::HashCRC32::calcStringHash(key.cstr());
+    return sead::HashCRC32::calcStringHash(key);
 }
 
 ParameterBase::ParameterBase() {
