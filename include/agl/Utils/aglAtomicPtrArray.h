@@ -15,7 +15,8 @@ namespace detail {
 
 class AtomicPtrArrayImpl {
 public:
-    inline AtomicPtrArrayImpl(s32 ptrNumMax, void* buf) { setBuffer(ptrNumMax, buf); }
+    AtomicPtrArrayImpl() = default;
+    AtomicPtrArrayImpl(s32 ptrNumMax, void* buf) { setBuffer(ptrNumMax, buf); }
 
     void setBuffer(s32 ptrNumMax, void* buf);
     void allocBuffer(s32 ptrNumMax, sead::Heap* heap, s32 alignment = sizeof(void*));
@@ -128,6 +129,7 @@ namespace utl {
 template <typename T>
 class AtomicPtrArray : public detail::AtomicPtrArrayImpl {
 public:
+    AtomicPtrArray() = default;
     AtomicPtrArray(s32 ptrNumMax, T** buf) : AtomicPtrArrayImpl(ptrNumMax, buf) {}
 
     T* at(s32 pos) const { return static_cast<T*>(AtomicPtrArrayImpl::at(pos)); }
@@ -219,7 +221,7 @@ protected:
 template <typename T, s32 N>
 class FixedPtrArray : public AtomicPtrArray<T> {
 public:
-    FixedPtrArray() : AtomicPtrArray<T>(N, mWork) {}
+    FixedPtrArray() { AtomicPtrArray<T>::setBuffer(N, mWork); }
 
     // These do not make sense for a *fixed* array.
     void setBuffer(s32 ptrNumMax, void* buf) = delete;
