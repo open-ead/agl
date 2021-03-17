@@ -63,8 +63,7 @@ protected:
 
     void pushBack(void* ptr) {
         const s32 idx = mPtrNum++;
-        const s32 num_max = mPtrNumMax;
-        SEAD_ASSERT_MSG(idx < num_max, "index = %d, mPtrNumMax = %d", idx, num_max);
+        SEAD_ASSERT_MSG(idx < mPtrNumMax, "index = %d, mPtrNumMax = %d", idx, mPtrNumMax.load());
         mPtrs[idx] = ptr;
     }
 
