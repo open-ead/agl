@@ -3,9 +3,13 @@
 #include <array>
 #include <basis/seadRawPrint.h>
 #include <basis/seadTypes.h>
-#include <container/seadTreeMap.h>
 #include <prim/seadTypedBitFlag.h>
 #include "agl/Utils/aglResCommon.h"
+
+namespace sead {
+template <typename Key, typename Value>
+class TreeMap;
+}
 
 namespace agl::utl {
 
