@@ -226,7 +226,7 @@ public:
 
     u32 calcBinarizeSize() const override {
         if constexpr (std::is_base_of<sead::SafeString, T>()) {
-            return mValue.calcLength();
+            return mValue.calcLength() + 1;
         } else {
             return size();
         }
