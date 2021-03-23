@@ -245,6 +245,7 @@ struct ResParameterArchiveData {
 static_assert(sizeof(ResParameterArchiveData) == 0x30);
 
 struct ResParameterArchive : ResCommon<ResParameterArchiveData> {
+    ResParameterArchive() = default;
     explicit ResParameterArchive(const void* p_data);
 
     ResParameterList getRootList() const {
