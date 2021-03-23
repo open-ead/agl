@@ -272,6 +272,11 @@ public:
     T& ref() { return mValue; }
     const T& ref() const { return mValue; }
 
+    Parameter& operator=(const T& value) {
+        mValue = value;
+        return *this;
+    }
+
 protected:
     T mValue;
 };
