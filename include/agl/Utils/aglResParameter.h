@@ -85,6 +85,7 @@ struct ResParameterObj {
     }
     Iterator end() const { return {nullptr, s32(ptr()->getNumParameters())}; }
 
+    explicit operator bool() const { return ptr() != nullptr; }
     ResParameterObjData* ptr() const { return mPtr; }
     u8* ptrBytes() const { return reinterpret_cast<u8*>(mPtr); }
 
@@ -176,6 +177,7 @@ struct ResParameterList {
     }
     ObjIterator objEnd() const { return {nullptr, s32(ptr()->getNumObjects())}; }
 
+    explicit operator bool() const { return ptr() != nullptr; }
     ResParameterListData* ptr() const { return mPtr; }
     u8* ptrBytes() const { return reinterpret_cast<u8*>(mPtr); }
 
