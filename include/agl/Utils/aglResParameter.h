@@ -103,6 +103,11 @@ struct ResParameterObj {
                                                     sizeof(ResParameterData) * index)};
     }
 
+    template <typename T>
+    T* getParameterData(s32 index) const {
+        return getResParameter(index).getData<T>();
+    }
+
     /// @returns the index of the specified parameter, or -1 if not found.
     s32 searchIndex(u32 param_hash) const;
 
