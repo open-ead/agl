@@ -143,6 +143,10 @@ class Parameter : public ParameterBase {
 public:
     Parameter() = default;
 
+    Parameter(const T& value, const sead::SafeString& name, IParameterObj* obj) {
+        initializeParameter(value, name, name, obj);
+    }
+
     Parameter(const T& value, const sead::SafeString& name, const sead::SafeString& label,
               IParameterObj* obj) {
         initializeParameter(value, name, label, obj);
@@ -255,6 +259,11 @@ public:
         if constexpr (std::is_same<T, sead::SafeString>()) {
             SEAD_ASSERT_MSG(!sead::MemUtil::isStack(value.cstr()), "%p is in stack", value.cstr());
         }
+    }
+
+    /// Alias of initializeParameter.
+    void init(const T& value, const sead::SafeString& name, IParameterObj* obj) {
+        initializeParameter(value, name, name, obj);
     }
 
     /// Alias of initializeParameter.
