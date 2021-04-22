@@ -32,7 +32,7 @@ public:
     void applyResParameterObj(ResParameterObj obj1, ResParameterObj obj2, f32 t,
                               IParameterList* list);
 
-    void applyResParameterObj(ResParameterObj obj, IParameterList* list) {
+    void applyResParameterObj(ResParameterObj obj, IParameterList* list = nullptr) {
         applyResParameterObj_(false, obj, {}, 0.0, list);
     }
 
