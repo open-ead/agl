@@ -25,6 +25,13 @@ public:
     void removeList(IParameterList* child);
     void removeObj(IParameterObj* child);
 
+    IParameterObj* getChildObjHead() const { return mpChildObjHead; }
+    IParameterObj* getChildObjTail() const { return mpChildObjTail; }
+    IParameterList* getChildListHead() const { return mpChildListHead; }
+    IParameterList* getChildListTail() const { return mpChildListTail; }
+    IParameterList* getNext() const { return mNext; }
+    IParameterList* getParent() const { return mParent; }
+
     sead::SafeString getName() const;
     u32 getNameHash() const { return mNameHash; }
 

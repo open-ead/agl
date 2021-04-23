@@ -24,6 +24,11 @@ public:
     sead::SafeString getName() const;
     u32 getNameHash() const { return mNameHash; }
 
+    ParameterBase* getParamListHead() const { return mParamListHead; }
+    ParameterBase* getParamListTail() const { return mParamListTail; }
+    u32 getParamListSize() const { return mParamListSize; }
+    IParameterObj* getNext() const { return mNext; }
+
     void writeToXML(sead::XmlElement* element, sead::Heap* heap);
     bool readFromXML(const sead::XmlElement& element, bool x);
     void createAttribute(sead::XmlElement* element, sead::Heap* heap) const;
