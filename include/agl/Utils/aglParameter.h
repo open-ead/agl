@@ -64,6 +64,8 @@ public:
     sead::SafeString getLabel() const;
     sead::SafeString getMeta() const;
 
+    ParameterBase* getNext() const { return mNext; }
+
     static const char* getTagName();
     static const char* getAttributeNameString();
     static const char* getAttributeTypeString();
