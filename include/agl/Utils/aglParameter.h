@@ -145,6 +145,8 @@ class Parameter : public ParameterBase {
 public:
     Parameter() = default;
 
+    explicit Parameter(const T& value) : mValue(value) {}
+
     Parameter(const T& value, const sead::SafeString& name, IParameterObj* obj) {
         initializeParameter(value, name, name, obj);
     }
