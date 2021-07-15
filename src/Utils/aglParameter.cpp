@@ -114,8 +114,8 @@ bool ParameterBase::isSafeType(ParameterType type) const {
         {ParameterType::String64, ParameterType::String256},
     };
 
-    for (const auto [t1, t2] : pairs) {
-        if (type == t1 && getParameterType() == t2)
+    for (const auto pair : pairs) {
+        if (type == pair.first && getParameterType() == pair.second)
             return true;
     }
 
