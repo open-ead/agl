@@ -2,7 +2,6 @@
 
 #include <basis/seadRawPrint.h>
 #include <prim/seadBitUtil.h>
-#include <string_view>
 
 namespace agl {
 
