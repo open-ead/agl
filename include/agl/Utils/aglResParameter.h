@@ -81,6 +81,8 @@ struct ResParameterObj {
     };
 
     Iterator begin() const {
+        if (!ptr()->hasParameters())
+            return {nullptr, 0};
         return {reinterpret_cast<ResParameterData*>(ptrBytes() + ptr()->getParametersOffset()), 0};
     }
     Iterator end() const { return {nullptr, s32(ptr()->getNumParameters())}; }
