@@ -1,7 +1,7 @@
 project(agl CXX ASM)
 
 add_library(agl OBJECT
-  include/agl/g3d/g3dResFile.h
+  include/agl/g3d/aglNW4FToNN.h
   include/agl/Utils/aglAtomicPtrArray.h
   include/agl/Utils/aglParameter.h
   include/agl/Utils/aglParameterCurve.hpp
