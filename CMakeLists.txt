@@ -11,6 +11,11 @@ add_library(agl OBJECT
   include/agl/Utils/aglParameterStringMgr.h
   include/agl/Utils/aglResCommon.h
   include/agl/Utils/aglResParameter.h
+  include/agl/detail/aglGPUMemBlockMgr.h
+  include/agl/driver/aglGraphicsDriverMgr.h
+  include/agl/driver/aglNVNMgr.h
+  include/agl/aglGPUCommon.hpp
+  include/agl/aglGPUMemBlock.hpp
   src/Utils/aglAtomicPtrArray.cpp
   src/Utils/aglParameter.cpp
   src/Utils/aglParameterIO.cpp
@@ -19,6 +24,10 @@ add_library(agl OBJECT
   src/Utils/aglParameterStringMgr.cpp
   src/Utils/aglResCommon.cpp
   src/Utils/aglResParameter.cpp
+  src/detail/aglGPUMemBlockMgr.cpp
+  src/driver/aglGraphicsDriverMgr.cpp
+  src/driver/aglNVNMgr.cpp
+  src/aglGPUMemBlock.cpp
 )
 
 target_compile_options(agl PRIVATE -fno-exceptions)
