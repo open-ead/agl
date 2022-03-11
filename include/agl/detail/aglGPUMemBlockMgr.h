@@ -14,9 +14,9 @@ namespace agl::detail {
 
 typedef sead::BitFlag32 MemoryPoolDriverBitFlag;
 
-const s32 VALID_POOL_TYPE_VALUE = -1;
-const s32 cGPUAccessMask = 0xF0000000;
-const u64 cGPUPhysicalMemorySizeAlignment = 0x1000;
+constexpr s32 VALID_POOL_TYPE_VALUE = -1;
+constexpr s32 cGPUAccessMask = 0xF0000000;
+constexpr u64 cGPUPhysicalMemorySizeAlignment = 0x1000;
 
 class MemoryPoolType : MemoryPoolDriverBitFlag {
 public:
@@ -46,10 +46,10 @@ private:
 
 static_assert(sizeof(MemoryPool) == 0x108);
 
-class GPUMemBlockMgrHeapEx : public sead::hostio::Node, sead::IDisposer {
+class GPUMemBlockMgrHeapEx : public sead::hostio::Node, public sead::IDisposer {
 public:
     GPUMemBlockMgrHeapEx(sead::Heap* p_heap);
-    virtual ~GPUMemBlockMgrHeapEx();
+    ~GPUMemBlockMgrHeapEx() override;
 
     void finalize();
 

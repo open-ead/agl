@@ -13,11 +13,11 @@ namespace agl {
 namespace detail {
 class MemoryPool;
 class MemoryPoolHeap;
-};  // namespace detail
+}  // namespace detail
 
 class GPUMemBlockBase {
 public:
-    GPUMemBlockBase(sead::Heap* p_heap);
+    explicit GPUMemBlockBase(sead::Heap* p_heap);
     virtual ~GPUMemBlockBase();
 
     void clear();

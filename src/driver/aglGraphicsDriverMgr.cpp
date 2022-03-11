@@ -8,5 +8,5 @@ GraphicsDriverMgr::GraphicsDriverMgr() {
     _30 = nullptr;
 }
 
-GraphicsDriverMgr::~GraphicsDriverMgr() {}
+GraphicsDriverMgr::~GraphicsDriverMgr() = default;
 }  // namespace agl::driver
