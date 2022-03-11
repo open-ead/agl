@@ -11,8 +11,8 @@ class DisplayList;
 namespace agl::driver {
 
 class GraphicsDriverMgr : public sead::hostio::Node {
-public:
     SEAD_SINGLETON_DISPOSER(GraphicsDriverMgr)
+public:
     GraphicsDriverMgr();
     virtual ~GraphicsDriverMgr();
 

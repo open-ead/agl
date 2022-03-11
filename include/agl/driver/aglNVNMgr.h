@@ -7,10 +7,9 @@
 namespace agl::driver {
 
 class NVNMgr : public GraphicsDriverMgr {
-public:
     // TODO: This is wrong and should actually touch the GraphicsDriverMgr implementation
     SEAD_SINGLETON_DISPOSER(NVNMgr)
-
+public:
     NVNMgr();
     ~NVNMgr() override;
 

@@ -69,8 +69,8 @@ enum class GPUMemBlockMgrFlags : u8 {
 };
 
 class GPUMemBlockMgr : public sead::hostio::Node {
-public:
     SEAD_SINGLETON_DISPOSER(GPUMemBlockMgr)
+public:
     GPUMemBlockMgr();
     virtual ~GPUMemBlockMgr();
 
