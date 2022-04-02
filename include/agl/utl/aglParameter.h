@@ -10,7 +10,7 @@
 #include <math/seadVector.h>
 #include <prim/seadSafeString.h>
 #include <type_traits>
-#include "agl/Utils/aglResParameter.h"
+#include "agl/utl/aglResParameter.h"
 
 namespace sead {
 class Heap;
@@ -435,5 +435,5 @@ inline ResParameterList getResParameterList(const agl::utl::ResParameterList& li
 }  // namespace agl::utl
 
 #define AGL_UTILS_PARAMETER_H_
-#include "agl/Utils/aglParameterCurve.hpp"
+#include "agl/utl/aglParameterCurve.hpp"
 #undef AGL_UTILS_PARAMETER_H_

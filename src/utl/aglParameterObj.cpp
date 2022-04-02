@@ -1,7 +1,7 @@
-#include "agl/Utils/aglParameterObj.h"
+#include "agl/utl/aglParameterObj.h"
 #include <basis/seadRawPrint.h>
 #include <prim/seadFormatPrint.h>
-#include "agl/Utils/aglParameter.h"
+#include "agl/utl/aglParameter.h"
 
 namespace agl::utl {
 
@@ -95,8 +95,7 @@ bool IParameterObj::verify(ParameterBase* p_check, ParameterBase* other) const {
         if (p_check->getNameHash() == param->getNameHash()) {
             sead::BufferingPrintFormatter ss;
             ss << "Same hash code at [%s] and [%s]. Please change.\n"
-               << p_check->getName().cstr() << param->getName().cstr()
-               << sead::flush;
+               << p_check->getName().cstr() << param->getName().cstr() << sead::flush;
             ok = false;
         }
         param = param->mNext;

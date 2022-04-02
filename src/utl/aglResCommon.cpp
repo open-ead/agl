@@ -1,4 +1,4 @@
-#include "agl/Utils/aglResCommon.h"
+#include "agl/utl/aglResCommon.h"
 #include <basis/seadRawPrint.h>
 #include <prim/seadEndian.h>
 

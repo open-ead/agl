@@ -2,28 +2,28 @@ project(agl CXX ASM)
 
 add_library(agl OBJECT
   include/agl/g3d/aglNW4FToNN.h
-  include/agl/Utils/aglAtomicPtrArray.h
-  include/agl/Utils/aglParameter.h
-  include/agl/Utils/aglParameterCurve.hpp
-  include/agl/Utils/aglParameterIO.h
-  include/agl/Utils/aglParameterList.h
-  include/agl/Utils/aglParameterObj.h
-  include/agl/Utils/aglParameterStringMgr.h
-  include/agl/Utils/aglResCommon.h
-  include/agl/Utils/aglResParameter.h
+  include/agl/utl/aglAtomicPtrArray.h
+  include/agl/utl/aglParameter.h
+  include/agl/utl/aglParameterCurve.hpp
+  include/agl/utl/aglParameterIO.h
+  include/agl/utl/aglParameterList.h
+  include/agl/utl/aglParameterObj.h
+  include/agl/utl/aglParameterStringMgr.h
+  include/agl/utl/aglResCommon.h
+  include/agl/utl/aglResParameter.h
   include/agl/detail/aglGPUMemBlockMgr.h
   include/agl/driver/aglGraphicsDriverMgr.h
   include/agl/driver/aglNVNMgr.h
   include/agl/aglGPUCommon.hpp
   include/agl/aglGPUMemBlock.hpp
-  src/Utils/aglAtomicPtrArray.cpp
-  src/Utils/aglParameter.cpp
-  src/Utils/aglParameterIO.cpp
-  src/Utils/aglParameterList.cpp
-  src/Utils/aglParameterObj.cpp
-  src/Utils/aglParameterStringMgr.cpp
-  src/Utils/aglResCommon.cpp
-  src/Utils/aglResParameter.cpp
+  src/utl/aglAtomicPtrArray.cpp
+  src/utl/aglParameter.cpp
+  src/utl/aglParameterIO.cpp
+  src/utl/aglParameterList.cpp
+  src/utl/aglParameterObj.cpp
+  src/utl/aglParameterStringMgr.cpp
+  src/utl/aglResCommon.cpp
+  src/utl/aglResParameter.cpp
   src/detail/aglGPUMemBlockMgr.cpp
   src/driver/aglGraphicsDriverMgr.cpp
   src/driver/aglNVNMgr.cpp
