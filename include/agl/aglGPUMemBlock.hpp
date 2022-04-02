@@ -6,7 +6,7 @@
 #include <math/seadMathCalcCommon.h>
 #include <prim/seadTypedBitFlag.h>
 #include <thread/seadCriticalSection.h>
-#include "aglGPUCommon.hpp"
+#include "agl/aglGPUCommon.hpp"
 
 namespace agl {
 
@@ -45,5 +45,13 @@ private:
 };
 
 static_assert(sizeof(GPUMemBlockBase) == 0x38);
+
+// TODO
+template <typename T>
+class GPUMemBlockT : public GPUMemBlockBase {};
+
+// TODO
+template <typename T>
+class GPUMemBlock : public GPUMemBlockT<T> {};
 
 }  // namespace agl

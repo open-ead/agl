@@ -5,6 +5,7 @@ add_library(agl OBJECT
   include/agl/aglGPUMemBlock.hpp
 
   include/agl/detail/aglGPUMemBlockMgr.h
+  include/agl/detail/aglPrivateResource.h
 
   include/agl/driver/aglGraphicsDriverMgr.h
   include/agl/driver/aglNVNMgr.h
