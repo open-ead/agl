@@ -1,7 +1,16 @@
 project(agl CXX ASM)
 
 add_library(agl OBJECT
+  include/agl/aglGPUCommon.hpp
+  include/agl/aglGPUMemBlock.hpp
+
+  include/agl/detail/aglGPUMemBlockMgr.h
+
+  include/agl/driver/aglGraphicsDriverMgr.h
+  include/agl/driver/aglNVNMgr.h
+
   include/agl/g3d/aglNW4FToNN.h
+
   include/agl/utl/aglAtomicPtrArray.h
   include/agl/utl/aglParameter.h
   include/agl/utl/aglParameterCurve.hpp
@@ -11,11 +20,14 @@ add_library(agl OBJECT
   include/agl/utl/aglParameterStringMgr.h
   include/agl/utl/aglResCommon.h
   include/agl/utl/aglResParameter.h
-  include/agl/detail/aglGPUMemBlockMgr.h
-  include/agl/driver/aglGraphicsDriverMgr.h
-  include/agl/driver/aglNVNMgr.h
-  include/agl/aglGPUCommon.hpp
-  include/agl/aglGPUMemBlock.hpp
+
+  src/aglGPUMemBlock.cpp
+
+  src/detail/aglGPUMemBlockMgr.cpp
+
+  src/driver/aglGraphicsDriverMgr.cpp
+  src/driver/aglNVNMgr.cpp
+
   src/utl/aglAtomicPtrArray.cpp
   src/utl/aglParameter.cpp
   src/utl/aglParameterIO.cpp
@@ -24,10 +36,6 @@ add_library(agl OBJECT
   src/utl/aglParameterStringMgr.cpp
   src/utl/aglResCommon.cpp
   src/utl/aglResParameter.cpp
-  src/detail/aglGPUMemBlockMgr.cpp
-  src/driver/aglGraphicsDriverMgr.cpp
-  src/driver/aglNVNMgr.cpp
-  src/aglGPUMemBlock.cpp
 )
 
 target_compile_options(agl PRIVATE -fno-exceptions)
