@@ -10,7 +10,19 @@ add_library(agl OBJECT
   include/agl/driver/aglGraphicsDriverMgr.h
   include/agl/driver/aglNVNMgr.h
 
+  include/agl/env/aglEnvObj.h
+  include/agl/env/aglEnvObjBuffer.h
+  include/agl/env/aglEnvObjMgr.h
+  include/agl/env/aglEnvObjSetMgr.h
+  include/agl/env/aglProjector.h
+  include/agl/env/aglFog.h
+  include/agl/env/aglLight.h
+  include/agl/env/aglProjector.h
+
   include/agl/g3d/aglNW4FToNN.h
+
+  include/agl/pfx/aglBloom.h
+  include/agl/pfx/aglDepthOfField.h
 
   include/agl/utl/aglAtomicPtrArray.h
   include/agl/utl/aglParameter.h
