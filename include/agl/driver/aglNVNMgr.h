@@ -19,4 +19,4 @@ private:
 // TODO: need sead::Graphics reversing...
 // static_assert(sizeof(NVNMgr) == 0x548);
 
-};  // namespace agl::driver
+}  // namespace agl::driver
