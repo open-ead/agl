@@ -23,6 +23,8 @@ add_library(agl OBJECT
 
   include/agl/pfx/aglBloom.h
   include/agl/pfx/aglDepthOfField.h
+  
+  include/agl/texture/aglTextureDataSerializer.h
 
   include/agl/utl/aglAtomicPtrArray.h
   include/agl/utl/aglParameter.h
@@ -33,6 +35,7 @@ add_library(agl OBJECT
   include/agl/utl/aglParameterStringMgr.h
   include/agl/utl/aglResCommon.h
   include/agl/utl/aglResParameter.h
+  include/agl/utl/aglScreenShotMgr.h
 
   src/aglGPUMemBlock.cpp
 
