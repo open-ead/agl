@@ -1,7 +1,7 @@
 #pragma once
 
 #include <heap/seadDisposer.h>
-#include "agl/texture/aglTextureDataInitializer.h"
+#include <agl/texture/aglTextureDataSerializer.h>
 
 namespace agl::utl {
 
