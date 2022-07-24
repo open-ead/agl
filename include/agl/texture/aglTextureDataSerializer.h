@@ -10,4 +10,4 @@ public:
     };
 };
 
-} // namespace agl
+}  // namespace agl
