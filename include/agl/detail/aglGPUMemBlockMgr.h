@@ -38,6 +38,11 @@ class MemoryPool {
 public:
     MemoryPool();
 
+    void initialize(void* storage_1, u64 storage_2, const MemoryPoolType& flags);
+    void initialize(void* map_virtual_1, u64 storage, const MemoryPoolType& flags, const MemoryPool& map_virtual_2, s32 map_virtual_3);
+
+    void finalize();
+
 private:
     NVNmemoryPool mDriverPool;
     MemoryPoolType mMemoryType;
