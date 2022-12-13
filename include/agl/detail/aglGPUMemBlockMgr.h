@@ -5,7 +5,7 @@
 #include <heap/seadDisposer.h>
 #include <hostio/seadHostIONode.h>
 #include <math/seadMathCalcCommon.h>
-#include <nvn/nvn_types.h>
+#include <nvn/nvn.h>
 #include <prim/seadBitFlag.h>
 #include <prim/seadTypedBitFlag.h>
 #include <thread/seadCriticalSection.h>
