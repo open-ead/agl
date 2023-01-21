@@ -13,7 +13,7 @@ namespace agl {
 class ShaderCompileInfo : public sead::hostio::Node {
     // this value is used as an index to a table of version lists
     // on SMO 1.2.0, located at 0x7101E80B30
-    typedef s32 Target;
+    using Target = s32;
 
     ShaderCompileInfo();
 

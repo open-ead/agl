@@ -12,7 +12,7 @@
 
 namespace agl::detail {
 
-typedef sead::BitFlag32 MemoryPoolDriverBitFlag;
+using MemoryPoolDriverBitFlag = sead::BitFlag32;
 
 constexpr s32 VALID_POOL_TYPE_VALUE = -1;
 constexpr s32 cGPUAccessMask = 0xF0000000;

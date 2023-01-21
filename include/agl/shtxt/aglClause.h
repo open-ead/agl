@@ -11,7 +11,7 @@ public:
         TableChecker();
     };
 
-    typedef u8 Type;
+    using Type = u8;
 
     Clause();
     Clause(Clause::Type, const char*, const char*);
