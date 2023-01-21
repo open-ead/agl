@@ -20,8 +20,8 @@ enum class MemoryAttribute : u32 {
 
 struct GPUMemVoidAddr {
     // FIXME: what are thoses?
-    u64 _0;
-    u64 _8;
+    void* _0;
+    void* _8;
     u64 mAddress;
 
     u64 getGPUMemBlock() const { return mAddress; }

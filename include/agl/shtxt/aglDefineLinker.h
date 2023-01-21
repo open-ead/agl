@@ -29,10 +29,10 @@ private:
     DefineLinker* _8;
     Clause* _10;
     Clause* _18;  // hash clause?
-    u64 _20;
+    void* _20;
     Clause* _28;
-    u64 _30;
-    u64 _38;
+    void* _30;
+    void* _38;
     s32 mHash;
     s16 _44;  // -1
     u16 _46;  // 0x101

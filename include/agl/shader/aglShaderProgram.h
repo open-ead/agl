@@ -37,28 +37,28 @@ private:
     DisplayList mShaderDisplayList;  // _10
     u32 _278;
     u32 _27c;
-    u64 _280;
+    void* _280;
     u32 _288;
     u32 _28c;
-    u64 _290;
+    void* _290;
     u32 _298;
     u32 _29c;
-    u64 _2a0;
+    void* _2a0;
     u32 _2a8;
     u32 _2ac;
-    u64 _2b0;
+    void* _2b0;
     u32 _2b8;
     u32 _2bc;
-    u64 _2c0;
+    void* _2c0;
     u32 _2c8;
     u32 _2cc;
-    u64 _2d0;
+    void* _2d0;
     VertexShader mVertexShader;
     FragmentShader mFragmentShader;
     GeometryShader mGeometryShader;
     ComputeShader mComputeShader;
     u8 _358[0x418 - 0x358];  // todo; what is here?
-    u64 _418;
+    void* _418;
     u32 _420;
 };
 

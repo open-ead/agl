@@ -25,8 +25,8 @@ public:
 
 private:
     void* mShaderBinary;  // _8
-    u64 _10;
-    u64 _18;
+    void* _10;
+    void* _18;
 };
 
 class VertexShader : public Shader {

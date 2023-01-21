@@ -16,7 +16,7 @@ public:
     void updateTextureId(s32);
 
 private:
-    u64 _0;
+    void* _0;
     s16 _8;
 };
 

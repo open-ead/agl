@@ -38,11 +38,11 @@ public:
     u64 calcConstructLength() const;
 
 private:
-    u64 _0;
-    u64 _8;  // some sort of size
-    u64 _10;
+    void* _0;
+    void* _8;  // some sort of size
+    void* _10;
     sead::ExpHeap* _18;
-    u64 _20;
+    void* _20;
     Clause* _28;
     DefineLinker* _30;
     const char* mRefName;
@@ -53,7 +53,7 @@ private:
     u32 _58;  // related to deploy info
     u32 _5c;
     DefineLinker* _60;
-    u64 _68;
+    void* _68;
 };
 
 }  // namespace agl::shtxt

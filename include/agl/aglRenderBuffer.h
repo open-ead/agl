@@ -37,7 +37,7 @@ public:
 private:
     u32 _8;
     u32 _c;
-    u64 _10;
+    void* _10;
     u32 _18;
     u32 _1c;
     RenderTargetColor* _20[8];

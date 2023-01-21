@@ -29,9 +29,9 @@ private:
     SyntaxTree* _0;
     SyntaxTree* _8;
     SyntaxTree* _10;
-    u64 _18;
+    void* _18;
     Clause* _20;
-    u64 _28;
+    void* _28;
     u32 _30;
 };
 

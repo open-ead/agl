@@ -39,9 +39,9 @@ private:
 };
 
 struct SurfaceBase {
-    u64 _0;
-    u64 _8;
-    u64 _10;
+    void* _0;
+    void* _8;
+    void* _10;
 };
 
 }  // namespace agl::detail

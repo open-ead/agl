@@ -28,10 +28,10 @@ class ShaderCompileInfo : public sead::hostio::Node {
     const sead::SafeString& getRegitserUniformBlockName();  // "RegisterUBO"
 
 private:
-    u64 _8;
+    void* _8;
     const char* mName;
-    u64 _18;
-    u64 _20;
+    void* _18;
+    void* _20;
     sead::PtrArray<const char*> _28;
     sead::PtrArray<const char*> _38;
     sead::PtrArray<const char*> _48;

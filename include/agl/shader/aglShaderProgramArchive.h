@@ -24,7 +24,7 @@ public:
     void setUp_(bool);
 
 private:
-    u64 _20;
+    void* _20;
     ResBinaryShaderArchive* mBinaryShaderArchive;
     ResShaderArchive* mResShaderArchive;
 };

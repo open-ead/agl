@@ -25,9 +25,9 @@ private:
     sead::Heap* _0;
     Clause* _8;
     const char* mRefName;
-    u64 _18;
-    u64 _20;
-    u64 _28;
+    void* _18;
+    void* _20;
+    void* _28;
 };
 
 }  // namespace agl::shtxt

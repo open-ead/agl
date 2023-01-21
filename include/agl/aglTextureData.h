@@ -12,15 +12,15 @@ public:
     public:
         explicit CompressToWork(const TextureData&);
 
-        u64 _0;
-        u64 _8;
-        u64 _10;
-        u64 _18;
+        void* _0;
+        void* _8;
+        void* _10;
+        void* _18;
         u32 _20;
-        u64 _28;
-        u64 _30;
+        void* _28;
+        void* _30;
         u32 _38;
-        u64 _40;
+        void* _40;
         detail::Surface mSurface;
         driver::NVNtexture_ mTexture;
     };
@@ -41,13 +41,13 @@ public:
     void getDebugLabel() const;
 
 private:
-    u64 _0;
+    void* _0;
     u32 _8;
     u32 _c;
-    u64 _10;
-    u64 _18;
-    u64 _20;
-    u64 _28;
+    void* _10;
+    void* _18;
+    void* _20;
+    void* _28;
     detail::Surface mSurface;
     TextureFormat mTextureFormat;
     u8 _58[0x120 - 0x58];
