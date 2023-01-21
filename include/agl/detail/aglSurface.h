@@ -2,9 +2,10 @@
 
 #include <agl/util.h>
 #include <basis/seadTypes.h>
-#include <nvn/nvn_types.h>
+#include <nvn/nvn.h>
 
 namespace agl::detail {
+
 struct SurfaceBase;
 
 class Surface {
@@ -42,4 +43,5 @@ struct SurfaceBase {
     u64 _8;
     u64 _10;
 };
+
 }  // namespace agl::detail

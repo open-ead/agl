@@ -10,6 +10,7 @@ class AnyDelegate1Const;
 }  // namespace sead
 
 namespace agl::shtxt {
+
 class Clause;
 
 class SyntaxTree {
@@ -33,4 +34,5 @@ private:
     u64 _28;
     u32 _30;
 };
+
 }  // namespace agl::shtxt

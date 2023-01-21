@@ -8,6 +8,7 @@ class Heap;
 }
 
 namespace agl {
+
 class DisplayList {
 public:
     DisplayList();

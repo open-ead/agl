@@ -3,6 +3,7 @@
 #include <basis/seadTypes.h>
 
 namespace agl {
+
 enum class MemoryAttribute : u32 {
     Default = 0,
     _00 = 1 << 0,

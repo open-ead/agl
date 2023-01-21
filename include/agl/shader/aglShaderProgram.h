@@ -9,6 +9,7 @@ class Heap;
 }
 
 namespace agl {
+
 class ShaderProgram {
 public:
     class VariationBuffer {
@@ -60,4 +61,5 @@ private:
     u64 _418;
     u32 _420;
 };
+
 }  // namespace agl

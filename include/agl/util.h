@@ -1,6 +1,7 @@
 #pragma once
 
 namespace agl {
+
 enum class TextureType {
     TYPELESS = 0,
     UNORM = 1,
@@ -89,11 +90,8 @@ enum class TextureFormat {
     ASTC12x12
 };
 
-enum class TextureAttribute {
+enum class TextureAttribute {};
 
-};
+enum class MultiSampleType {};
 
-enum class MultiSampleType {
-
-};
 }  // namespace agl

@@ -3,6 +3,7 @@
 #include "agl/aglTextureData.h"
 
 namespace agl {
+
 class RenderTargetColor : public TextureData {
 public:
     RenderTargetColor();
@@ -25,4 +26,5 @@ private:
     u64 _168;
     u64 _170;
 };
+
 }  // namespace agl

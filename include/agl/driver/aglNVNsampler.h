@@ -1,9 +1,10 @@
 #pragma once
 
 #include <basis/seadTypes.h>
-#include <nvn/nvn_types.h>
+#include <nvn/nvn.h>
 
 namespace agl::driver {
+
 class NVNsampler_ {
 public:
     NVNsampler_();
@@ -18,4 +19,5 @@ private:
     u64 _0;
     s16 _8;
 };
+
 }  // namespace agl::driver

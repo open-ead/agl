@@ -10,6 +10,7 @@ class AnyDelegate1Const;
 }  // namespace sead
 
 namespace agl::shtxt {
+
 class Clause;
 class SyntaxLeash;
 
@@ -46,4 +47,5 @@ private:
     sead::Heap* _8;
     sead::AnyDelegate1Const<Clause*>* _10;
 };
+
 }  // namespace agl::shtxt

@@ -14,6 +14,7 @@ class XmlDocument;
 }  // namespace sead
 
 namespace agl::detail {
+
 class FileIOMgr : public sead::hostio::Node {
     SEAD_SINGLETON_DISPOSER(FileIOMgr)
 public:
@@ -65,4 +66,5 @@ public:
 private:
     sead::NinHostIOFileDevice* _28;
 };
+
 }  // namespace agl::detail

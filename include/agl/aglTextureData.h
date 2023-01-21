@@ -5,6 +5,7 @@
 #include "agl/driver/aglNVNtexture.h"
 
 namespace agl {
+
 class TextureData {
 public:
     class CompressToWork {
@@ -52,4 +53,5 @@ private:
     u8 _58[0x120 - 0x58];
     const char* _120;  // "agl::TextureData string"
 };
+
 }  // namespace agl

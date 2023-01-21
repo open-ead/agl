@@ -1,9 +1,10 @@
 #pragma once
 
 #include <basis/seadTypes.h>
-#include <nvn/nvn_types.h>
+#include <nvn/nvn.h>
 
 namespace agl::driver {
+
 class NVNtexture_ {
 public:
     NVNtexture_();
@@ -25,4 +26,5 @@ private:
     u8 _c6;
     u8 _c7;
 };
+
 }  // namespace agl::driver

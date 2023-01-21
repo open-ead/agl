@@ -12,6 +12,7 @@ class DrawContext;
 }  // namespace sead
 
 namespace agl {
+
 class DrawContext;
 class RenderTargetColor;
 class RenderTargetDepth;
@@ -42,4 +43,5 @@ private:
     RenderTargetColor* _20[8];
     RenderTargetDepth* _60;
 };
+
 }  // namespace agl

@@ -3,6 +3,7 @@
 #include <prim/seadSafeString.h>
 
 namespace agl::shtxt {
+
 class Clause {
 public:
     class TableChecker {
@@ -42,4 +43,5 @@ private:
     static bool cTableChecked;
     static u32* cHashTable;
 };
+
 }  // namespace agl::shtxt

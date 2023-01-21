@@ -3,9 +3,11 @@
 #include <basis/seadTypes.h>
 
 namespace agl {
+
 class GPUMemBlockBase;
 
 namespace detail {
+
 class GPUMemBlockMgrHeapEx;
 class MemoryPoolType;
 
@@ -28,5 +30,6 @@ public:
 private:
     GPUMemBlockBase* _120;
 };
+
 }  // namespace detail
 }  // namespace agl

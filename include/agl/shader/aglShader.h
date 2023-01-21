@@ -3,6 +3,7 @@
 #include <basis/seadTypes.h>
 
 namespace agl {
+
 enum ShaderType {
     ShaderType_Vertex = 0,
     ShaderType_Fragment = 1,
@@ -55,4 +56,5 @@ public:
 
     virtual s32 getShaderType() const;
 };
+
 }  // namespace agl

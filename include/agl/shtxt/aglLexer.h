@@ -7,6 +7,7 @@ class Heap;
 }
 
 namespace agl::shtxt {
+
 class Clause;
 
 class Lexer {
@@ -28,4 +29,5 @@ private:
     u64 _20;
     u64 _28;
 };
+
 }  // namespace agl::shtxt

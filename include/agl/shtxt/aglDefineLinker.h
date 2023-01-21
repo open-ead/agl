@@ -7,6 +7,7 @@ class Heap;
 }
 
 namespace agl::shtxt {
+
 class Clause;
 
 class DefineLinker {
@@ -36,4 +37,5 @@ private:
     s16 _44;  // -1
     u16 _46;  // 0x101
 };
+
 }  // namespace agl::shtxt

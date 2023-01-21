@@ -8,6 +8,7 @@ class ExpHeap;
 }  // namespace sead
 
 namespace agl::shtxt {
+
 class Clause;
 class DefineLinker;
 class MacroDeployInfo;
@@ -54,4 +55,5 @@ private:
     DefineLinker* _60;
     u64 _68;
 };
+
 }  // namespace agl::shtxt

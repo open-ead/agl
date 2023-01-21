@@ -6,6 +6,7 @@
 #include "prim/seadRuntimeTypeInfo.h"
 
 namespace agl {
+
 class RenderBuffer;
 class DisplayList;
 enum ShaderMode {};
@@ -40,4 +41,5 @@ private:
     void* gap2[19];
     long mTextureDirty;
 };
+
 }  // namespace agl

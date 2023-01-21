@@ -3,6 +3,7 @@
 #include <basis/seadTypes.h>
 
 namespace agl::driver {
+
 class NVNimage_ {
 public:
     NVNimage_();
@@ -15,4 +16,5 @@ public:
 private:
     u64 mImageId;
 };
+
 }  // namespace agl::driver

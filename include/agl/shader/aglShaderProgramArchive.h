@@ -4,6 +4,7 @@
 #include <hostio/seadHostIONode.h>
 
 namespace agl {
+
 class ResBinaryShaderArchive;
 class ResShaderArchive;
 class ResShaderProgram;
@@ -27,4 +28,5 @@ private:
     ResBinaryShaderArchive* mBinaryShaderArchive;
     ResShaderArchive* mResShaderArchive;
 };
+
 }  // namespace agl
