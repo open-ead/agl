@@ -16,7 +16,7 @@ class DrawContext : public sead::DrawContext {
     SEAD_RTTI_OVERRIDE(DrawContext, sead::DrawContext)
 public:
     DrawContext();
-    virtual ~DrawContext();
+    ~DrawContext() override;
 
     void setCommandBuffer(DisplayList*);
     void flushCommandBuffer();

@@ -33,28 +33,28 @@ class VertexShader : public Shader {
 public:
     virtual ~VertexShader();
 
-    virtual s32 getShaderType() const;
+    s32 getShaderType() const override;
 };
 
 class FragmentShader : public Shader {
 public:
     virtual ~FragmentShader();
 
-    virtual s32 getShaderType() const;
+    s32 getShaderType() const override;
 };
 
 class GeometryShader : public Shader {
 public:
     virtual ~GeometryShader();
 
-    virtual s32 getShaderType() const;
+    s32 getShaderType() const override;
 };
 
 class ComputeShader : public Shader {
 public:
     virtual ~ComputeShader();
 
-    virtual s32 getShaderType() const;
+    s32 getShaderType() const override;
 };
 
 }  // namespace agl

@@ -24,9 +24,9 @@ public:
     RenderBuffer(const sead::Vector2f&, f32, f32, f32, f32);
     ~RenderBuffer() override;
 
-    virtual void copyToDisplayBuffer(sead::DrawContext*, const sead::DisplayBuffer*);
-    virtual void clear(sead::DrawContext*, u32, const sead::Color4f&, f32, u32);
-    virtual void bindImpl_(sead::DrawContext*) const;
+    void copyToDisplayBuffer(sead::DrawContext* draw_context, const sead::DisplayBuffer* display_buffer) const override;
+    void clear(sead::DrawContext* draw_context, u32 clr_flag, const sead::Color4f& color, f32 depth, u32 stencil) const override;
+    void bindImpl_(sead::DrawContext* draw_context) const override;
 
     void initialize_();
     void setRenderTargetColorNullAll();
