@@ -37,7 +37,7 @@ public:
     bool hasStencil() const;
     void invalidateCPUCache();
     void flushCPUCache() const;
-    void setDebugLabel(const sead::SafeString&);
+    void setDebugLabel(const sead::SafeString& debug_label);
     void getDebugLabel() const;
 
 private:
@@ -51,7 +51,7 @@ private:
     detail::Surface mSurface;
     TextureFormat mTextureFormat;
     u8 _58[0x120 - 0x58];
-    const char* _120;  // "agl::TextureData string"
+    const char* mDebugLabel;  // "agl::TextureData string"
 };
 
 }  // namespace agl

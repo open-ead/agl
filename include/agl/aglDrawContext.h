@@ -18,19 +18,19 @@ public:
     DrawContext();
     ~DrawContext() override;
 
-    void setCommandBuffer(DisplayList*);
+    void setCommandBuffer(DisplayList* buffer);
     void flushCommandBuffer();
-    void setBoundRenderBuffer(u64*);
-    void barrierTexture(u32);
-    void barrierShader(u32);
-    bool isTextureDirty(u32, s32) const;
-    void setTextureDirty(s32);
+    void setBoundRenderBuffer(const RenderBuffer* buffer);
+    void barrierTexture(u32 flags);
+    void barrierShader(u32 flags);
+    bool isTextureDirty(u32 unused, s32 index) const;
+    void setTextureDirty(s32 index);
     void changeShaderType(ShaderMode mode, ShaderOptimizeType optimizeType);
     void setCommandBufferTemporary();
 
 private:
     void* gap[5];
-    agl::DisplayList* mDisplayList;
+    agl::DisplayList* mCommandBuffer;
     const agl::RenderBuffer* mBoundRenderBuffer;
     u8 _100;
     ShaderMode mShaderMode;

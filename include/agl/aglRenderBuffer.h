@@ -20,28 +20,26 @@ class RenderTargetDepth;
 class RenderBuffer : public sead::FrameBuffer {
 public:
     RenderBuffer();
-    RenderBuffer(const sead::Vector2f&, const sead::BoundBox2f&);
-    RenderBuffer(const sead::Vector2f&, f32, f32, f32, f32);
+    RenderBuffer(const sead::Vector2f& virtual_size, const sead::BoundBox2f& physical_area);
+    RenderBuffer(const sead::Vector2f& virtual_size, f32 physical_x, f32 physical_y, f32 physical_w,
+                 f32 physical_h);
     ~RenderBuffer() override;
 
-    void copyToDisplayBuffer(sead::DrawContext* draw_context, const sead::DisplayBuffer* display_buffer) const override;
-    void clear(sead::DrawContext* draw_context, u32 clr_flag, const sead::Color4f& color, f32 depth, u32 stencil) const override;
+    void copyToDisplayBuffer(sead::DrawContext* draw_context,
+                             const sead::DisplayBuffer* display_buffer) const override;
+    void clear(sead::DrawContext* draw_context, u32 clr_flag, const sead::Color4f& color, f32 depth,
+               u32 stencil) const override;
     void bindImpl_(sead::DrawContext* draw_context) const override;
 
     void initialize_();
     void setRenderTargetColorNullAll();
-    void adjustPhysicalAreaAndVirtualSizeFromColorTarget(u32);
-    void invalidateGPUCache(DrawContext*) const;
-    void bind_(DrawContext*, u16) const;
+    void adjustPhysicalAreaAndVirtualSizeFromColorTarget(u32 color_index);
+    void invalidateGPUCache(DrawContext* draw_context) const;
+    void bind_(DrawContext* draw_context, u16 bitmap) const;
 
 private:
-    u32 _8;
-    u32 _c;
-    void* _10;
-    u32 _18;
-    u32 _1c;
-    RenderTargetColor* _20[8];
-    RenderTargetDepth* _60;
+    RenderTargetColor* mRenderTargetColor[8];
+    RenderTargetDepth* mRenderTargetDepth;
 };
 
 }  // namespace agl
