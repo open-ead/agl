@@ -24,7 +24,7 @@ class ShaderCompileInfo : public sead::hostio::Node {
     void clearVariation();
     void pushBackVariation(const char*, const char*);
     void calcCompileSource(ShaderType, sead::BufferedSafeString*,
-                           ShaderCompileInfo::Target, bool);
+                           Target, bool);
     const sead::SafeString& getRegitserUniformBlockName();  // "RegisterUBO"
 
 private:
