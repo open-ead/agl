@@ -1,7 +1,5 @@
 #pragma once
 
-#include <nn/gfx/api.h>
-#include <nn/gfx/memory.h>
 #include "agl/detail/aglMemoryPoolHeap.h"
 #include "aglGPUMemBlock.hpp"
 
