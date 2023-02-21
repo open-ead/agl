@@ -76,6 +76,7 @@ enum class TextureFormat {
     cTextureFormat_Depth_32,
     cTextureFormat_Depth_24_uNorm_Stencil_8,
     cTextureFormat_Depth_32_float_Stencil_8,
+    cTextureFormat_Num,
 };
 
 enum class TextureAttribute {};
