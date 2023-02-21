@@ -1,8 +1,8 @@
 #pragma once
 
 #include <prim/seadSafeString.h>
-#include "agl/aglDisplayList.h"
-#include "agl/shader/aglShader.h"
+#include "agl/common/aglDisplayList.h"
+#include "agl/common/aglShader.h"
 
 namespace sead {
 class Heap;

@@ -1,16 +1,20 @@
 project(agl CXX ASM)
 
 add_library(agl OBJECT
-  include/agl/aglDisplayList.h
-  include/agl/aglDrawContext.h
   include/agl/aglGPUCommon.hpp
-  include/agl/aglGPUMemBlock.hpp
-  include/agl/aglRenderBuffer.h
-  include/agl/aglRenderTargetColor.h
-  include/agl/aglRenderTargetDepth.h
-  include/agl/aglTextureData.h
-  include/agl/gpu.h
-  include/agl/util.h
+
+  include/agl/common/aglDisplayList.h
+  include/agl/common/aglDrawContext.h
+  include/agl/common/aglGPUMemAddr.h
+  include/agl/common/aglGPUMemBlock.h
+  include/agl/common/aglRenderBuffer.h
+  include/agl/common/aglRenderTarget.h
+  include/agl/common/aglShader.h
+  include/agl/common/aglShaderCompileInfo.h
+  include/agl/common/aglShaderProgram.h
+  include/agl/common/aglShaderProgramArchive.h
+  include/agl/common/aglTextureData.h
+  include/agl/common/aglTextureEnum.h
 
   include/agl/detail/aglFileIOMgr.h
   include/agl/detail/aglGPUMemBlockMgr.h
@@ -28,29 +32,25 @@ add_library(agl OBJECT
   include/agl/env/aglEnvObjBuffer.h
   include/agl/env/aglEnvObjMgr.h
   include/agl/env/aglEnvObjSetMgr.h
-  include/agl/env/aglProjector.h
   include/agl/env/aglFog.h
   include/agl/env/aglLight.h
   include/agl/env/aglProjector.h
+
+  include/agl/fx/aglFxOfxLensFlare.h
 
   include/agl/g3d/aglNW4FToNN.h
 
   include/agl/pfx/aglBloom.h
   include/agl/pfx/aglDepthOfField.h
-  
-  include/agl/texture/aglTextureDataSerializer.h
 
-  include/agl/shader/aglShader.h
-  include/agl/shader/aglShaderCompileInfo.h
-  include/agl/shader/aglShaderProgram.h
-  include/agl/shader/aglShaderProgramArchive.h
-  
-  include/agl/shtxt/aglClause.h
-  include/agl/shtxt/aglDefineLinker.h
-  include/agl/shtxt/aglExpressionEvaluator.h
-  include/agl/shtxt/aglLexer.h
-  include/agl/shtxt/aglPreprocessor.h
-  include/agl/shtxt/aglSyntaxTree.h
+  include/agl/shader_text/aglShaderTextClause.h
+  include/agl/shader_text/aglShaderTextDefineLinker.h
+  include/agl/shader_text/aglShaderTextExpressionEvaluator.h
+  include/agl/shader_text/aglShaderTextLexer.h
+  include/agl/shader_text/aglShaderTextPreprocessor.h
+  include/agl/shader_text/aglShaderTextSyntaxTree.h
+
+  include/agl/texture/aglTextureDataSerializer.h
 
   include/agl/utl/aglAtomicPtrArray.h
   include/agl/utl/aglParameter.h
@@ -62,14 +62,10 @@ add_library(agl OBJECT
   include/agl/utl/aglResCommon.h
   include/agl/utl/aglResParameter.h
   include/agl/utl/aglScreenShotMgr.h
-
-  src/aglGPUMemBlock.cpp
-
+  
   src/detail/aglGPUMemBlockMgr.cpp
-
   src/driver/aglGraphicsDriverMgr.cpp
   src/driver/aglNVNMgr.cpp
-
   src/utl/aglAtomicPtrArray.cpp
   src/utl/aglParameter.cpp
   src/utl/aglParameterIO.cpp
@@ -78,10 +74,8 @@ add_library(agl OBJECT
   src/utl/aglParameterStringMgr.cpp
   src/utl/aglResCommon.cpp
   src/utl/aglResParameter.cpp
-  src/detail/aglGPUMemBlockMgr.cpp
-  src/driver/aglGraphicsDriverMgr.cpp
-  src/driver/aglNVNMgr.cpp
-  src/aglGPUMemBlock.cpp
+  
+  src/stub.cpp
 )
 
 target_compile_options(agl PRIVATE -fno-exceptions)

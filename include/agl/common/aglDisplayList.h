@@ -1,7 +1,7 @@
 #pragma once
 
 #include <basis/seadTypes.h>
-#include "agl/gpu.h"
+#include "aglGPUMemAddr.h"
 
 namespace sead {
 class Heap;

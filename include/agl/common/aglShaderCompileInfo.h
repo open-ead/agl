@@ -2,7 +2,7 @@
 
 #include <container/seadPtrArray.h>
 #include <hostio/seadHostIONode.h>
-#include "agl/shader/aglShader.h"
+#include "agl/common/aglShader.h"
 
 namespace sead {
 class Heap;

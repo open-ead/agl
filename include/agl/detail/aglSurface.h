@@ -1,8 +1,8 @@
 #pragma once
 
-#include <agl/util.h>
 #include <basis/seadTypes.h>
 #include <nvn/nvn.h>
+#include "agl/common/aglTextureEnum.h"
 
 namespace agl::detail {
 

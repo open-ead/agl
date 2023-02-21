@@ -1,7 +1,7 @@
 #pragma once
 
 #include "agl/detail/aglMemoryPoolHeap.h"
-#include "aglGPUMemBlock.hpp"
+#include "aglGPUMemBlock.h"
 
 namespace sead {
 class Heap;
