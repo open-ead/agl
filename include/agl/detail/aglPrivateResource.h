@@ -1,10 +1,10 @@
 #pragma once
 
+#include <agl/common/aglGPUMemBlock.h>
 #include <basis/seadTypes.h>
 #include <heap/seadDisposer.h>
 #include <hostio/seadHostIONode.h>
 #include <prim/seadSafeString.h>
-#include "agl/aglGPUMemBlock.hpp"
 
 namespace agl::detail {
 
