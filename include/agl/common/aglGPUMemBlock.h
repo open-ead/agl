@@ -4,6 +4,7 @@
 #include <heap/seadDisposer.h>
 #include <hostio/seadHostIONode.h>
 #include <math/seadMathCalcCommon.h>
+#include <nn/gfx/gfx_Types.h>
 #include <prim/seadTypedBitFlag.h>
 #include <thread/seadCriticalSection.h>
 #include "agl/aglGPUCommon.hpp"
@@ -27,6 +28,7 @@ public:
     bool tryAllocBuffer_(u64, sead::Heap*, s32, MemoryAttribute);
     void setBuffer_(u64, void*, void*, MemoryAttribute);
     void setVirtual_(u64, sead::Heap*, MemoryAttribute, GPUMemVoidAddr, s32);
+    void initializeGfxMemoryPool(nn::gfx::MemoryPool*) const;
     void addList(GPUMemBlockBase*);
     void setMemoryPool(void*, u64, detail::MemoryPool*);
     void setMemoryPoolHeap(void*, u64, detail::MemoryPoolHeap*);

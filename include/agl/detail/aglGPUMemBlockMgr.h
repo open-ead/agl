@@ -12,7 +12,7 @@
 
 namespace agl::detail {
 
-typedef sead::BitFlag32 MemoryPoolDriverBitFlag;
+using MemoryPoolDriverBitFlag = sead::BitFlag32;
 
 constexpr s32 VALID_POOL_TYPE_VALUE = -1;
 constexpr s32 cGPUAccessMask = 0xF0000000;
@@ -38,12 +38,17 @@ class MemoryPool {
 public:
     MemoryPool();
 
+    void initialize(void* storage_1, u64 storage_2, const MemoryPoolType& flags);
+    void initialize(void* map_virtual_1, u64 storage, const MemoryPoolType& flags,
+                    const MemoryPool& map_virtual_2, s32 map_virtual_3);
+
+    void finalize();
+
 private:
     NVNmemoryPool mDriverPool;
     MemoryPoolType mMemoryType;
     uint32_t idk;
 };
-
 static_assert(sizeof(MemoryPool) == 0x108);
 
 class GPUMemBlockMgrHeapEx : public sead::hostio::Node, public sead::IDisposer {
@@ -59,7 +64,6 @@ private:
     void* m10;
     sead::CriticalSection mCS;
 };
-
 static_assert(sizeof(GPUMemBlockMgrHeapEx) == 0x80);
 
 enum class GPUMemBlockMgrFlags : u8 {
@@ -92,7 +96,6 @@ private:
     size_t mMinBlockSize;
     sead::TypedBitFlag<GPUMemBlockMgrFlags> mFlags;
 };
-
 static_assert(sizeof(GPUMemBlockMgr) == 0x88);
 
 }  // namespace agl::detail
