@@ -1,4 +1,4 @@
-#include "utl/aglParameterStringMgr.h"
+#include "utility/aglParameterStringMgr.h"
 
 namespace agl::utl {
 
@@ -6,7 +6,7 @@ SEAD_SINGLETON_DISPOSER_IMPL(ParameterStringMgr)
 
 ParameterStringMgr::ParameterStringMgr() {
 #ifdef SEAD_DEBUG
-    setNodeName("utl::ParameterStringMgr");
+    setNodeName("utility::ParameterStringMgr");
     setNodeMeta("Icon=NOTE");
 #endif
 }

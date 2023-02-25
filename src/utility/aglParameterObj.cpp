@@ -1,7 +1,7 @@
-#include "utl/aglParameterObj.h"
+#include "utility/aglParameterObj.h"
 #include <basis/seadRawPrint.h>
 #include <prim/seadFormatPrint.h>
-#include "utl/aglParameter.h"
+#include "utility/aglParameter.h"
 
 namespace agl::utl {
 

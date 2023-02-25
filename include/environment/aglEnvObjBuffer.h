@@ -1,7 +1,7 @@
 #pragma once
 
 #include <container/seadSafeArray.h>
-#include "env/aglEnvObj.h"
+#include "environment/aglEnvObj.h"
 
 namespace agl::env {
 

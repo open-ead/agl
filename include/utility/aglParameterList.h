@@ -2,7 +2,7 @@
 
 #include <hostio/seadHostIOReflexible.h>
 #include <prim/seadSafeString.h>
-#include "utl/aglResParameter.h"
+#include "utility/aglResParameter.h"
 
 namespace sead {
 class XmlElement;

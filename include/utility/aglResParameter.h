@@ -4,7 +4,7 @@
 #include <basis/seadRawPrint.h>
 #include <basis/seadTypes.h>
 #include <prim/seadTypedBitFlag.h>
-#include "utl/aglResCommon.h"
+#include "utility/aglResCommon.h"
 
 namespace sead {
 template <typename Key, typename Value>

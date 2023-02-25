@@ -1,8 +1,8 @@
-#include "utl/aglResParameter.h"
+#include "utility/aglResParameter.h"
 #include <basis/seadRawPrint.h>
 #include <math/seadVector.h>
 #include <prim/seadPtrUtil.h>
-#include "utl/aglParameter.h"
+#include "utility/aglParameter.h"
 
 namespace agl::utl {
 

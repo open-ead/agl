@@ -1,7 +1,7 @@
 #pragma once
 
 #ifndef AGL_UTILS_PARAMETER_H_
-#include "utl/aglParameter.h"
+#include "utility/aglParameter.h"
 #endif
 
 namespace agl::utl {
