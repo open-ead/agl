@@ -1,6 +1,6 @@
 #pragma once
 
-#include "aglGPUMemBlock.h"
+#include "common/aglGPUMemBlock.h"
 #include "detail/aglMemoryPoolHeap.h"
 
 namespace sead {

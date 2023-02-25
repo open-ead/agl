@@ -1,6 +1,6 @@
 #pragma once
 
-#include "aglTextureData.h"
+#include "common/aglTextureData.h"
 
 namespace agl {
 

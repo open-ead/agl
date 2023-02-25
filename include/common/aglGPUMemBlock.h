@@ -7,7 +7,7 @@
 #include <math/seadMathCalcCommon.h>
 #include <prim/seadTypedBitFlag.h>
 #include <thread/seadCriticalSection.h>
-#include "aglGPUCommon.hpp"
+#include "common/aglGPUCommon.hpp"
 
 namespace agl {
 
