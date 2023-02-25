@@ -1,4 +1,4 @@
-#include "agl/utl/aglParameterIO.h"
+#include "utl/aglParameterIO.h"
 #include <basis/seadRawPrint.h>
 
 namespace agl::utl {

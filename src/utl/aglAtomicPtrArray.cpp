@@ -1,4 +1,4 @@
-#include "agl/utl/aglAtomicPtrArray.h"
+#include "utl/aglAtomicPtrArray.h"
 #include <algorithm>
 #include <basis/seadNew.h>
 

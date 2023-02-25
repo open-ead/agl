@@ -1,12 +1,12 @@
-#include "agl/utl/aglParameter.h"
+#include "utl/aglParameter.h"
 #include <codec/seadHashCRC32.h>
 #include <gfx/seadColor.h>
 #include <math/seadQuatCalcCommon.h>
 #include <math/seadVector.h>
 #include <prim/seadFormatPrint.h>
 #include <prim/seadMemUtil.h>
-#include "agl/utl/aglParameterObj.h"
-#include "agl/utl/aglParameterStringMgr.h"
+#include "utl/aglParameterObj.h"
+#include "utl/aglParameterStringMgr.h"
 
 namespace agl::utl {
 

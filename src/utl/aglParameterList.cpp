@@ -1,10 +1,10 @@
-#include "agl/utl/aglParameterList.h"
+#include "utl/aglParameterList.h"
 #include <basis/seadRawPrint.h>
 #include <prim/seadFormatPrint.h>
 #include <prim/seadSafeString.h>
-#include "agl/utl/aglParameter.h"
-#include "agl/utl/aglParameterObj.h"
-#include "agl/utl/aglParameterStringMgr.h"
+#include "utl/aglParameter.h"
+#include "utl/aglParameterObj.h"
+#include "utl/aglParameterStringMgr.h"
 
 namespace agl::utl {
 

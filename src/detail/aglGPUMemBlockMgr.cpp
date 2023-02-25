@@ -1,4 +1,4 @@
-#include "agl/detail/aglGPUMemBlockMgr.h"
+#include "detail/aglGPUMemBlockMgr.h"
 
 namespace agl::detail {
 const MemoryPoolType MemoryPoolType::cInvalidPoolType(0);
