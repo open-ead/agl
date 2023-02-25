@@ -1,6 +1,6 @@
 #pragma once
 
-#include "env/aglEnvObjBuffer.h"
+#include "environment/aglEnvObjBuffer.h"
 
 namespace agl::env {
 

@@ -2,7 +2,7 @@
 
 #include <heap/seadDisposer.h>
 #include <prim/seadSafeString.h>
-#include "texture/aglTextureDataSerializer.h"
+#include "common/aglTextureDataSerializer.h"
 
 namespace agl::utl {
 
