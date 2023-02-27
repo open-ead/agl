@@ -51,6 +51,7 @@ add_library(agl OBJECT
   include/shader_text/aglShaderTextSyntaxTree.h
 
   include/utility/aglAtomicPtrArray.h
+  include/utility/aglDevTools.h
   include/utility/aglParameter.h
   include/utility/aglParameterCurve.hpp
   include/utility/aglParameterIO.h
