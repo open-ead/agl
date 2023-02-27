@@ -20,6 +20,7 @@ add_library(agl OBJECT
   include/agl/detail/aglGPUMemBlockMgr.h
   include/agl/detail/aglMemoryPoolHeap.h
   include/agl/detail/aglPrivateResource.h
+  include/agl/detail/aglShaderHolder.h
   include/agl/detail/aglSurface.h
 
   include/agl/driver/aglGraphicsDriverMgr.h
