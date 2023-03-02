@@ -1,4 +1,4 @@
-#include "agl/driver/aglGraphicsDriverMgr.h"
+#include "driver/aglGraphicsDriverMgr.h"
 
 namespace agl::driver {
 SEAD_SINGLETON_DISPOSER_IMPL(GraphicsDriverMgr)

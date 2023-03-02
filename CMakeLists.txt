@@ -1,81 +1,79 @@
 project(agl CXX ASM)
 
 add_library(agl OBJECT
-  include/agl/aglGPUCommon.hpp
+  include/common/aglDisplayList.h
+  include/common/aglDrawContext.h
+  include/common/aglGPUCommon.hpp
+  include/common/aglGPUMemAddr.h
+  include/common/aglGPUMemBlock.h
+  include/common/aglRenderBuffer.h
+  include/common/aglRenderTarget.h
+  include/common/aglShader.h
+  include/common/aglShaderCompileInfo.h
+  include/common/aglShaderProgram.h
+  include/common/aglShaderProgramArchive.h
+  include/common/aglTextureData.h
+  include/common/aglTextureDataSerializer.h
+  include/common/aglTextureEnum.h
 
-  include/agl/common/aglDisplayList.h
-  include/agl/common/aglDrawContext.h
-  include/agl/common/aglGPUMemAddr.h
-  include/agl/common/aglGPUMemBlock.h
-  include/agl/common/aglRenderBuffer.h
-  include/agl/common/aglRenderTarget.h
-  include/agl/common/aglShader.h
-  include/agl/common/aglShaderCompileInfo.h
-  include/agl/common/aglShaderProgram.h
-  include/agl/common/aglShaderProgramArchive.h
-  include/agl/common/aglTextureData.h
-  include/agl/common/aglTextureEnum.h
+  include/detail/aglFileIOMgr.h
+  include/detail/aglGPUMemBlockMgr.h
+  include/detail/aglMemoryPoolHeap.h
+  include/detail/aglPrivateResource.h
+  include/detail/aglSurface.h
 
-  include/agl/detail/aglFileIOMgr.h
-  include/agl/detail/aglGPUMemBlockMgr.h
-  include/agl/detail/aglMemoryPoolHeap.h
-  include/agl/detail/aglPrivateResource.h
-  include/agl/detail/aglSurface.h
+  include/driver/aglGraphicsDriverMgr.h
+  include/driver/aglNVNMgr.h
+  include/driver/aglNVNimage.h
+  include/driver/aglNVNsampler.h
+  include/driver/aglNVNtexture.h
 
-  include/agl/driver/aglGraphicsDriverMgr.h
-  include/agl/driver/aglNVNMgr.h
-  include/agl/driver/aglNVNimage.h
-  include/agl/driver/aglNVNsampler.h
-  include/agl/driver/aglNVNtexture.h
+  include/environment/aglEnvObj.h
+  include/environment/aglEnvObjBuffer.h
+  include/environment/aglEnvObjMgr.h
+  include/environment/aglEnvObjSetMgr.h
+  include/environment/aglFog.h
+  include/environment/aglLight.h
+  include/environment/aglProjector.h
 
-  include/agl/env/aglEnvObj.h
-  include/agl/env/aglEnvObjBuffer.h
-  include/agl/env/aglEnvObjMgr.h
-  include/agl/env/aglEnvObjSetMgr.h
-  include/agl/env/aglFog.h
-  include/agl/env/aglLight.h
-  include/agl/env/aglProjector.h
+  include/effect/aglFxOfxLensFlare.h
 
-  include/agl/fx/aglFxOfxLensFlare.h
+  include/g3d/aglNW4FToNN.h
 
-  include/agl/g3d/aglNW4FToNN.h
+  include/postfx/aglBloom.h
+  include/postfx/aglDepthOfField.h
 
-  include/agl/pfx/aglBloom.h
-  include/agl/pfx/aglDepthOfField.h
+  include/shader_text/aglShaderTextClause.h
+  include/shader_text/aglShaderTextDefineLinker.h
+  include/shader_text/aglShaderTextExpressionEvaluator.h
+  include/shader_text/aglShaderTextLexer.h
+  include/shader_text/aglShaderTextPreprocessor.h
+  include/shader_text/aglShaderTextSyntaxTree.h
 
-  include/agl/shader_text/aglShaderTextClause.h
-  include/agl/shader_text/aglShaderTextDefineLinker.h
-  include/agl/shader_text/aglShaderTextExpressionEvaluator.h
-  include/agl/shader_text/aglShaderTextLexer.h
-  include/agl/shader_text/aglShaderTextPreprocessor.h
-  include/agl/shader_text/aglShaderTextSyntaxTree.h
-
-  include/agl/texture/aglTextureDataSerializer.h
-
-  include/agl/utl/aglAtomicPtrArray.h
-  include/agl/utl/aglParameter.h
-  include/agl/utl/aglParameterCurve.hpp
-  include/agl/utl/aglParameterIO.h
-  include/agl/utl/aglParameterList.h
-  include/agl/utl/aglParameterObj.h
-  include/agl/utl/aglParameterStringMgr.h
-  include/agl/utl/aglResCommon.h
-  include/agl/utl/aglResParameter.h
-  include/agl/utl/aglScreenShotMgr.h
+  include/utility/aglAtomicPtrArray.h
+  include/utility/aglParameter.h
+  include/utility/aglParameterCurve.hpp
+  include/utility/aglParameterIO.h
+  include/utility/aglParameterList.h
+  include/utility/aglParameterObj.h
+  include/utility/aglParameterStringMgr.h
+  include/utility/aglResCommon.h
+  include/utility/aglResParameter.h
+  include/utility/aglScreenShotMgr.h
   
   src/detail/aglGPUMemBlockMgr.cpp
 
   src/driver/aglGraphicsDriverMgr.cpp
   src/driver/aglNVNMgr.cpp
 
-  src/utl/aglAtomicPtrArray.cpp
-  src/utl/aglParameter.cpp
-  src/utl/aglParameterIO.cpp
-  src/utl/aglParameterList.cpp
-  src/utl/aglParameterObj.cpp
-  src/utl/aglParameterStringMgr.cpp
-  src/utl/aglResCommon.cpp
-  src/utl/aglResParameter.cpp
+  src/utility/aglAtomicPtrArray.cpp
+  src/utility/aglParameter.cpp
+  src/utility/aglParameterIO.cpp
+  src/utility/aglParameterList.cpp
+  src/utility/aglParameterObj.cpp
+  src/utility/aglParameterStringMgr.cpp
+  src/utility/aglResCommon.cpp
+  src/utility/aglResParameter.cpp
 )
 
 target_compile_options(agl PRIVATE -fno-exceptions)
