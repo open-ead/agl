@@ -8,8 +8,19 @@ add_library(agl OBJECT
   include/common/aglGPUMemBlock.h
   include/common/aglRenderBuffer.h
   include/common/aglRenderTarget.h
+  include/common/aglResBinaryShaderArchive.h
+  include/common/aglResBinaryShaderProgram.h
+  include/common/aglResCommon.h
+  include/common/aglResShaderArchive.h
+  include/common/aglResShaderBinary.h
+  include/common/aglResShaderMacro.h
+  include/common/aglResShaderProgram.h
+  include/common/aglResShaderSource.h
+  include/common/aglResShaderSymbol.h
+  include/common/aglResShaderVariation.h
   include/common/aglShader.h
   include/common/aglShaderCompileInfo.h
+  include/common/aglShaderEnum.h
   include/common/aglShaderProgram.h
   include/common/aglShaderProgramArchive.h
   include/common/aglTextureData.h
