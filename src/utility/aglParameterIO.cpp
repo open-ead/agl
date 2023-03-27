@@ -19,9 +19,9 @@ IParameterIO::IParameterIO(const sead::SafeString& name, u32 version) {
 
 void IParameterIO::applyResParameterArchive(ResParameterArchive arc) {
     SEAD_ASSERT(arc.isValid());
-    mResFileSize = arc.mPtr->file_size;
+    mResFileSize = arc.ptr()->file_size;
 
-    if (mVersion != arc.mPtr->pio_version)
+    if (mVersion != arc.ptr()->pio_version)
         callbackInvalidVersion_(arc);
 
     applyResParameterList(arc.getRootList());
@@ -32,10 +32,10 @@ void IParameterIO::applyResParameterArchiveLerp(ResParameterArchive arc_a,
     SEAD_ASSERT(arc_a.isValid());
     SEAD_ASSERT(arc_b.isValid());
 
-    if (mVersion != arc_a.mPtr->pio_version)
+    if (mVersion != arc_a.ptr()->pio_version)
         callbackInvalidVersion_(arc_a);
 
-    if (mVersion != arc_b.mPtr->pio_version)
+    if (mVersion != arc_b.ptr()->pio_version)
         callbackInvalidVersion_(arc_b);
 
     applyResParameterList(arc_a.getRootList(), arc_b.getRootList(), t);

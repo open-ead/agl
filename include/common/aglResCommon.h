@@ -1,9 +1,11 @@
 #pragma once
 
-#include <basis/seadTypes.h>
+#include <basis/seadRawPrint.h>
+#include <prim/seadBitUtil.h>
 
 namespace agl {
 
+// maybe first parameter is is_le, maybe it is big_endian - different between decomps
 void ModifyEndianU32(bool is_le, void* p_data, size_t size);
 
 template <typename _DataType>
@@ -18,35 +20,50 @@ public:
     bool isValid() const { return mpData != nullptr; }
 
     void verify() const {
-        if (ref().mSigWord != DataType::cSignature) {
-            const char* signature = ptr()->mSignature;
-            // SEAD_ASSERT_MSG(false, "Wrong binary. [%c%c%c%c].",
-            //                        signature[0], signature[1],
-            //                        signature[2], signature[3]);
+        if (isValidMagic()) {
+            const char* b = reinterpret_cast<const char*>(mpData);
+            SEAD_ASSERT_MSG(false, "Wrong binary. [%c%c%c%c].", b[0], b[1], b[2], b[3]);
         }
 
-        if (ref().mVersion != DataType::cVersion) {
-            // SEAD_ASSERT_MSG(false, "Version error.current:%d binary:%d",
-            //                        DataType::cVersion,
-            //                        ref().mVersion);
+        if (isValidVersion()) {
+            SEAD_ASSERT_MSG(false, "Version error.current:%d binary:%d",
+                        DataType::getVersion(), sead::BitUtil::bitCastPtr<u32>(ptr(), 4));
         }
     }
 
-    DataType* ptr() { return const_cast<DataType*>(mpData); }
+    DataType* ptr() {
+        assertValid();
+        return const_cast<DataType*>(mpData);
+    }
 
-    const DataType* ptr() const { return mpData; }
+    const DataType* ptr() const {
+        assertValid();
+        return mpData;
+    }
+
+    u8* ptrBytes() const { return const_cast<u8*>(reinterpret_cast<const u8*>(mpData)); }
 
     DataType& ref() {
-        // SEAD_ASSERT(isValid());
+        SEAD_ASSERT(isValid());
         return *ptr();
     }
 
     const DataType& ref() const {
-        // SEAD_ASSERT(isValid());
+        SEAD_ASSERT(isValid());
         return *ptr();
     }
 
-private:
+    bool isValidMagic() const {
+        return sead::BitUtil::bitCastPtr<u32>(ptr(), 0) == DataType::getSignature();
+    }
+
+    bool isValidVersion() const {
+        return sead::BitUtil::bitCastPtr<u32>(ptr(), 4) == DataType::getVersion();
+    }
+
+    void assertValid() const { SEAD_ASSERT(isValid()); }
+
+protected:
     const DataType* mpData;
 };
 
