@@ -22,9 +22,9 @@ public:
     const char* getText() const { return getName() + ptr()->mNameLen; }
 };
 
-typedef ResArray<ResShaderSource> ResShaderSourceArray;
+using ResShaderSourceArray = ResArray<ResShaderSource>;
 
-typedef ResShaderSourceArray::DataType ResShaderSourceArrayData;
+using ResShaderSourceArrayData = ResShaderSourceArray::DataType;
 static_assert(sizeof(ResShaderSourceArrayData) == 8, "agl::ResShaderSourceArrayData size mismatch");
 
 }  // namespace agl

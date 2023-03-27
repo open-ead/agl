@@ -32,9 +32,9 @@ public:
     ResShaderSymbolArray getResShaderSymbolArray(ShaderSymbolType type) const;
 };
 
-typedef ResArray<ResShaderProgram> ResShaderProgramArray;
+using ResShaderProgramArray = ResArray<ResShaderProgram>;
 
-typedef ResShaderProgramArray::DataType ResShaderProgramArrayData;
+using ResShaderProgramArrayData = ResShaderProgramArray::DataType;
 static_assert(sizeof(ResShaderProgramArrayData) == 8,
               "agl::ResShaderProgramArrayData size mismatch");
 

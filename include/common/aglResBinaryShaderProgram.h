@@ -34,9 +34,9 @@ public:
     ResShaderSymbolArray getResShaderSymbolArray(ShaderSymbolType type) const;
 };
 
-typedef ResArray<ResBinaryShaderProgram> ResBinaryShaderProgramArray;
+using ResBinaryShaderProgramArray = ResArray<ResBinaryShaderProgram>;
 
-typedef ResBinaryShaderProgramArray::DataType ResBinaryShaderProgramArrayData;
+using ResBinaryShaderProgramArrayData = ResBinaryShaderProgramArray::DataType;
 static_assert(sizeof(ResBinaryShaderProgramArrayData) == 8,
               "agl::ResBinaryShaderProgramArrayData size mismatch");
 

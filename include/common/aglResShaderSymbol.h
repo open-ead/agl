@@ -52,7 +52,7 @@ public:
     ResShaderSymbol searchResShaderSymbolByID(const sead::SafeString& id) const;
 };
 
-typedef ResShaderSymbolArray::DataType ResShaderSymbolArrayData;
+using ResShaderSymbolArrayData = ResShaderSymbolArray::DataType;
 static_assert(sizeof(ResShaderSymbolArrayData) == 8, "agl::ResShaderSymbolArrayData size mismatch");
 
 }  // namespace agl

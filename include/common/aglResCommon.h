@@ -9,9 +9,8 @@ void ModifyEndianU32(bool is_le, void* p_data, size_t size);
 template <typename _DataType>
 class ResCommon {
 public:
-    typedef _DataType DataType;
+    using DataType = _DataType;
 
-public:
     ResCommon() : mpData(nullptr) {}
 
     ResCommon(const void* data) : mpData(static_cast<const DataType*>(data)) {}
@@ -71,7 +70,7 @@ struct ResArrayData {
     u32 mNum;
     // DataType mData[];
 
-    typedef DataType ElemType;
+    using ElemType = DataType;
 };
 
 template <typename Type>
@@ -79,10 +78,10 @@ class ResArray : public ResCommon<ResArrayData<typename Type::DataType>> {
     AGL_RES_COMMON(ResArray<Type>)
 
 public:
-    typedef Type ElemType;
-    typedef typename Type::DataType ElemDataType;
-    typedef typename ResArray<Type>::DataType DataType;
-    typedef ResCommon<DataType> Base;
+    using ElemType = Type;
+    using ElemDataType = typename Type::DataType;
+    using DataType = typename ResArray<Type>::DataType;
+    using Base = ResCommon<DataType>;
 
 public:
     class iterator {

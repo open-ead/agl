@@ -21,9 +21,9 @@ public:
     const char* getValue() const { return getName() + ptr()->mNameLen; }
 };
 
-typedef ResArray<ResShaderMacro> ResShaderMacroArray;
+using ResShaderMacroArray = ResArray<ResShaderMacro>;
 
-typedef ResShaderMacroArray::DataType ResShaderMacroArrayData;
+using ResShaderMacroArrayData = ResShaderMacroArray::DataType;
 static_assert(sizeof(ResShaderMacroArrayData) == 8, "agl::ResShaderMacroArrayData size mismatch");
 
 }  // namespace agl

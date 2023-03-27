@@ -28,9 +28,9 @@ public:
     void setUp();
 };
 
-typedef ResArray<ResShaderBinary> ResShaderBinaryArray;
+using ResShaderBinaryArray = ResArray<ResShaderBinary>;
 
-typedef ResShaderBinaryArray::DataType ResShaderBinaryArrayData;
+using ResShaderBinaryArrayData = ResShaderBinaryArray::DataType;
 static_assert(sizeof(ResShaderBinaryArrayData) == 8, "agl::ResShaderBinaryArrayData size mismatch");
 
 }  // namespace agl

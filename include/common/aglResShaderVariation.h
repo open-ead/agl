@@ -23,9 +23,9 @@ public:
     const char* getValue(s32 index) const;
 };
 
-typedef ResArray<ResShaderVariation> ResShaderVariationArray;
+using ResShaderVariationArray = ResArray<ResShaderVariation>;
 
-typedef ResShaderVariationArray::DataType ResShaderVariationArrayData;
+using ResShaderVariationArrayData = ResShaderVariationArray::DataType;
 static_assert(sizeof(ResShaderVariationArrayData) == 8,
               "agl::ResShaderVariationArrayData size mismatch");
 
