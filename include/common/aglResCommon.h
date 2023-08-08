@@ -182,11 +182,4 @@ public:
             ModifyEndianU32(is_le, &(*it), sizeof(ElemDataType));
     }
 };
-
-#define AGL_RES_ARRAY(class_name)                                                                  \
-public:                                                                                            \
-    class_name() : ResArray<class_name::ElemType>() {}                                             \
-                                                                                                   \
-    class_name(const void* data) : ResArray<class_name::ElemType>(data) {}
-
 }  // namespace agl

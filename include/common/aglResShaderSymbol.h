@@ -46,9 +46,9 @@ public:
 };
 
 class ResShaderSymbolArray : public ResArray<ResShaderSymbol> {
-    AGL_RES_ARRAY(ResShaderSymbolArray)
-
 public:
+    using ResArray::ResArray;
+
     ResShaderSymbol searchResShaderSymbolByID(const sead::SafeString& id) const;
 };
 
