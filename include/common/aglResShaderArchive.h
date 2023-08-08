@@ -25,12 +25,12 @@ public:
 private:
     static const u32 cVersion = 11;
     static const u32 cSignature = 0x53484141;  // SHAA
-    #ifdef cafe
+#ifdef cafe
     static const u32 cEndianCheckBit = 0x01000001;
-    #endif
-    #ifdef SWITCH
+#endif
+#ifdef SWITCH
     static const u32 cEndianCheckBit = 0x00000001;
-    #endif
+#endif
 
     friend class ResCommon<ResShaderArchiveData>;
     friend class ResShaderArchive;

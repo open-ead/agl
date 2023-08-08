@@ -164,7 +164,7 @@ public:
     u32 getNum() const { return Base::ref().mNum; }
 
     ElemType get(s32 n) const {
-        SEAD_ASSERT(0 <= n && n <= static_cast< int >( this->getNum() ));
+        SEAD_ASSERT(0 <= n && n <= static_cast<int>(this->getNum()));
 
         constIterator itr = constBegin();
         constIterator itr_end = constIterator(n, nullptr);

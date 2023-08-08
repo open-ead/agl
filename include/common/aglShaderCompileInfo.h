@@ -9,7 +9,8 @@ namespace sead {
 class Heap;
 }
 
-// more information: https://github.com/aboood40091/sead/blob/master/packages/agl/include/common/aglShaderCompileInfo.h
+// more information:
+// https://github.com/aboood40091/sead/blob/master/packages/agl/include/common/aglShaderCompileInfo.h
 namespace agl {
 
 class ShaderCompileInfo : public sead::hostio::Node {
