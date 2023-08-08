@@ -8,10 +8,10 @@ namespace agl {
 // maybe first parameter is is_le, maybe it is big_endian - different between decomps
 void ModifyEndianU32(bool is_le, void* p_data, size_t size);
 
-template <typename _DataType>
+template <typename DataType_>
 class ResCommon {
 public:
-    using DataType = _DataType;
+    using DataType = DataType_;
 
     ResCommon() : mpData(nullptr) {}
 
