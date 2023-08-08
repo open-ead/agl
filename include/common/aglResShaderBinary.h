@@ -14,9 +14,9 @@ struct ResShaderBinaryData {
 static_assert(sizeof(ResShaderBinaryData) == 0x10, "agl::ResShaderBinaryData size mismatch");
 
 class ResShaderBinary : public ResCommon<ResShaderBinaryData> {
-    AGL_RES_COMMON(ResShaderBinary)
-
 public:
+    using ResCommon::ResCommon;
+
     ShaderType getShaderType() const { return ShaderType(ref().mShaderType); }
 
     void* getData() const {

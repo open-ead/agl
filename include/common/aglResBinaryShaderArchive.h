@@ -35,10 +35,11 @@ static_assert(sizeof(ResBinaryShaderArchiveData) == 0x18,
               "agl::ResBinaryShaderArchiveData size mismatch");
 
 class ResBinaryShaderArchive : public ResCommon<ResBinaryShaderArchiveData> {
-    AGL_RES_COMMON(ResBinaryShaderArchive)
     AGL_RES_FILE_HEADER()
 
 public:
+    using ResCommon::ResCommon;
+
     const char* getName() const {
         const DataType* const data = ptr();
         return (const char*)(data + 1);

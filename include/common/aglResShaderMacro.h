@@ -13,9 +13,9 @@ struct ResShaderMacroData {
 static_assert(sizeof(ResShaderMacroData) == 0xC, "agl::ResShaderMacroData size mismatch");
 
 class ResShaderMacro : public ResCommon<ResShaderMacroData> {
-    AGL_RES_COMMON(ResShaderMacro)
-
 public:
+    using ResCommon::ResCommon;
+
     const char* getName() const { return (const char*)(ptr() + 1); }
 
     const char* getValue() const { return getName() + ptr()->mNameLen; }

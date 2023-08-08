@@ -18,9 +18,9 @@ struct ResShaderSymbolData {
 static_assert(sizeof(ResShaderSymbolData) == 0x18, "agl::ResShaderSymbolData size mismatch");
 
 class ResShaderSymbol : public ResCommon<ResShaderSymbolData> {
-    AGL_RES_COMMON(ResShaderSymbol)
-
 public:
+    using ResCommon::ResCommon;
+
     const char* getName() const {
         const DataType* const data = ptr();
         return (const char*)(data + 1);

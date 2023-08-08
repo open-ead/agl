@@ -33,10 +33,11 @@ private:
 static_assert(sizeof(ResShaderArchiveData) == 0x14, "agl::ResShaderArchiveData size mismatch");
 
 class ResShaderArchive : public ResCommon<ResShaderArchiveData> {
-    AGL_RES_COMMON(ResShaderArchive)
     AGL_RES_FILE_HEADER()
 
 public:
+    using ResCommon::ResCommon;
+
     const char* getName() const {
         const DataType* const data = ptr();
         return (const char*)(data + 1);

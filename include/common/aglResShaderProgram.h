@@ -15,9 +15,9 @@ struct ResShaderProgramData {
 static_assert(sizeof(ResShaderProgramData) == 0x14, "agl::ResShaderProgramData size mismatch");
 
 class ResShaderProgram : public ResCommon<ResShaderProgramData> {
-    AGL_RES_COMMON(ResShaderProgram)
-
 public:
+    using ResCommon::ResCommon;
+
     const char* getName() const { return (const char*)(ptr() + 1); }
 
     ResShaderMacroArray getResShaderMacroArray(ShaderType type) const;

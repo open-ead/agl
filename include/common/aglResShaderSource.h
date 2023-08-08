@@ -14,9 +14,9 @@ struct ResShaderSourceData {
 static_assert(sizeof(ResShaderSourceData) == 0x10, "agl::ResShaderSourceData size mismatch");
 
 class ResShaderSource : public ResCommon<ResShaderSourceData> {
-    AGL_RES_COMMON(ResShaderSource)
-
 public:
+    using ResCommon::ResCommon;
+
     const char* getName() const { return (const char*)(ptr() + 1); }
 
     const char* getText() const { return getName() + ptr()->mNameLen; }

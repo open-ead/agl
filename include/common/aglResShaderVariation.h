@@ -14,9 +14,9 @@ struct ResShaderVariationData {
 static_assert(sizeof(ResShaderVariationData) == 0x10, "agl::ResShaderVariationData size mismatch");
 
 class ResShaderVariation : public ResCommon<ResShaderVariationData> {
-    AGL_RES_COMMON(ResShaderVariation)
-
 public:
+    using ResCommon::ResCommon;
+
     const char* getName() const { return (const char*)(ptr() + 1); }
 
     const char* getID() const;

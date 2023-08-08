@@ -69,7 +69,6 @@ add_library(agl OBJECT
   include/utility/aglParameterList.h
   include/utility/aglParameterObj.h
   include/utility/aglParameterStringMgr.h
-  include/utility/aglResCommon.h
   include/utility/aglResParameter.h
   include/utility/aglScreenShotMgr.h
   

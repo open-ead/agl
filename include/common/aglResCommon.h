@@ -67,12 +67,6 @@ protected:
     const DataType* mpData;
 };
 
-#define AGL_RES_COMMON(class_name)                                                                 \
-public:                                                                                            \
-    class_name() : ResCommon<typename class_name::DataType>() {}                                   \
-                                                                                                   \
-    class_name(const void* data) : ResCommon<typename class_name::DataType>(data) {}
-
 #define AGL_RES_FILE_HEADER()                                                                      \
 public:                                                                                            \
     bool modifyEndian() const { return ref().mEndian & DataType::cEndianCheckBit; }                \
@@ -92,13 +86,13 @@ struct ResArrayData {
 
 template <typename Type>
 class ResArray : public ResCommon<ResArrayData<typename Type::DataType>> {
-    AGL_RES_COMMON(ResArray<Type>)
-
 public:
     using ElemType = Type;
     using ElemDataType = typename Type::DataType;
     using DataType = typename ResArray<Type>::DataType;
     using Base = ResCommon<DataType>;
+    
+    using ResCommon<Type>::ResCommon;
 
 public:
     class iterator {

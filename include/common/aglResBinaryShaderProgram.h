@@ -16,9 +16,9 @@ static_assert(sizeof(ResBinaryShaderProgramData) == 0x10,
               "agl::ResBinaryShaderProgramData size mismatch");
 
 class ResBinaryShaderProgram : public ResCommon<ResBinaryShaderProgramData> {
-    AGL_RES_COMMON(ResBinaryShaderProgram)
-
 public:
+    using ResCommon::ResCommon;
+
     const char* getName() const { return (const char*)(ptr() + 1); }
 
     ResShaderVariationArray getResShaderVariationArray() const {
