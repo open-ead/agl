@@ -26,8 +26,8 @@ public:
         }
 
         if (isValidVersion()) {
-            SEAD_ASSERT_MSG(false, "Version error.current:%d binary:%d",
-                        DataType::getVersion(), sead::BitUtil::bitCastPtr<u32>(ptr(), 4));
+            SEAD_ASSERT_MSG(false, "Version error.current:%d binary:%d", DataType::getVersion(),
+                            sead::BitUtil::bitCastPtr<u32>(ptr(), 4));
         }
     }
 
@@ -91,7 +91,7 @@ public:
     using ElemDataType = typename Type::DataType;
     using DataType = typename ResArray<Type>::DataType;
     using Base = ResCommon<DataType>;
-    
+
     using ResCommon<Type>::ResCommon;
 
 public:

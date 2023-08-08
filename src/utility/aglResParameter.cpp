@@ -78,7 +78,8 @@ ResParameterArchive::ResParameterArchive(const void* p_data) {
 
     SEAD_ASSERT(sead::PtrUtil::isAlignedN(p_data, 4));
     if (mpData->flags.isOff(ResParameterArchiveFlag::LittleEndian))
-        ModifyEndianU32(false, const_cast<ResParameterArchiveData*>(mpData), sizeof(ResParameterArchiveData));
+        ModifyEndianU32(false, const_cast<ResParameterArchiveData*>(mpData),
+                        sizeof(ResParameterArchiveData));
 
     verify();
 
