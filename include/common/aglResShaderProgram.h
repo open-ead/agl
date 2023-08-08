@@ -12,7 +12,12 @@ struct ResShaderProgramData {
     s32 mSourceIndex[cShaderType_Num];
     // char mName[];
 };
+#ifdef SWITCH
+static_assert(sizeof(ResShaderProgramData) == 0x18, "agl::ResShaderProgramData size mismatch");
+#endif
+#ifdef cafe
 static_assert(sizeof(ResShaderProgramData) == 0x14, "agl::ResShaderProgramData size mismatch");
+#endif
 
 class ResShaderProgram : public ResCommon<ResShaderProgramData> {
 public:

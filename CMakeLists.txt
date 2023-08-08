@@ -83,8 +83,10 @@ add_library(agl OBJECT
   src/utility/aglParameterList.cpp
   src/utility/aglParameterObj.cpp
   src/utility/aglParameterStringMgr.cpp
-  src/utility/aglResCommon.cpp
   src/utility/aglResParameter.cpp
+  
+  src/utility/common/aglResCommon.cpp
+  src/utility/common/aglResShaderArchive.cpp
 )
 
 target_compile_options(agl PRIVATE -fno-exceptions)

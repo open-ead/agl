@@ -44,12 +44,12 @@ public:
     u8* ptrBytes() const { return const_cast<u8*>(reinterpret_cast<const u8*>(mpData)); }
 
     DataType& ref() {
-        SEAD_ASSERT(isValid());
+        assertValid();
         return *ptr();
     }
 
     const DataType& ref() const {
-        SEAD_ASSERT(isValid());
+        assertValid();
         return *ptr();
     }
 
@@ -77,7 +77,7 @@ public:                                                                         
 
 template <typename DataType>
 struct ResArrayData {
-    u32 mSize;
+    s32 mSize;
     u32 mNum;
     // DataType mData[];
 
@@ -92,7 +92,7 @@ public:
     using DataType = typename ResArray<Type>::DataType;
     using Base = ResCommon<DataType>;
 
-    using ResCommon<Type>::ResCommon;
+    using ResCommon<DataType>::ResCommon;
 
 public:
     class iterator {
@@ -164,7 +164,7 @@ public:
     u32 getNum() const { return Base::ref().mNum; }
 
     ElemType get(s32 n) const {
-        // SEAD_ASSERT(0 <= n && n <= static_cast< int >( this->getNum() ));
+        SEAD_ASSERT(0 <= n && n <= static_cast< int >( this->getNum() ));
 
         constIterator itr = constBegin();
         constIterator itr_end = constIterator(n, nullptr);

@@ -6,7 +6,15 @@ namespace agl {
 
 // No idea which headers these are actually supposed to go in
 
-enum ShaderType { cShaderType_Vertex, cShaderType_Fragment, cShaderType_Geometry, cShaderType_Num };
+enum ShaderType {
+    cShaderType_Vertex,
+    cShaderType_Fragment,
+    cShaderType_Geometry,
+#ifdef SWITCH
+    cShaderType_Unknown,
+#endif
+    cShaderType_Num
+};
 
 enum ShaderSymbolType {
     cShaderSymbolType_Uniform,
