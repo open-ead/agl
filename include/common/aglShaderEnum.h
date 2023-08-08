@@ -11,7 +11,7 @@ enum ShaderType {
     cShaderType_Fragment,
     cShaderType_Geometry,
 #ifdef SWITCH
-    cShaderType_Unknown,
+    cShaderType_Compute,
 #endif
     cShaderType_Num
 };
