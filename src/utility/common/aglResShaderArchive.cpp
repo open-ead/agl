@@ -202,7 +202,8 @@ ResShaderSymbol ResShaderSymbolArray::searchResShaderSymbolByID(const sead::Safe
     return nullptr;
 }
 
-// NON_MATCHING: weird optimizations with bit magic to tell whether more than one loop iteration has to be done
+// NON_MATCHING: weird optimizations with bit magic to tell whether more than one loop iteration has
+// to be done
 ResShaderMacroArray ResShaderProgram::getResShaderMacroArray(ShaderType type) const {
     const ResShaderMacroArrayData* macro_array;
     {
@@ -260,21 +261,22 @@ ResShaderSymbolArray ResBinaryShaderProgram::getResShaderSymbolArray(ShaderSymbo
     return symbol_array;
 }
 
-// NON_MATCHING: heavily depends on the two (mismatching) functions above, probably a lot of mismatches carried over
+// NON_MATCHING: heavily depends on the two (mismatching) functions above, probably a lot of
+// mismatches carried over
 bool ResShaderArchive::setUp() {
-    #ifdef cafe
+#ifdef cafe
     SEAD_ASSERT(isValid());
-    #endif
+#endif
 
     if (!isEndianResolved()) {
-        #ifdef cafe
+#ifdef cafe
         ModifyEndianU32(modifyEndian(), ptr(), sizeof(DataType));
 
         verify();
-        #endif
-        #ifdef SWITCH
+#endif
+#ifdef SWITCH
         ModifyEndianU32(false, ptr(), sizeof(DataType));
-        #endif
+#endif
 
         ResShaderProgramArray prog_arr = getResShaderProgramArray();
         prog_arr.modifyEndianArray(modifyEndian());
@@ -300,16 +302,17 @@ bool ResShaderArchive::setUp() {
 
         setEndianResolved();
     }
-    #ifdef cafe
+#ifdef cafe
     else {
         verify();
     }
-    #endif
+#endif
 
     return true;
 }
 
-// NON_MATCHING: also heavily depends on the two (mismatching) functions above, probably a lot of mismatches carried over
+// NON_MATCHING: also heavily depends on the two (mismatching) functions above, probably a lot of
+// mismatches carried over
 bool ResBinaryShaderArchive::setUp(bool le_resolve_pointers) {
     SEAD_ASSERT(isValid());
 
