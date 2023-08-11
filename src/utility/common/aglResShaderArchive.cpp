@@ -174,7 +174,7 @@ const char* ResShaderVariation::getID() const {
 }
 
 const char* ResShaderVariation::getValue(s32 index) const {
-    SEAD_ASSERT(0 <= index && index < static_cast<int>(ref().mValueNum));
+    SEAD_ASSERT(0 <= index && index < static_cast< int >( ref().mValueNum ));
 
     const char* value = getName() + ref().mNameLen;
 
