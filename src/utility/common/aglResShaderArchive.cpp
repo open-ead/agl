@@ -174,7 +174,9 @@ const char* ResShaderVariation::getID() const {
 }
 
 const char* ResShaderVariation::getValue(s32 index) const {
+    // clang-format off
     SEAD_ASSERT(0 <= index && index < static_cast< int >( ref().mValueNum ));
+    // clang-format on
 
     const char* value = getName() + ref().mNameLen;
 
