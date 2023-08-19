@@ -27,7 +27,7 @@ public:
 private:
     sead::FixedPtrArray<ShaderProgram, 206> mShaderPrograms;
     sead::UnsafeArray<ShaderProgramArchive, 6> mShaderProgramArchives;
-    char mArchiveOptions;
+    bool mArchiveOptions;
 };
 static_assert(sizeof(ShaderHolder) == 0xB30);
 
