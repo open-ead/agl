@@ -4,17 +4,11 @@
 #include <heap/seadDisposer.h>
 #include <hostio/seadHostIONode.h>
 #include <prim/seadSafeString.h>
+#include "common/aglResBinaryShaderArchive.h"
+#include "common/aglResShaderArchive.h"
 
 namespace agl {
 
-class ResBinaryShaderArchive {
-private:
-    void* mPtr;
-};
-class ResShaderArchive {
-private:
-    void* mPtr;
-};
 class ResShaderProgram;
 class ResShaderSource;
 class ShaderProgram;
