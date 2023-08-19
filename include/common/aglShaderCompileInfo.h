@@ -3,11 +3,14 @@
 #include <container/seadPtrArray.h>
 #include <hostio/seadHostIONode.h>
 #include "common/aglShader.h"
+#include "common/aglShaderEnum.h"
 
 namespace sead {
 class Heap;
 }
 
+// more information:
+// https://github.com/aboood40091/sead/blob/master/packages/agl/include/common/aglShaderCompileInfo.h
 namespace agl {
 
 class ShaderCompileInfo : public sead::hostio::Node {

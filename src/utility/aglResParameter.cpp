@@ -72,18 +72,19 @@ s32 ResParameterList::searchObjIndex(u32 obj_hash) const {
 
 // NON_MATCHING: partial implementation (unused conversion code is unimplemented)
 ResParameterArchive::ResParameterArchive(const void* p_data) {
-    mPtr = static_cast<ResParameterArchiveData*>(const_cast<void*>(p_data));
+    mpData = static_cast<ResParameterArchiveData*>(const_cast<void*>(p_data));
     if (!p_data)
         return;
 
     SEAD_ASSERT(sead::PtrUtil::isAlignedN(p_data, 4));
-    if (mPtr->flags.isOff(ResParameterArchiveFlag::LittleEndian))
-        ModifyEndianU32(false, mPtr, sizeof(ResParameterArchiveData));
+    if (mpData->flags.isOff(ResParameterArchiveFlag::LittleEndian))
+        ModifyEndianU32(false, const_cast<ResParameterArchiveData*>(mpData),
+                        sizeof(ResParameterArchiveData));
 
     verify();
 
-    if (mPtr->flags.isOn(ResParameterArchiveFlag::LittleEndian) &&
-        mPtr->flags.isOn(ResParameterArchiveFlag::Utf8)) {
+    if (mpData->flags.isOn(ResParameterArchiveFlag::LittleEndian) &&
+        mpData->flags.isOn(ResParameterArchiveFlag::Utf8)) {
         // Nothing else to do.
         return;
     }

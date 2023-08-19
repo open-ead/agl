@@ -4,7 +4,7 @@
 #include <basis/seadRawPrint.h>
 #include <basis/seadTypes.h>
 #include <prim/seadTypedBitFlag.h>
-#include "utility/aglResCommon.h"
+#include "common/aglResCommon.h"
 
 namespace sead {
 template <typename Key, typename Value>
@@ -259,7 +259,7 @@ struct ResParameterArchive : ResCommon<ResParameterArchiveData> {
 
     ResParameterList getRootList() const {
         return {reinterpret_cast<ResParameterListData*>(
-            ptrBytes() + sizeof(ResParameterArchiveData) + mPtr->offset_to_pio)};
+            ptrBytes() + sizeof(ResParameterArchiveData) + ptr()->offset_to_pio)};
     }
 };
 

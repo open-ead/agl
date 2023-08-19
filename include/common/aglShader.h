@@ -4,13 +4,6 @@
 
 namespace agl {
 
-enum ShaderType {
-    ShaderType_Vertex = 0,
-    ShaderType_Fragment = 1,
-    ShaderType_Geometry = 2,
-    ShaderType_Compute = 3
-};
-
 class Shader {
 public:
     Shader();
