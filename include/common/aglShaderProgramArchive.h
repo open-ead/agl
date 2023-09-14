@@ -1,14 +1,19 @@
 #pragma once
 
+#include <container/seadBuffer.h>
 #include <heap/seadDisposer.h>
 #include <hostio/seadHostIONode.h>
+#include <prim/seadSafeString.h>
+#include "common/aglResBinaryShaderArchive.h"
+#include "common/aglResShaderArchive.h"
 
 namespace agl {
 
-class ResBinaryShaderArchive;
-class ResShaderArchive;
 class ResShaderProgram;
 class ResShaderSource;
+class ShaderProgram;
+class ShaderProgramEdit;
+class ShaderSource;
 
 class ShaderProgramArchive : public sead::IDisposer, public sead::hostio::Node {
 public:
@@ -22,11 +27,22 @@ public:
     void updateCompileInfo();
     void setUp();
     void setUp_(bool);
+    void setUpFromObjectReflector(bool, bool);
+    int searchShaderProgramIndex(const sead::SafeString&) const;
+    sead::FormatFixedSafeString<1024> genMessage(sead::hostio::Context* context);
+    void listenPropertyEvent(const sead::hostio::PropertyEvent* property_event);
 
 private:
-    void* _20;
-    ResBinaryShaderArchive* mBinaryShaderArchive;
-    ResShaderArchive* mResShaderArchive;
+    ResBinaryShaderArchive mBinaryShaderArchive;
+    ResShaderArchive mResShaderArchive;
+    sead::Buffer<ShaderProgram> mShaderPrograms;
+    void* _48[6];
+    short _78[2];
+    sead::Buffer<ShaderProgramEdit> mShaderProgramEdits;
+    sead::Buffer<ShaderSource> mShaderSources;
+    sead::Buffer<void*> unkData;
+    sead::Buffer<bool*> unkData2;
 };
+static_assert(sizeof(ShaderProgramArchive) == 0xC0);
 
 }  // namespace agl
