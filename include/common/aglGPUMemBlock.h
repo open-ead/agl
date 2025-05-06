@@ -18,7 +18,7 @@ class MemoryPoolHeap;
 
 class GPUMemBlockBase {
 public:
-    explicit GPUMemBlockBase(sead::Heap* p_heap);
+    GPUMemBlockBase();
     virtual ~GPUMemBlockBase();
 
     void clear();
