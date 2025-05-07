@@ -50,7 +50,10 @@ static_assert(sizeof(GPUMemBlockBase) == 0x38);
 
 // TODO
 template <typename T>
-class GPUMemBlockT : public GPUMemBlockBase {};
+class GPUMemBlockT : public GPUMemBlockBase {
+public:
+    ~GPUMemBlockT() {;}
+};
 
 // TODO
 template <typename T>
