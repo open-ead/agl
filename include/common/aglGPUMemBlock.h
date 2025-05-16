@@ -52,7 +52,7 @@ static_assert(sizeof(GPUMemBlockBase) == 0x38);
 template <typename T>
 class GPUMemBlockT : public GPUMemBlockBase {
 public:
-    ~GPUMemBlockT() {;}
+    ~GPUMemBlockT() { ; }
 };
 
 // TODO
