@@ -23,7 +23,7 @@ public:
     void setByteOffsetByPtr(void* ptr);
     void roundUp(int addr);
     void flushCPUCache(u64);
-    void invalidateCPUCache(u64);
+    void invalidateCPUCache(u64) const;
 
     bool isValid() const { return mMemoryPool != nullptr; }
 
