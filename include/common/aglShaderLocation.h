@@ -26,4 +26,4 @@ class UniformBlockLocation : public ShaderLocation, public sead::INamable {
     void search(const ShaderProgram&);
 };
 
-}
+}  // namespace agl
