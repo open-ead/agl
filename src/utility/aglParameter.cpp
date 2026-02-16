@@ -414,4 +414,73 @@ bool ParameterBase::makeZero() {
     return false;
 }
 
+// NON_MATCHING: https://decomp.me/scratch/46nZM
+ParameterBase* ParameterBase::createByTypeName(const sead::SafeString& name,
+                                               const sead::SafeString& value) {
+    if (name.isEqual(getParameterTypeName(ParameterType::Bool))) {
+        return new Parameter<bool>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::F32))) {
+        return new Parameter<f32>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::Int))) {
+        return new Parameter<s32>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::U32))) {
+        return new Parameter<u32>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::Vec2))) {
+        return new Parameter<sead::Vector2f>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::Vec3))) {
+        return new Parameter<sead::Vector3f>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::Vec4))) {
+        return new Parameter<sead::Vector4f>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::Color))) {
+        return new Parameter<sead::Color4f>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::Quat))) {
+        return new Parameter<sead::Quatf>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::String32))) {
+        return new Parameter<sead::FixedSafeString<32>>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::String64))) {
+        return new Parameter<sead::FixedSafeString<64>>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::String256))) {
+        return new Parameter<sead::FixedSafeString<256>>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::StringRef))) {
+        return new Parameter<sead::SafeString>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::Curve1))) {
+        return new ParameterCurve<1>("", "", nullptr);
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::Curve2))) {
+        return new ParameterCurve<2>("", "", nullptr);
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::Curve3))) {
+        return new ParameterCurve<3>("", "", nullptr);
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::Curve4))) {
+        return new ParameterCurve<4>("", "", nullptr);
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::BufferInt))) {
+        return new ParameterBuffer<s32>(nullptr, value);
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::BufferF32))) {
+        return new ParameterBuffer<f32>(nullptr, value);
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::BufferU32))) {
+        return new ParameterBuffer<u32>(nullptr, value);
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::BufferBinary))) {
+        return new ParameterBuffer<u8>(nullptr, value);
+    }
+    return nullptr;
+}
+
 }  // namespace agl::utl
