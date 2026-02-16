@@ -414,4 +414,158 @@ bool ParameterBase::makeZero() {
     return false;
 }
 
+// NON_MATCHING: https://decomp.me/scratch/46nZM
+ParameterBase* ParameterBase::createByTypeName(const sead::SafeString& name,
+                                               const sead::SafeString& value) {
+    if (name.isEqual(getParameterTypeName(ParameterType::Bool))) {
+        return new Parameter<bool>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::F32))) {
+        return new Parameter<f32>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::Int))) {
+        return new Parameter<int>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::U32))) {
+        return new Parameter<u32>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::Vec2))) {
+        return new Parameter<sead::Vector2f>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::Vec3))) {
+        return new Parameter<sead::Vector3f>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::Vec4))) {
+        return new Parameter<sead::Vector4f>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::Color))) {
+        return new Parameter<sead::Color4f>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::Quat))) {
+        return new Parameter<sead::Quatf>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::String32))) {
+        return new Parameter<sead::FixedSafeString<32>>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::String64))) {
+        return new Parameter<sead::FixedSafeString<64>>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::String256))) {
+        return new Parameter<sead::FixedSafeString<256>>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::StringRef))) {
+        return new Parameter<sead::SafeString>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::Curve1))) {
+        return new ParameterCurve<1>("", "", nullptr);
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::Curve2))) {
+        return new ParameterCurve<2>("", "", nullptr);
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::Curve3))) {
+        return new ParameterCurve<3>("", "", nullptr);
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::Curve4))) {
+        return new ParameterCurve<4>("", "", nullptr);
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::BufferInt))) {
+        return new ParameterBuffer<s32>(nullptr, value);
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::BufferF32))) {
+        return new ParameterBuffer<f32>(nullptr, value);
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::BufferU32))) {
+        return new ParameterBuffer<u32>(nullptr, value);
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::BufferBinary))) {
+        return new ParameterBuffer<u8>(nullptr, value);
+    }
+    return nullptr;
+}
+
+template <u32 N>
+ParameterCurve<N>::ParameterCurve(const sead::SafeString& name, const sead::SafeString& label,
+                                  IParameterObj* param_obj)
+    : ParameterBase(name, label, param_obj) {
+    reset();
+}
+
+template <u32 N>
+void ParameterCurve<N>::reset() {
+    static f32 s_initialize[9] = {0.0, 0.0, 0.5, 0.5, 0.5, 0.5, 1.0, 1.0, 0.5};
+    for (s32 i = 0; i < N; ++i) {
+        sead::MemUtil::copy(mCurveData[i].f, s_initialize, sizeof(s_initialize));
+        for (s32 j = 9; j < cUnitCurveParamNum; ++j)
+            mCurveData[i].f[j] = 1.0;
+        mCurves[i].setData(&mCurveData[i], sead::hostio::CurveType::Hermit2D, cUnitCurveParamNum,
+                           9);
+    }
+}
+
+template <u32 N>
+bool ParameterCurve<N>::copy(const ParameterBase& other) {
+    if (getParameterType() != other.getParameterType())
+        return false;
+
+    if (getName() != other.getName())
+        return false;
+
+    copyUnsafe(other);
+    return true;
+}
+
+template <u32 N>
+void ParameterCurve<N>::copyUnsafe(const ParameterBase& other) {
+    if (getParameterType() != other.getParameterType()) {
+        SEAD_ASSERT_MSG(false, "getParameterType() == src.getParameterType()");
+        return;
+    }
+
+    sead::MemUtil::copy(ptr(), other.ptr(), size());
+    for (s32 i = 0; i < N; ++i) {
+        auto& curve = mCurves[i];
+        auto& curve_other = static_cast<const ParameterCurve<N>&>(other).mCurves[i];
+        curve.setCurveType(curve_other.getCurveType());
+        curve.mInfo.numUse = curve_other.mInfo.numUse;
+    }
+}
+
+template <u32 N>
+ParameterType ParameterCurve<N>::getParameterType() const {
+    if constexpr (N == 1)
+        return ParameterType::Curve1;
+    else if constexpr (N == 2)
+        return ParameterType::Curve2;
+    else if constexpr (N == 3)
+        return ParameterType::Curve3;
+    else if constexpr (N == 4)
+        return ParameterType::Curve4;
+    else
+        static_assert(N == 1, "Invalid number of curves");
+}
+
+template <u32 N>
+ParameterBase* ParameterCurve<N>::clone(sead::Heap* heap, IParameterObj* obj) const {
+    auto* instance = new (heap) ParameterCurve<N>(getParameterName(), getLabel(), obj);
+    sead::MemUtil::copy(instance->mCurveData.data(), mCurveData.data(), sizeof(mCurveData));
+    return instance;
+}
+
+template <u32 N>
+void ParameterCurve<N>::postApplyResource_(const void*, size_t size) {
+    if (this->size() == size) {
+        for (s32 i = 0; i < N; ++i) {
+            mCurves[i].setCurveType(sead::hostio::CurveType(mCurveData[i].curveType));
+            mCurves[i].mFloats = mCurveData[i].f;
+            mCurves[i].mInfo.numFloats = cUnitCurveParamNum;
+            mCurves[i].setNumUse(mCurveData[i].numUse);
+        }
+    } else {
+        for (s32 i = 0; i < N; ++i) {
+            mCurves[i].mInfo.numFloats = cUnitCurveParamNum;
+            mCurves[i].mFloats = mCurveData[i].f;
+        }
+    }
+}
+
 }  // namespace agl::utl

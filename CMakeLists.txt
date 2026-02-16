@@ -65,7 +65,6 @@ add_library(agl OBJECT
   include/utility/aglAtomicPtrArray.h
   include/utility/aglDevTools.h
   include/utility/aglParameter.h
-  include/utility/aglParameterCurve.hpp
   include/utility/aglParameterIO.h
   include/utility/aglParameterList.h
   include/utility/aglParameterObj.h

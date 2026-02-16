@@ -10,6 +10,7 @@
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
 #include <prim/seadSafeString.h>
+#include <prim/seadStringUtil.h>
 #include "utility/aglResParameter.h"
 
 namespace sead {
@@ -102,7 +103,7 @@ public:
     void applyResource(ResParameter res, f32 t);
     void applyString(const sead::SafeString& string, bool x);
     virtual void postApplyResource_(const void*, size_t) {}
-    void createByTypeName(const sead::SafeString& a, const sead::SafeString& b);
+    ParameterBase* createByTypeName(const sead::SafeString& name, const sead::SafeString& value);
 
     virtual bool isBinary() const { return false; }
     virtual bool isBinaryInternalBuffer() const { return true; }
@@ -302,8 +303,15 @@ protected:
 template <typename T>
 class ParameterBuffer : public Parameter<T*> {
 public:
-    ParameterBuffer(sead::Heap* heap, s32 num) {
+    ParameterBuffer(sead::Heap* heap, const sead::SafeString& elements) {
         SEAD_ASSERT(!isBinaryInternalBuffer());
+        u32 num = sead::StringUtil::parseS32(elements, sead::StringUtil::CardinalNumber::BaseAuto);
+
+        // TODO: Check if this can be generalized for any type
+        if constexpr (std::is_same<T, u8>()) {
+            num = sead::Mathf::ceil(num * 0.25f) * 4;
+        }
+
         this->mValue = new (heap) T[num];
         mBufferSize = num;
         mBufferAllocated = true;
@@ -343,7 +351,8 @@ public:
     void postApplyResource_(const void* data, size_t size) override {
         if (isBinaryInternalBuffer())
             return;
-        this->mValue = data;
+        // TODO: Check this cast
+        this->mValue = const_cast<T*>(reinterpret_cast<const T*>(data));
         mBufferSize = size / sizeof(T);
     }
 
@@ -433,7 +442,3 @@ inline ResParameterList getResParameterList(const agl::utl::ResParameterList& li
 }
 
 }  // namespace agl::utl
-
-#define AGL_UTILS_PARAMETER_H_
-#include "utility/aglParameterCurve.hpp"
-#undef AGL_UTILS_PARAMETER_H_
