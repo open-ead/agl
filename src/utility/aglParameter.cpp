@@ -5,6 +5,7 @@
 #include <math/seadVector.h>
 #include <prim/seadFormatPrint.h>
 #include <prim/seadMemUtil.h>
+#include <prim/seadStringUtil.h>
 #include "utility/aglParameterObj.h"
 #include "utility/aglParameterStringMgr.h"
 
@@ -414,7 +415,7 @@ bool ParameterBase::makeZero() {
     return false;
 }
 
-// NON_MATCHING: https://decomp.me/scratch/46nZM
+// NON_MATCHING: https://decomp.me/scratch/wBa6H
 ParameterBase* ParameterBase::createByTypeName(const sead::SafeString& name,
                                                const sead::SafeString& value) {
     if (name.isEqual(getParameterTypeName(ParameterType::Bool))) {
@@ -469,16 +470,28 @@ ParameterBase* ParameterBase::createByTypeName(const sead::SafeString& name,
         return new ParameterCurve<4>("", "", nullptr);
     }
     if (name.isEqual(getParameterTypeName(ParameterType::BufferInt))) {
-        return new ParameterBuffer<s32>(nullptr, value);
+        ParameterBuffer<s32>* buffer = new ParameterBuffer<s32>;
+        u32 num = sead::StringUtil::parseS32(value, sead::StringUtil::CardinalNumber::BaseAuto);
+        buffer->allocateBuffer(nullptr, num);
+        return buffer;
     }
     if (name.isEqual(getParameterTypeName(ParameterType::BufferF32))) {
-        return new ParameterBuffer<f32>(nullptr, value);
+        ParameterBuffer<f32>* buffer = new ParameterBuffer<f32>;
+        u32 num = sead::StringUtil::parseS32(value, sead::StringUtil::CardinalNumber::BaseAuto);
+        buffer->allocateBuffer(nullptr, num);
+        return buffer;
     }
     if (name.isEqual(getParameterTypeName(ParameterType::BufferU32))) {
-        return new ParameterBuffer<u32>(nullptr, value);
+        ParameterBuffer<u32>* buffer = new ParameterBuffer<u32>;
+        u32 num = sead::StringUtil::parseS32(value, sead::StringUtil::CardinalNumber::BaseAuto);
+        buffer->allocateBuffer(nullptr, num);
+        return buffer;
     }
     if (name.isEqual(getParameterTypeName(ParameterType::BufferBinary))) {
-        return new ParameterBuffer<u8>(nullptr, value);
+        ParameterBuffer<u8>* buffer = new ParameterBuffer<u8>;
+        u32 num = sead::StringUtil::parseS32(value, sead::StringUtil::CardinalNumber::BaseAuto);
+        buffer->allocateBuffer(nullptr, sead::Mathf::ceil(num * 0.25f) * 4);
+        return buffer;
     }
     return nullptr;
 }
