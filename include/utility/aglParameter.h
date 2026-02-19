@@ -10,7 +10,6 @@
 #include <math/seadQuat.h>
 #include <math/seadVector.h>
 #include <prim/seadSafeString.h>
-#include <prim/seadStringUtil.h>
 #include "utility/aglResParameter.h"
 
 namespace sead {
@@ -303,15 +302,12 @@ protected:
 template <typename T>
 class ParameterBuffer : public Parameter<T*> {
 public:
-    ParameterBuffer(sead::Heap* heap, const sead::SafeString& elements) {
+    ParameterBuffer() = default;
+
+    ~ParameterBuffer() override { freeBuffer(); }
+
+    void allocateBuffer(sead::Heap* heap, u32 num) {
         SEAD_ASSERT(!isBinaryInternalBuffer());
-        u32 num = sead::StringUtil::parseS32(elements, sead::StringUtil::CardinalNumber::BaseAuto);
-
-        // TODO: Check if this can be generalized for any type
-        if constexpr (std::is_same<T, u8>()) {
-            num = sead::Mathf::ceil(num * 0.25f) * 4;
-        }
-
         this->mValue = new (heap) T[num];
         mBufferSize = num;
         mBufferAllocated = true;
@@ -319,8 +315,6 @@ public:
         for (s32 i = 0; i < num; ++i)
             this->mValue[i] = {};
     }
-
-    ~ParameterBuffer() override { freeBuffer(); }
 
     void freeBuffer() {
         if (!mBufferAllocated)
