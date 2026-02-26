@@ -415,7 +415,7 @@ bool ParameterBase::makeZero() {
     return false;
 }
 
-// NON_MATCHING: https://decomp.me/scratch/wBa6H
+// NON_MATCHING: https://decomp.me/scratch/N8MEk
 ParameterBase* ParameterBase::createByTypeName(const sead::SafeString& name,
                                                const sead::SafeString& value) {
     if (name.isEqual(getParameterTypeName(ParameterType::Bool))) {
