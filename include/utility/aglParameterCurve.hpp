@@ -13,6 +13,20 @@ inline ParameterCurve<N>::ParameterCurve(const sead::SafeString& name,
     reset();
 }
 
+// NOTE: This is a hack to match ParameterBase::createByTypeName. It doesn't inline using the
+// general template.
+template <>
+inline void ParameterCurve<4>::reset() {
+    static f32 s_initialize[9] = {0.0, 0.0, 0.5, 0.5, 0.5, 0.5, 1.0, 1.0, 0.5};
+    for (s32 i = 0; i < 4; ++i) {
+        sead::MemUtil::copy(mCurveData[i].f, s_initialize, sizeof(s_initialize));
+        for (s32 j = 9; j < cUnitCurveParamNum; ++j)
+            mCurveData[i].f[j] = 1.0;
+        mCurves[i].setData(&mCurveData[i], sead::hostio::CurveType::Hermit2D, cUnitCurveParamNum,
+                           9);
+    }
+}
+
 template <u32 N>
 inline void ParameterCurve<N>::reset() {
     static f32 s_initialize[9] = {0.0, 0.0, 0.5, 0.5, 0.5, 0.5, 1.0, 1.0, 0.5};
