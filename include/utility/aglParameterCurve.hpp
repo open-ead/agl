@@ -18,9 +18,9 @@ inline ParameterCurve<N>::ParameterCurve(const sead::SafeString& name,
 template <>
 inline void ParameterCurve<4>::reset() {
     static f32 s_initialize[9] = {0.0, 0.0, 0.5, 0.5, 0.5, 0.5, 1.0, 1.0, 0.5};
-    for (s32 i = 0; i < 4; ++i) {
+    for (u32 i = 0; i < 4; ++i) {
         sead::MemUtil::copy(mCurveData[i].f, s_initialize, sizeof(s_initialize));
-        for (s32 j = 9; j < cUnitCurveParamNum; ++j)
+        for (u32 j = 9; j < cUnitCurveParamNum; ++j)
             mCurveData[i].f[j] = 1.0;
         mCurves[i].setData(&mCurveData[i], sead::hostio::CurveType::Hermit2D, cUnitCurveParamNum,
                            9);
@@ -30,9 +30,9 @@ inline void ParameterCurve<4>::reset() {
 template <u32 N>
 inline void ParameterCurve<N>::reset() {
     static f32 s_initialize[9] = {0.0, 0.0, 0.5, 0.5, 0.5, 0.5, 1.0, 1.0, 0.5};
-    for (s32 i = 0; i < N; ++i) {
+    for (u32 i = 0; i < N; ++i) {
         sead::MemUtil::copy(mCurveData[i].f, s_initialize, sizeof(s_initialize));
-        for (s32 j = 9; j < cUnitCurveParamNum; ++j)
+        for (u32 j = 9; j < cUnitCurveParamNum; ++j)
             mCurveData[i].f[j] = 1.0;
         mCurves[i].setData(&mCurveData[i], sead::hostio::CurveType::Hermit2D, cUnitCurveParamNum,
                            9);
@@ -59,7 +59,7 @@ inline void ParameterCurve<N>::copyUnsafe(const ParameterBase& other) {
     }
 
     sead::MemUtil::copy(ptr(), other.ptr(), size());
-    for (s32 i = 0; i < N; ++i) {
+    for (u32 i = 0; i < N; ++i) {
         auto& curve = mCurves[i];
         auto& curve_other = static_cast<const ParameterCurve<N>&>(other).mCurves[i];
         curve.setCurveType(curve_other.getCurveType());
@@ -91,14 +91,14 @@ inline ParameterBase* ParameterCurve<N>::clone(sead::Heap* heap, IParameterObj* 
 template <u32 N>
 inline void ParameterCurve<N>::postApplyResource_(const void*, size_t size) {
     if (this->size() == size) {
-        for (s32 i = 0; i < N; ++i) {
+        for (u32 i = 0; i < N; ++i) {
             mCurves[i].setCurveType(sead::hostio::CurveType(mCurveData[i].curveType));
             mCurves[i].mFloats = mCurveData[i].f;
             mCurves[i].mInfo.numFloats = cUnitCurveParamNum;
             mCurves[i].setNumUse(mCurveData[i].numUse);
         }
     } else {
-        for (s32 i = 0; i < N; ++i) {
+        for (u32 i = 0; i < N; ++i) {
             mCurves[i].mInfo.numFloats = cUnitCurveParamNum;
             mCurves[i].mFloats = mCurveData[i].f;
         }

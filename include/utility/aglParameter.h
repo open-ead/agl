@@ -313,7 +313,7 @@ public:
         mBufferSize = num;
         mBufferAllocated = true;
 
-        for (s32 i = 0; i < num; ++i)
+        for (u32 i = 0; i < num; ++i)
             this->mValue[i] = {};
     }
 
