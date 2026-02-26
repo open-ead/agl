@@ -102,7 +102,8 @@ public:
     void applyResource(ResParameter res, f32 t);
     void applyString(const sead::SafeString& string, bool x);
     virtual void postApplyResource_(const void*, size_t) {}
-    ParameterBase* createByTypeName(const sead::SafeString& name, const sead::SafeString& value);
+    static ParameterBase* createByTypeName(const sead::SafeString& name,
+                                           const sead::SafeString& value);
 
     virtual bool isBinary() const { return false; }
     virtual bool isBinaryInternalBuffer() const { return true; }
@@ -371,6 +372,8 @@ public:
 template <u32 N>
 class ParameterCurve : public ParameterBase {
 public:
+    ParameterCurve() { reset(); }
+
     ParameterCurve(const sead::SafeString& name, const sead::SafeString& label,
                    IParameterObj* param_obj);
 

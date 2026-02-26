@@ -415,7 +415,6 @@ bool ParameterBase::makeZero() {
     return false;
 }
 
-// NON_MATCHING: https://decomp.me/scratch/N8MEk
 ParameterBase* ParameterBase::createByTypeName(const sead::SafeString& name,
                                                const sead::SafeString& value) {
     if (name.isEqual(getParameterTypeName(ParameterType::Bool))) {
@@ -458,16 +457,16 @@ ParameterBase* ParameterBase::createByTypeName(const sead::SafeString& name,
         return new Parameter<sead::SafeString>;
     }
     if (name.isEqual(getParameterTypeName(ParameterType::Curve1))) {
-        return new ParameterCurve<1>("", "", nullptr);
+        return new ParameterCurve<1>;
     }
     if (name.isEqual(getParameterTypeName(ParameterType::Curve2))) {
-        return new ParameterCurve<2>("", "", nullptr);
+        return new ParameterCurve<2>;
     }
     if (name.isEqual(getParameterTypeName(ParameterType::Curve3))) {
-        return new ParameterCurve<3>("", "", nullptr);
+        return new ParameterCurve<3>;
     }
     if (name.isEqual(getParameterTypeName(ParameterType::Curve4))) {
-        return new ParameterCurve<4>("", "", nullptr);
+        return new ParameterCurve<4>;
     }
     if (name.isEqual(getParameterTypeName(ParameterType::BufferInt))) {
         ParameterBuffer<s32>* buffer = new ParameterBuffer<s32>;
@@ -490,7 +489,7 @@ ParameterBase* ParameterBase::createByTypeName(const sead::SafeString& name,
     if (name.isEqual(getParameterTypeName(ParameterType::BufferBinary))) {
         ParameterBuffer<u8>* buffer = new ParameterBuffer<u8>;
         u32 num = sead::StringUtil::parseS32(value, sead::StringUtil::CardinalNumber::BaseAuto);
-        buffer->allocateBuffer(nullptr, sead::Mathf::ceil(num * 0.25f) * 4);
+        buffer->allocateBuffer(nullptr, (u32)sead::Mathf::ceil(num * 0.25f) * 4);
         return buffer;
     }
     return nullptr;
