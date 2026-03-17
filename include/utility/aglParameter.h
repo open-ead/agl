@@ -103,7 +103,7 @@ public:
     void applyString(const sead::SafeString& string, bool x);
     virtual void postApplyResource_(const void*, size_t) {}
     static ParameterBase* createByTypeName(const sead::SafeString& name,
-                                           const sead::SafeString& value);
+                                           const sead::SafeString& bufferSize);
 
     virtual bool isBinary() const { return false; }
     virtual bool isBinaryInternalBuffer() const { return true; }
