@@ -102,7 +102,8 @@ public:
     void applyResource(ResParameter res, f32 t);
     void applyString(const sead::SafeString& string, bool x);
     virtual void postApplyResource_(const void*, size_t) {}
-    void createByTypeName(const sead::SafeString& a, const sead::SafeString& b);
+    static ParameterBase* createByTypeName(const sead::SafeString& name,
+                                           const sead::SafeString& bufferSize);
 
     virtual bool isBinary() const { return false; }
     virtual bool isBinaryInternalBuffer() const { return true; }
@@ -302,17 +303,19 @@ protected:
 template <typename T>
 class ParameterBuffer : public Parameter<T*> {
 public:
-    ParameterBuffer(sead::Heap* heap, s32 num) {
+    ParameterBuffer() = default;
+
+    ~ParameterBuffer() override { freeBuffer(); }
+
+    void allocateBuffer(sead::Heap* heap, u32 num) {
         SEAD_ASSERT(!isBinaryInternalBuffer());
         this->mValue = new (heap) T[num];
         mBufferSize = num;
         mBufferAllocated = true;
 
-        for (s32 i = 0; i < num; ++i)
+        for (u32 i = 0; i < num; ++i)
             this->mValue[i] = {};
     }
-
-    ~ParameterBuffer() override { freeBuffer(); }
 
     void freeBuffer() {
         if (!mBufferAllocated)
@@ -343,7 +346,7 @@ public:
     void postApplyResource_(const void* data, size_t size) override {
         if (isBinaryInternalBuffer())
             return;
-        this->mValue = data;
+        this->mValue = const_cast<T*>(static_cast<const T*>(data));
         mBufferSize = size / sizeof(T);
     }
 
@@ -369,6 +372,8 @@ public:
 template <u32 N>
 class ParameterCurve : public ParameterBase {
 public:
+    ParameterCurve() { reset(); }
+
     ParameterCurve(const sead::SafeString& name, const sead::SafeString& label,
                    IParameterObj* param_obj);
 
