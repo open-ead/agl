@@ -3,6 +3,7 @@
 #include <prim/seadSafeString.h>
 #include "common/aglDisplayList.h"
 #include "common/aglShader.h"
+#include "common/aglShaderEnum.h"
 
 namespace sead {
 class Heap;
@@ -31,6 +32,9 @@ public:
                               sead::Heap*);
     void setVariationMacroValue(s32, s32, const sead::SafeString&);
     void createVariation(sead::Heap*);
+    bool hasStage(ShaderType) const;
+    const Shader& getShader(ShaderType) const;
+    Shader* getShader(ShaderType);
 
 private:
     u64* _8;
