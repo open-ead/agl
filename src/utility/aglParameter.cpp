@@ -5,6 +5,7 @@
 #include <math/seadVector.h>
 #include <prim/seadFormatPrint.h>
 #include <prim/seadMemUtil.h>
+#include <prim/seadStringUtil.h>
 #include "utility/aglParameterObj.h"
 #include "utility/aglParameterStringMgr.h"
 
@@ -414,23 +415,88 @@ bool ParameterBase::makeZero() {
     return false;
 }
 
-// TODO: Remove these explicit instantiations once ParameterBase::createByTypeName is implemented.
-template class Parameter<bool>;
-template class Parameter<f32>;
-template class Parameter<s32>;
-template class Parameter<sead::Vector2f>;
-template class Parameter<sead::Vector3f>;
-template class Parameter<sead::Vector4f>;
-template class Parameter<sead::Color4f>;
-template class Parameter<sead::FixedSafeString<32>>;
-template class Parameter<sead::FixedSafeString<64>>;
-template class Parameter<sead::FixedSafeString<256>>;
-template class Parameter<sead::Quatf>;
-template class Parameter<u32>;
-template class Parameter<sead::SafeString>;
-template class ParameterCurve<1>;
-template class ParameterCurve<2>;
-template class ParameterCurve<3>;
-template class ParameterCurve<4>;
+ParameterBase* ParameterBase::createByTypeName(const sead::SafeString& name,
+                                               const sead::SafeString& bufferSize) {
+    if (name.isEqual(getParameterTypeName(ParameterType::Bool))) {
+        return new Parameter<bool>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::F32))) {
+        return new Parameter<f32>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::Int))) {
+        return new Parameter<s32>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::U32))) {
+        return new Parameter<u32>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::Vec2))) {
+        return new Parameter<sead::Vector2f>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::Vec3))) {
+        return new Parameter<sead::Vector3f>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::Vec4))) {
+        return new Parameter<sead::Vector4f>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::Color))) {
+        return new Parameter<sead::Color4f>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::Quat))) {
+        return new Parameter<sead::Quatf>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::String32))) {
+        return new Parameter<sead::FixedSafeString<32>>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::String64))) {
+        return new Parameter<sead::FixedSafeString<64>>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::String256))) {
+        return new Parameter<sead::FixedSafeString<256>>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::StringRef))) {
+        return new Parameter<sead::SafeString>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::Curve1))) {
+        return new ParameterCurve<1>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::Curve2))) {
+        return new ParameterCurve<2>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::Curve3))) {
+        return new ParameterCurve<3>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::Curve4))) {
+        return new ParameterCurve<4>;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::BufferInt))) {
+        ParameterBuffer<s32>* buffer = new ParameterBuffer<s32>;
+        u32 size =
+            sead::StringUtil::parseS32(bufferSize, sead::StringUtil::CardinalNumber::BaseAuto);
+        buffer->allocateBuffer(nullptr, size);
+        return buffer;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::BufferF32))) {
+        ParameterBuffer<f32>* buffer = new ParameterBuffer<f32>;
+        u32 size =
+            sead::StringUtil::parseS32(bufferSize, sead::StringUtil::CardinalNumber::BaseAuto);
+        buffer->allocateBuffer(nullptr, size);
+        return buffer;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::BufferU32))) {
+        ParameterBuffer<u32>* buffer = new ParameterBuffer<u32>;
+        u32 size =
+            sead::StringUtil::parseS32(bufferSize, sead::StringUtil::CardinalNumber::BaseAuto);
+        buffer->allocateBuffer(nullptr, size);
+        return buffer;
+    }
+    if (name.isEqual(getParameterTypeName(ParameterType::BufferBinary))) {
+        ParameterBuffer<u8>* buffer = new ParameterBuffer<u8>;
+        u32 size =
+            sead::StringUtil::parseS32(bufferSize, sead::StringUtil::CardinalNumber::BaseAuto);
+        buffer->allocateBuffer(nullptr, (u32)sead::Mathf::ceil(size * 0.25f) * 4);
+        return buffer;
+    }
+    return nullptr;
+}
 
 }  // namespace agl::utl
