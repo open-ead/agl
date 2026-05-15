@@ -42,12 +42,9 @@ static s32 getLocation(const UniformBlockLocation& loc, const ShaderProgram& pro
 
     const ShaderBinary* shaderBinary = reinterpret_cast<const ShaderBinary*>(data);
     const char* name = loc.getName().cstr();
-    u32 numUniformBlocks = shaderBinary->numUniformBlocks;
-    if (numUniformBlocks == 0)
-        return -1;
 
     // TODO: probably an inlined search function returning UniformBlock*
-    for (u32 i = 0; i < numUniformBlocks; i++) {
+    for (u32 i = 0; i < shaderBinary->numUniformBlocks; i++) {
         if (strcmp(shaderBinary->uniformBlocks[i].name, name) == 0) {
             if (&shaderBinary->uniformBlocks[i])
                 return shaderBinary->uniformBlocks[i].location;
