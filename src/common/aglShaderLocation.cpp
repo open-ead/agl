@@ -20,15 +20,12 @@ void ShaderLocation::setRegisterLocation(ShaderType type, s32 location) {
     mRegisterLocation[type != cShaderType_Vertex] = location;
 }
 
-UniformBlockLocation::~UniformBlockLocation() = default;
-
 static s32 getLocation(const UniformBlockLocation& loc, const ShaderProgram& program,
                        ShaderType type) {
     if (!program.hasStage(type))
         return -1;
 
-    const Shader& shader = program.getShader(type);
-    const void* data = shader.getShaderBinary();
+    const void* data = program.getShader(type).getShaderBinary();
     if (!data)
         return -1;
 
@@ -49,14 +46,12 @@ static s32 getLocation(const UniformBlockLocation& loc, const ShaderProgram& pro
     if (numUniformBlocks == 0)
         return -1;
 
-    UniformBlock* uniformBlocks = shaderBinary->uniformBlocks;
-
     // TODO: probably an inlined search function returning UniformBlock*
     for (u32 i = 0; i < numUniformBlocks; i++) {
-        if (strcmp(uniformBlocks[i].name, name) == 0) {
-            if (&uniformBlocks[i])
-                return uniformBlocks[i].location;
-            return -1;
+        if (strcmp(shaderBinary->uniformBlocks[i].name, name) == 0) {
+            if (&shaderBinary->uniformBlocks[i])
+                return shaderBinary->uniformBlocks[i].location;
+            break;
         }
     }
 

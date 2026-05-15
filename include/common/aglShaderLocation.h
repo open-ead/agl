@@ -22,7 +22,7 @@ private:
 };
 
 class UniformBlockLocation : public ShaderLocation, public sead::INamable {
-    ~UniformBlockLocation();
+    ~UniformBlockLocation() = default;
     void search(const ShaderProgram&);
 };
 
