@@ -21,6 +21,7 @@ add_library(agl OBJECT
   include/common/aglShader.h
   include/common/aglShaderCompileInfo.h
   include/common/aglShaderEnum.h
+  include/common/aglShaderLocation.h
   include/common/aglShaderProgram.h
   include/common/aglShaderProgramArchive.h
   include/common/aglTextureData.h
@@ -72,6 +73,8 @@ add_library(agl OBJECT
   include/utility/aglParameterStringMgr.h
   include/utility/aglResParameter.h
   include/utility/aglScreenShotMgr.h
+
+  src/common/aglShaderLocation.cpp
   
   src/detail/aglGPUMemBlockMgr.cpp
 

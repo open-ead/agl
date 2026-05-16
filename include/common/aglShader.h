@@ -16,6 +16,8 @@ public:
 
     void setBinary(const void* shaderBinary);
 
+    const void* getShaderBinary() const { return mShaderBinary; }
+
 private:
     void* mShaderBinary;  // _8
     void* _10;
