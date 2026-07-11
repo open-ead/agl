@@ -6,7 +6,7 @@
 namespace agl {
 
 struct ResBinaryShaderProgramData {
-    u32 mSize;
+    s32 mSize;
     u32 mNameLen;
     u32 mKind;
     u32 mBaseIndex;
@@ -23,7 +23,10 @@ public:
 
     ResShaderVariationArray getResShaderVariationArray() const {
         const DataType* const data = ptr();
-        return (const ResShaderVariationArrayData*)((uintptr_t)(data + 1) + data->mNameLen);
+        const u8* address = (const u8*)data;
+        address += sizeof(DataType);
+        address += data->mNameLen;
+        return (const ResShaderVariationArrayData*)address;
     }
 
     ResShaderVariationArray getResShaderVariationDefaultArray() const {

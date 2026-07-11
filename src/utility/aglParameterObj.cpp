@@ -10,15 +10,13 @@ IParameterObj::IParameterObj() = default;
 void IParameterObj::pushBackListNode(ParameterBase* p_node) {
     SEAD_ASSERT(p_node != nullptr);
 
-    ParameterBase** ptr;
-    if (mParamListTail) {
-        ptr = &mParamListTail->mNext;
-    } else {
-        ptr = &mParamListHead;
+    if (mParamListTail)
+        mParamListTail->mNext = p_node;
+    else {
+        mParamListHead = p_node;
         mParamListTail = p_node;
     }
 
-    *ptr = p_node;
     mParamListTail = p_node;
     ++mParamListSize;
 }
@@ -87,18 +85,16 @@ bool IParameterObj::verify() const {
     return ret;
 }
 
+// NON_MATCHING: Retail shares the return epilogue with the adjacent verification function.
 bool IParameterObj::verify(ParameterBase* p_check, ParameterBase* other) const {
     SEAD_ASSERT(p_check != nullptr);
-    auto* param = other;
     bool ok = true;
-    while (param) {
-        if (p_check->getNameHash() == param->getNameHash()) {
-            sead::BufferingPrintFormatter ss;
-            ss << "Same hash code at [%s] and [%s]. Please change.\n"
-               << p_check->getName().cstr() << param->getName().cstr() << sead::flush;
-            ok = false;
-        }
-        param = param->mNext;
+    if (other) {
+        const u32 hash = p_check->getNameHash();
+        do {
+            ok &= hash != other->getNameHash();
+            other = other->mNext;
+        } while (other);
     }
     return ok;
 }
@@ -181,6 +177,8 @@ void IParameterObj::copyLerp(ParameterBase* first, ParameterBase* last,
     postCopy_();
 }
 
+// NON_MATCHING: Retail tests mParamListHead before the source-list pointer.
+// Next hypothesis: alter local lifetimes to recover the X20/X21 assignment without changing the CFG.
 void IParameterObj::copyLerp(const IParameterObj& obj1, const IParameterObj& obj2, f32 t) {
     if (!preCopy_())
         return;

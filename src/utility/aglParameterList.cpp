@@ -27,7 +27,10 @@ void IParameterList::addList(IParameterList* child, const sead::SafeString& name
     SEAD_ASSERT(child != nullptr);
     child->setParameterListName_(name);
 
-    (!mpChildListTail ? mpChildListHead : mpChildListTail->mNext) = child;
+    if (mpChildListTail)
+        mpChildListTail->mNext = child;
+    else
+        mpChildListHead = child;
     mpChildListTail = child;
     child->mParent = this;
 }
@@ -41,7 +44,10 @@ void IParameterList::addObj(IParameterObj* child, const sead::SafeString& name) 
 #endif
     child->mNameHash = ParameterBase::calcHash(name);
 
-    (!mpChildObjTail ? mpChildObjHead : mpChildObjTail->mNext) = child;
+    if (mpChildObjTail)
+        mpChildObjTail->mNext = child;
+    else
+        mpChildObjHead = child;
     mpChildObjTail = child;
 }
 
@@ -81,11 +87,12 @@ void IParameterList::removeList(IParameterList* child) {
             return;
     }
 
-    (prev ? prev->mNext : mpChildListHead) = child->mNext;
-    if (!child->mNext) {
-        SEAD_ASSERT(mpChildListTail == child);
+    if (prev)
+        prev->mNext = child->mNext;
+    else
+        mpChildListHead = child->mNext;
+    if (!child->mNext)
         mpChildListTail = prev;
-    }
     child->mNext = nullptr;
 }
 
@@ -105,11 +112,12 @@ void IParameterList::removeObj(IParameterObj* child) {
             return;
     }
 
-    (prev ? prev->mNext : mpChildObjHead) = child->mNext;
-    if (!child->mNext) {
-        SEAD_ASSERT(mpChildObjTail == child);
+    if (prev)
+        prev->mNext = child->mNext;
+    else
+        mpChildObjHead = child->mNext;
+    if (!child->mNext)
         mpChildObjTail = prev;
-    }
     child->mNext = nullptr;
 }
 
@@ -183,34 +191,24 @@ bool IParameterList::verifyObj() const {
     return ret;
 }
 
+// NON_MATCHING: Retail shares the return epilogue with the adjacent verification function.
 bool IParameterList::verifyList(IParameterList* p_check, IParameterList* other) const {
     SEAD_ASSERT(p_check != nullptr);
-    auto* list = other;
     bool ok = true;
-    while (list) {
-        if (p_check->getNameHash() == list->getNameHash()) {
-            sead::BufferingPrintFormatter ss;
-            ss << "Same hash code at [%s] and [%s]. Please change.\n"
-               << p_check->getName().cstr() << list->getName().cstr() << sead::flush;
-            ok = false;
-        }
-        list = list->mNext;
+    while (other) {
+        ok &= p_check->getNameHash() != other->getNameHash();
+        other = other->mNext;
     }
     return ok;
 }
 
+// NON_MATCHING: Retail shares the return epilogue with the adjacent verification function.
 bool IParameterList::verifyObj(IParameterObj* p_check, IParameterObj* other) const {
     SEAD_ASSERT(p_check != nullptr);
-    auto* list = other;
     bool ok = true;
-    while (list) {
-        if (p_check->getNameHash() == list->getNameHash()) {
-            sead::BufferingPrintFormatter ss;
-            ss << "Same hash code at [%s] and [%s]. Please change.\n"
-               << p_check->getName().cstr() << list->getName().cstr() << sead::flush;
-            ok = false;
-        }
-        list = list->mNext;
+    while (other) {
+        ok &= p_check->getNameHash() != other->getNameHash();
+        other = other->mNext;
     }
     return ok;
 }

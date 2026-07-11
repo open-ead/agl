@@ -27,6 +27,26 @@ inline void ParameterCurve<4>::reset() {
     }
 }
 
+template <>
+__attribute__((noinline, used)) inline void ParameterCurve<3>::reset() {
+    static f32 s_initialize[9] = {0.0, 0.0, 0.5, 0.5, 0.5, 0.5, 1.0, 1.0, 0.5};
+
+    sead::MemUtil::copy(mCurveData[0].f, s_initialize, sizeof(s_initialize));
+    for (u32 j = 9; j < cUnitCurveParamNum; ++j)
+        mCurveData[0].f[j] = 1.0;
+    mCurves[0].setData(&mCurveData[0], sead::hostio::CurveType::Hermit2D, cUnitCurveParamNum, 9);
+
+    sead::MemUtil::copy(mCurveData[1].f, s_initialize, sizeof(s_initialize));
+    for (u32 j = 9; j < cUnitCurveParamNum; ++j)
+        mCurveData[1].f[j] = 1.0;
+    mCurves[1].setData(&mCurveData[1], sead::hostio::CurveType::Hermit2D, cUnitCurveParamNum, 9);
+
+    sead::MemUtil::copy(mCurveData[2].f, s_initialize, sizeof(s_initialize));
+    for (u32 j = 9; j < cUnitCurveParamNum; ++j)
+        mCurveData[2].f[j] = 1.0;
+    mCurves[2].setData(&mCurveData[2], sead::hostio::CurveType::Hermit2D, cUnitCurveParamNum, 9);
+}
+
 template <u32 N>
 inline void ParameterCurve<N>::reset() {
     static f32 s_initialize[9] = {0.0, 0.0, 0.5, 0.5, 0.5, 0.5, 1.0, 1.0, 0.5};
@@ -89,6 +109,7 @@ inline ParameterBase* ParameterCurve<N>::clone(sead::Heap* heap, IParameterObj* 
 }
 
 template <u32 N>
+// NON_MATCHING: N=2/3/4 behavior and baseline sizes are correct, but retail unrolls pointer/metadata stores in a different schedule. Pointer-first ordering shrinks the functions by hoisting a common store, while setData/setFloats expands them. Next hypothesis is an explicit per-instantiation assignment order that avoids both common-store hoisting and helper write-back.
 inline void ParameterCurve<N>::postApplyResource_(const void*, size_t size) {
     if (this->size() == size) {
         for (u32 i = 0; i < N; ++i) {
@@ -104,5 +125,8 @@ inline void ParameterCurve<N>::postApplyResource_(const void*, size_t size) {
         }
     }
 }
+
+extern template bool ParameterCurve<1>::copy(const ParameterBase&);
+extern template ParameterBase* ParameterCurve<1>::clone(sead::Heap*, IParameterObj*) const;
 
 }  // namespace agl::utl

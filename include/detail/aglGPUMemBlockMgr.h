@@ -57,6 +57,7 @@ public:
     ~GPUMemBlockMgrHeapEx() override;
 
     void finalize();
+    sead::Heap* getDisposerHeap() const { return getDisposerHeap_(); }
 
 private:
     s32 mAllowSharing;

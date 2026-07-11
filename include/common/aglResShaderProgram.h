@@ -7,7 +7,7 @@
 namespace agl {
 
 struct ResShaderProgramData {
-    u32 mSize;
+    s32 mSize;
     u32 mNameLen;
     s32 mSourceIndex[cShaderType_Num];
     // char mName[];
