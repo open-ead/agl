@@ -492,7 +492,6 @@ void ResBinaryShaderArchive::createMemoryPoolBuffer_() {
     nvnBufferInitialize(&ref().mBuffer, &buffer_builder);
 }
 
-// NON_MATCHING: retail emits UBFX W10,W9,#2,#1; Clang canonicalizes the faithful 0/1 extraction to AND W10,W9,#4 because the value is only tested. Next hypothesis: recover the original flag wrapper/value use that required normalization.
 bool ResBinaryShaderArchive::setUp(bool le_resolve_pointers) {
     SEAD_ASSERT(isValid());
 
@@ -503,6 +502,7 @@ bool ResBinaryShaderArchive::setUp(bool le_resolve_pointers) {
     createMemoryPoolBuffer_();
 
     const u32 flags = ref().mEndian;
+    const bool pointer_base = ((flags >> 2) & 1) != 0;
     ResShaderBinaryArray binary_arr = getResShaderBinaryArray();
     if (endian_resolved) {
         if ((flags & 2) != 0)
@@ -510,7 +510,7 @@ bool ResBinaryShaderArchive::setUp(bool le_resolve_pointers) {
 
         const u32 binary_num = binary_arr.ref().mNum;
         if (binary_num != 0) {
-            if ((flags & 4) != 0) {
+            if (pointer_base) {
                 for (ResShaderBinaryArray::iterator it = binary_arr.begin(), it_end = binary_arr.end();
                      it != it_end; ++it) {
                     ResShaderBinary binary(&(*it));
@@ -556,7 +556,6 @@ bool ResBinaryShaderArchive::setUp(bool le_resolve_pointers) {
 
     ResShaderBinaryArray::iterator it = binary_arr.begin();
     ResShaderBinaryArray::iterator it_end = binary_arr.end();
-    const u32 pointer_base = (flags >> 2) & 1;
     const bool pointers_resolved = ((flags >> 1) & 1) != 0;
     for (; it != it_end; ++it) {
         ResShaderBinary binary(&(*it));
