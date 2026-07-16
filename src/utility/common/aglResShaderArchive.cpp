@@ -492,8 +492,7 @@ void ResBinaryShaderArchive::createMemoryPoolBuffer_() {
     nvnBufferInitialize(&ref().mBuffer, &buffer_builder);
 }
 
-// NON_MATCHING: Retail extracts the pointer-base flag with UBFX; LLVM emits an equivalent AND.
-// Next hypothesis: recover the original flag accessor that returns a normalized bit.
+// NON_MATCHING: retail emits UBFX W10,W9,#2,#1; Clang canonicalizes the faithful 0/1 extraction to AND W10,W9,#4 because the value is only tested. Next hypothesis: recover the original flag wrapper/value use that required normalization.
 bool ResBinaryShaderArchive::setUp(bool le_resolve_pointers) {
     SEAD_ASSERT(isValid());
 

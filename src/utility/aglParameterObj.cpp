@@ -85,7 +85,7 @@ bool IParameterObj::verify() const {
     return ret;
 }
 
-// NON_MATCHING: Retail shares the return epilogue with the adjacent verification function.
+// NON_MATCHING: retail branches from loop exit to one shared RET; Clang tail-duplicates RET. Next hypothesis: recover a source or compilation-unit lifetime boundary that inhibits tail duplication without adding runtime work.
 bool IParameterObj::verify(ParameterBase* p_check, ParameterBase* other) const {
     SEAD_ASSERT(p_check != nullptr);
     bool ok = true;
@@ -177,8 +177,7 @@ void IParameterObj::copyLerp(ParameterBase* first, ParameterBase* last,
     postCopy_();
 }
 
-// NON_MATCHING: Retail tests mParamListHead before the source-list pointer.
-// Next hypothesis: alter local lifetimes to recover the X20/X21 assignment without changing the CFG.
+// NON_MATCHING: retail checks X20 (destination head) before X21 (source head); current emits the two CBZs reversed. Next hypothesis: recover original local-lifetime spelling without extra CFG.
 void IParameterObj::copyLerp(const IParameterObj& obj1, const IParameterObj& obj2, f32 t) {
     if (!preCopy_())
         return;

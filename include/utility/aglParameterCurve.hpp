@@ -109,19 +109,23 @@ inline ParameterBase* ParameterCurve<N>::clone(sead::Heap* heap, IParameterObj* 
 }
 
 template <u32 N>
-// NON_MATCHING: N=2/3/4 behavior and baseline sizes are correct, but retail unrolls pointer/metadata stores in a different schedule. Pointer-first ordering shrinks the functions by hoisting a common store, while setData/setFloats expands them. Next hypothesis is an explicit per-instantiation assignment order that avoids both common-store hoisting and helper write-back.
+// NON_MATCHING: best faithful N-specific ordering scores N=2/3/4 at 475/720/1245; retail still duplicates/schedules late pointer stores differently. Next hypothesis: recover an original accessor or alias boundary that prevents cross-branch tail merging without helper write-back.
 inline void ParameterCurve<N>::postApplyResource_(const void*, size_t size) {
     if (this->size() == size) {
         for (u32 i = 0; i < N; ++i) {
             mCurves[i].setCurveType(sead::hostio::CurveType(mCurveData[i].curveType));
-            mCurves[i].mFloats = mCurveData[i].f;
-            mCurves[i].mInfo.numFloats = cUnitCurveParamNum;
             mCurves[i].setNumUse(mCurveData[i].numUse);
+            mCurves[i].setFloats(&mCurveData[i], cUnitCurveParamNum);
         }
     } else {
         for (u32 i = 0; i < N; ++i) {
-            mCurves[i].mInfo.numFloats = cUnitCurveParamNum;
-            mCurves[i].mFloats = mCurveData[i].f;
+            if constexpr (N == 2) {
+                mCurves[i].mFloats = mCurveData[i].f;
+                mCurves[i].mInfo.numFloats = cUnitCurveParamNum;
+            } else {
+                mCurves[i].mInfo.numFloats = cUnitCurveParamNum;
+                mCurves[i].mFloats = mCurveData[i].f;
+            }
         }
     }
 }

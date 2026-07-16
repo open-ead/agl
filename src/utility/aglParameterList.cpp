@@ -191,7 +191,7 @@ bool IParameterList::verifyObj() const {
     return ret;
 }
 
-// NON_MATCHING: Retail shares the return epilogue with the adjacent verification function.
+// NON_MATCHING: retail branches from loop exit to one shared RET; Clang tail-duplicates RET. Next hypothesis: recover a source or compilation-unit lifetime boundary that inhibits tail duplication without adding runtime work.
 bool IParameterList::verifyList(IParameterList* p_check, IParameterList* other) const {
     SEAD_ASSERT(p_check != nullptr);
     bool ok = true;
@@ -202,7 +202,7 @@ bool IParameterList::verifyList(IParameterList* p_check, IParameterList* other) 
     return ok;
 }
 
-// NON_MATCHING: Retail shares the return epilogue with the adjacent verification function.
+// NON_MATCHING: retail branches from loop exit to one shared RET; Clang tail-duplicates RET. Next hypothesis: recover a source or compilation-unit lifetime boundary that inhibits tail duplication without adding runtime work.
 bool IParameterList::verifyObj(IParameterObj* p_check, IParameterObj* other) const {
     SEAD_ASSERT(p_check != nullptr);
     bool ok = true;
