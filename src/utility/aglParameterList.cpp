@@ -191,25 +191,19 @@ bool IParameterList::verifyObj() const {
     return ret;
 }
 
-// NON_MATCHING: retail branches from loop exit to one shared RET; Clang tail-duplicates RET. Next hypothesis: recover a source or compilation-unit lifetime boundary that inhibits tail duplication without adding runtime work.
 bool IParameterList::verifyList(IParameterList* p_check, IParameterList* other) const {
     SEAD_ASSERT(p_check != nullptr);
     bool ok = true;
-    while (other) {
-        ok &= p_check->getNameHash() != other->getNameHash();
-        other = other->mNext;
-    }
+    for (const IParameterList* list = other; list; list = list->mNext)
+        ok &= p_check->getNameHash() != list->getNameHash();
     return ok;
 }
 
-// NON_MATCHING: retail branches from loop exit to one shared RET; Clang tail-duplicates RET. Next hypothesis: recover a source or compilation-unit lifetime boundary that inhibits tail duplication without adding runtime work.
 bool IParameterList::verifyObj(IParameterObj* p_check, IParameterObj* other) const {
     SEAD_ASSERT(p_check != nullptr);
     bool ok = true;
-    while (other) {
-        ok &= p_check->getNameHash() != other->getNameHash();
-        other = other->mNext;
-    }
+    for (const IParameterObj* obj = other; obj; obj = obj->mNext)
+        ok &= p_check->getNameHash() != obj->getNameHash();
     return ok;
 }
 

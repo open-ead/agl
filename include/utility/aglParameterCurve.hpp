@@ -109,22 +109,69 @@ inline ParameterBase* ParameterCurve<N>::clone(sead::Heap* heap, IParameterObj* 
 }
 
 template <u32 N>
-// NON_MATCHING: best faithful N-specific ordering scores N=2/3/4 at 475/720/1245; retail still duplicates/schedules late pointer stores differently. Next hypothesis: recover an original accessor or alias boundary that prevents cross-branch tail merging without helper write-back.
+// NON_MATCHING: Curve<2>/<4> are exact; Curve<3> retains one equal-size-path scheduling residual. Next hypothesis: recover the N=3 source lifetime that holds the second and third float pointers without introducing an extra base register.
 inline void ParameterCurve<N>::postApplyResource_(const void*, size_t size) {
     if (this->size() == size) {
         for (u32 i = 0; i < N; ++i) {
-            mCurves[i].setCurveType(sead::hostio::CurveType(mCurveData[i].curveType));
-            mCurves[i].setNumUse(mCurveData[i].numUse);
-            mCurves[i].setFloats(&mCurveData[i], cUnitCurveParamNum);
+            auto& curve = mCurves[i];
+            auto& data = mCurveData[i];
+            if constexpr (N == 1) {
+                mCurves[i].setCurveType(sead::hostio::CurveType(mCurveData[i].curveType));
+                mCurves[i].setNumUse(mCurveData[i].numUse);
+                mCurves[i].setFloats(&mCurveData[i], cUnitCurveParamNum);
+            } else if constexpr (N == 3) {
+                const auto type = sead::hostio::CurveType(data.curveType);
+                curve.setCurveType(type);
+                auto* floats = data.f;
+                curve.mInfo.numFloats = cUnitCurveParamNum;
+                curve.mFloats = floats;
+                curve.setNumUse(data.numUse);
+            } else {
+                auto* floats = data.f;
+                const auto type = sead::hostio::CurveType(data.curveType);
+                curve.mInfo.curveType = u8(type);
+                curve.mInfo.numFloats = cUnitCurveParamNum;
+                curve.mFloats = floats;
+                const u32 num_use = data.numUse;
+                curve.mInfo.numUse = u8(num_use);
+            }
         }
     } else {
-        for (u32 i = 0; i < N; ++i) {
-            if constexpr (N == 2) {
-                mCurves[i].mFloats = mCurveData[i].f;
-                mCurves[i].mInfo.numFloats = cUnitCurveParamNum;
-            } else {
+        if constexpr (N == 1) {
+            for (u32 i = 0; i < N; ++i) {
                 mCurves[i].mInfo.numFloats = cUnitCurveParamNum;
                 mCurves[i].mFloats = mCurveData[i].f;
+            }
+        } else if constexpr (N == 2) {
+            mCurves[0].mInfo.numFloats = cUnitCurveParamNum;
+            mCurves[0].mFloats = mCurveData[0].f;
+            mCurves[1].mFloats = mCurveData[1].f;
+            mCurves[1].mInfo.numFloats = cUnitCurveParamNum;
+        } else if constexpr (N == 3) {
+            auto* floats0 = mCurveData[0].f;
+            mCurves[0].mInfo.numFloats = cUnitCurveParamNum;
+            auto* floats1 = mCurveData[1].f;
+            mCurves[0].mFloats = floats0;
+            auto* floats2 = mCurveData[2].f;
+            mCurves[1].mInfo.numFloats = cUnitCurveParamNum;
+            mCurves[1].mFloats = floats1;
+            mCurves[2].mInfo.numFloats = cUnitCurveParamNum;
+            mCurves[2].mFloats = floats2;
+        } else if constexpr (N == 4) {
+            mCurves[0].mInfo.numFloats = cUnitCurveParamNum;
+            mCurves[0].mFloats = mCurveData[0].f;
+            auto* floats1 = mCurveData[1].f;
+            mCurves[1].mInfo.numFloats = cUnitCurveParamNum;
+            mCurves[1].mFloats = floats1;
+            mCurves[2].mFloats = mCurveData[2].f;
+            mCurves[2].mInfo.numFloats = cUnitCurveParamNum;
+            auto* floats3 = mCurveData[3].f;
+            mCurves[3].mInfo.numFloats = cUnitCurveParamNum;
+            mCurves[3].mFloats = floats3;
+        } else {
+            for (u32 i = 0; i < N; ++i) {
+                mCurves[i].mFloats = mCurveData[i].f;
+                mCurves[i].mInfo.numFloats = cUnitCurveParamNum;
             }
         }
     }

@@ -85,17 +85,11 @@ bool IParameterObj::verify() const {
     return ret;
 }
 
-// NON_MATCHING: retail branches from loop exit to one shared RET; Clang tail-duplicates RET. Next hypothesis: recover a source or compilation-unit lifetime boundary that inhibits tail duplication without adding runtime work.
 bool IParameterObj::verify(ParameterBase* p_check, ParameterBase* other) const {
     SEAD_ASSERT(p_check != nullptr);
     bool ok = true;
-    if (other) {
-        const u32 hash = p_check->getNameHash();
-        do {
-            ok &= hash != other->getNameHash();
-            other = other->mNext;
-        } while (other);
-    }
+    for (const ParameterBase* param = other; param; param = param->mNext)
+        ok &= p_check->getNameHash() != param->getNameHash();
     return ok;
 }
 
