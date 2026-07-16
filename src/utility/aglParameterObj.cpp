@@ -171,17 +171,16 @@ void IParameterObj::copyLerp(ParameterBase* first, ParameterBase* last,
     postCopy_();
 }
 
-// NON_MATCHING: retail checks X20 (destination head) before X21 (source head); current emits the two CBZs reversed. Next hypothesis: recover original local-lifetime spelling without extra CFG.
 void IParameterObj::copyLerp(const IParameterObj& obj1, const IParameterObj& obj2, f32 t) {
     if (!preCopy_())
         return;
 
-    auto mpHead = mParamListHead;
+    auto* it1 = obj1.mParamListHead;
+    auto* mpHead = mParamListHead;
     SEAD_ASSERT(mpHead);
 
     const u32 hash = mpHead->getNameHash();
 
-    auto* it1 = obj1.mParamListHead;
     while (it1 && it1->getNameHash() != hash)
         it1 = it1->mNext;
 

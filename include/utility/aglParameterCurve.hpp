@@ -109,31 +109,44 @@ inline ParameterBase* ParameterCurve<N>::clone(sead::Heap* heap, IParameterObj* 
 }
 
 template <u32 N>
-// NON_MATCHING: Curve<2>/<4> are exact; Curve<3> retains one equal-size-path scheduling residual. Next hypothesis: recover the N=3 source lifetime that holds the second and third float pointers without introducing an extra base register.
 inline void ParameterCurve<N>::postApplyResource_(const void*, size_t size) {
     if (this->size() == size) {
-        for (u32 i = 0; i < N; ++i) {
-            auto& curve = mCurves[i];
-            auto& data = mCurveData[i];
-            if constexpr (N == 1) {
-                mCurves[i].setCurveType(sead::hostio::CurveType(mCurveData[i].curveType));
-                mCurves[i].setNumUse(mCurveData[i].numUse);
-                mCurves[i].setFloats(&mCurveData[i], cUnitCurveParamNum);
-            } else if constexpr (N == 3) {
+        if constexpr (N == 3) {
+            for (u32 i = 0; i < 2; ++i) {
+                auto& curve = mCurves[i];
+                auto& data = mCurveData[i];
                 const auto type = sead::hostio::CurveType(data.curveType);
                 curve.setCurveType(type);
                 auto* floats = data.f;
-                curve.mInfo.numFloats = cUnitCurveParamNum;
-                curve.mFloats = floats;
                 curve.setNumUse(data.numUse);
-            } else {
-                auto* floats = data.f;
-                const auto type = sead::hostio::CurveType(data.curveType);
-                curve.mInfo.curveType = u8(type);
-                curve.mInfo.numFloats = cUnitCurveParamNum;
                 curve.mFloats = floats;
-                const u32 num_use = data.numUse;
-                curve.mInfo.numUse = u8(num_use);
+                curve.mInfo.numFloats = cUnitCurveParamNum;
+            }
+            auto& curve = mCurves[2];
+            auto& data = mCurveData[2];
+            auto* floats = data.f;
+            const auto type = sead::hostio::CurveType(data.curveType);
+            curve.setCurveType(type);
+            curve.mFloats = floats;
+            curve.setNumUse(data.numUse);
+            curve.mInfo.numFloats = cUnitCurveParamNum;
+        } else {
+            for (u32 i = 0; i < N; ++i) {
+                auto& curve = mCurves[i];
+                auto& data = mCurveData[i];
+                if constexpr (N == 1) {
+                    mCurves[i].setCurveType(sead::hostio::CurveType(mCurveData[i].curveType));
+                    mCurves[i].setNumUse(mCurveData[i].numUse);
+                    mCurves[i].setFloats(&mCurveData[i], cUnitCurveParamNum);
+                } else {
+                    auto* floats = data.f;
+                    const auto type = sead::hostio::CurveType(data.curveType);
+                    curve.mInfo.curveType = u8(type);
+                    curve.mInfo.numFloats = cUnitCurveParamNum;
+                    curve.mFloats = floats;
+                    const u32 num_use = data.numUse;
+                    curve.mInfo.numUse = u8(num_use);
+                }
             }
         }
     } else {
