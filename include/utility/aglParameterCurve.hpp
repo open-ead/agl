@@ -190,7 +190,4 @@ inline void ParameterCurve<N>::postApplyResource_(const void*, size_t size) {
     }
 }
 
-extern template bool ParameterCurve<1>::copy(const ParameterBase&);
-extern template ParameterBase* ParameterCurve<1>::clone(sead::Heap*, IParameterObj*) const;
-
 }  // namespace agl::utl
