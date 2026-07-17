@@ -1,7 +1,7 @@
 #include "utility/aglResParameter.h"
+#include <cstring>
 #include <basis/seadNew.h>
 #include <basis/seadRawPrint.h>
-#include <cstring>
 #include <heap/seadHeap.h>
 #include <math/seadVector.h>
 #include <prim/seadPtrUtil.h>
@@ -75,58 +75,53 @@ s32 ResParameterList::searchObjIndex(u32 obj_hash) const {
     return -1;
 }
 
-// NON_MATCHING: Retail tests the endian flag with TBZ and lays out the early-return block oppositely.
-// Next hypothesis: recover the original flag/helper boundary without branch hints.
 ResParameterArchive::ResParameterArchive(const void* p_data) {
     mpData = (ResParameterArchiveData*)p_data;
     if (!mpData)
         return;
 
     const u32 initial_flags = mpData->flags.getDirect();
+    const bool little_endian = (initial_flags & u32(ResParameterArchiveFlag::LittleEndian)) != 0;
     bool utf8;
-    if ((initial_flags & u32(ResParameterArchiveFlag::LittleEndian)) == 0) {
-        ModifyEndianU32(false, (ResParameterArchiveData*)mpData,
-                        sizeof(ResParameterArchiveData));
-        utf8 = mpData->flags.isOn(ResParameterArchiveFlag::Utf8);
-    } else {
+    if (little_endian) {
         if ((initial_flags & u32(ResParameterArchiveFlag::Utf8)) != 0)
             return;
         utf8 = false;
+    } else {
+        ModifyEndianU32(false, (ResParameterArchiveData*)mpData, sizeof(ResParameterArchiveData));
+        utf8 = mpData->flags.isOn(ResParameterArchiveFlag::Utf8);
     }
 
     const size_t list_size = sizeof(ResParameterListData) * mpData->num_lists;
-    const size_t object_size = sizeof(ResParameterObjData) * mpData->num_objects;
-
     u8* const parameter_io = ptrBytes() + sizeof(ResParameterArchiveData) + mpData->offset_to_pio;
     char* string = (char*)(parameter_io + list_size);
+    const size_t object_size = sizeof(ResParameterObjData) * mpData->num_objects;
     string += object_size;
     const size_t parameter_size = sizeof(ResParameterData) * mpData->num_parameters;
     string += parameter_size;
     string += mpData->data_section_size;
     char* const string_end = string + mpData->string_section_size;
 
-    if ((initial_flags & u32(ResParameterArchiveFlag::LittleEndian)) == 0) {
+    if (!little_endian) {
         const size_t parameter_io_size =
             list_size + object_size + parameter_size + mpData->data_section_size;
         if (parameter_io_size != 0)
             ModifyEndianU32(false, parameter_io, parameter_io_size);
 
         const u32 unknown_size = mpData->unk_section_size;
-        for (u32 offset = 0; offset < unknown_size;
-             offset += *(u32*)(string_end + offset)) {
+        for (u32 offset = 0; offset < unknown_size; offset += *(u32*)(string_end + offset)) {
             ModifyEndianU32(false, string_end + offset, sizeof(u32));
         }
 
-        ((ResParameterArchiveData*)mpData)->flags.set(
-            ResParameterArchiveFlag::LittleEndian);
+        ((ResParameterArchiveData*)mpData)->flags.set(ResParameterArchiveFlag::LittleEndian);
     }
 
     if (!utf8 && mpData->string_section_size != 0) {
         while (string < string_end) {
             const s32 source_length = sead::SafeString(string).calcLength();
             if (source_length > 0) {
-                sead::Heap* const heap = detail::PrivateResource::instance()->getWorkHeap();
                 const s32 source_capacity = source_length + 1;
+                sead::Heap* const heap = detail::PrivateResource::instance()->getWorkHeap();
                 char16* const utf16 = new (heap, 8) char16[source_capacity];
                 const s32 converted_capacity = 2 * source_capacity;
                 char* const converted = new (heap, 8) char[converted_capacity];
