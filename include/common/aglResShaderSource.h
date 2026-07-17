@@ -5,7 +5,7 @@
 namespace agl {
 
 struct ResShaderSourceData {
-    u32 mSize;
+    s32 mSize;
     u32 mNameLen;
     u32 mTextLen;  // Text Length
     u32 _c;        // Text Length... 2

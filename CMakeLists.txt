@@ -1,6 +1,8 @@
 project(agl CXX ASM)
 
 add_library(agl OBJECT
+  include/aglVersion.h
+
   include/common/aglDisplayList.h
   include/common/aglDrawContext.h
   include/common/aglGPUCommon.hpp

@@ -109,7 +109,9 @@ public:
 
         iterator& operator++() {
             ++mIndex;
-            mElem = (ElemDataType*)((uintptr_t)mElem + Type(mElem).ref().mSize);
+            u8* elem = (u8*)mElem;
+            elem += Type(mElem).ref().mSize;
+            mElem = (ElemDataType*)elem;
             return *this;
         }
 

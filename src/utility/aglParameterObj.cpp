@@ -1,4 +1,5 @@
 #include "utility/aglParameterObj.h"
+#include <aglVersion.h>
 #include <basis/seadRawPrint.h>
 #include <prim/seadFormatPrint.h>
 #include "utility/aglParameter.h"
@@ -10,6 +11,7 @@ IParameterObj::IParameterObj() = default;
 void IParameterObj::pushBackListNode(ParameterBase* p_node) {
     SEAD_ASSERT(p_node != nullptr);
 
+#if AGL_VERSION == AGL_VERSION_BOTW
     ParameterBase** ptr;
     if (mParamListTail) {
         ptr = &mParamListTail->mNext;
@@ -19,6 +21,15 @@ void IParameterObj::pushBackListNode(ParameterBase* p_node) {
     }
 
     *ptr = p_node;
+#else
+    if (mParamListTail)
+        mParamListTail->mNext = p_node;
+    else {
+        mParamListHead = p_node;
+        mParamListTail = p_node;
+    }
+#endif
+
     mParamListTail = p_node;
     ++mParamListSize;
 }
@@ -89,17 +100,9 @@ bool IParameterObj::verify() const {
 
 bool IParameterObj::verify(ParameterBase* p_check, ParameterBase* other) const {
     SEAD_ASSERT(p_check != nullptr);
-    auto* param = other;
     bool ok = true;
-    while (param) {
-        if (p_check->getNameHash() == param->getNameHash()) {
-            sead::BufferingPrintFormatter ss;
-            ss << "Same hash code at [%s] and [%s]. Please change.\n"
-               << p_check->getName().cstr() << param->getName().cstr() << sead::flush;
-            ok = false;
-        }
-        param = param->mNext;
-    }
+    for (const ParameterBase* param = other; param; param = param->mNext)
+        ok &= p_check->getNameHash() != param->getNameHash();
     return ok;
 }
 
@@ -185,12 +188,12 @@ void IParameterObj::copyLerp(const IParameterObj& obj1, const IParameterObj& obj
     if (!preCopy_())
         return;
 
-    auto mpHead = mParamListHead;
+    auto* it1 = obj1.mParamListHead;
+    auto* mpHead = mParamListHead;
     SEAD_ASSERT(mpHead);
 
     const u32 hash = mpHead->getNameHash();
 
-    auto* it1 = obj1.mParamListHead;
     while (it1 && it1->getNameHash() != hash)
         it1 = it1->mNext;
 

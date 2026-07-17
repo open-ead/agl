@@ -1,4 +1,5 @@
 #include "utility/aglParameter.h"
+#include <aglVersion.h>
 #include <codec/seadHashCRC32.h>
 #include <gfx/seadColor.h>
 #include <math/seadQuatCalcCommon.h>
@@ -101,43 +102,30 @@ const char* ParameterBase::getParameterTypeName(ParameterType type) {
     return sParameterTypeNames[u32(type)];
 }
 
-// NON_MATCHING: Clang emits a switch...
 bool ParameterBase::isSafeType(ParameterType type) const {
     if (getParameterType() == type)
         return true;
-
-    constexpr std::pair<ParameterType, ParameterType> pairs[] = {
-        {ParameterType::String64, ParameterType::String32},
-        {ParameterType::String32, ParameterType::String64},
-        {ParameterType::String256, ParameterType::String32},
-        {ParameterType::String256, ParameterType::String64},
-        {ParameterType::String32, ParameterType::String256},
-        {ParameterType::String64, ParameterType::String256},
-    };
-
-    for (const auto pair : pairs) {
-        if (type == pair.first && getParameterType() == pair.second)
-            return true;
-    }
-
+    if (getParameterType() == ParameterType::String32 && type == ParameterType::String64)
+        return true;
+    if (getParameterType() == ParameterType::String64 && type == ParameterType::String32)
+        return true;
+    if (getParameterType() == ParameterType::String32 && type == ParameterType::String256)
+        return true;
+    if (getParameterType() == ParameterType::String64 && type == ParameterType::String256)
+        return true;
+    if (getParameterType() == ParameterType::String256 && type == ParameterType::String32)
+        return true;
+    if (getParameterType() == ParameterType::String256 && type == ParameterType::String64)
+        return true;
     if (getParameterType() == ParameterType::StringRef &&
         (type == ParameterType::String32 || type == ParameterType::String64 ||
-         type == ParameterType::String256)) {
+         type == ParameterType::String256))
         return true;
-    }
-
     return false;
 }
 
-bool ParameterBase::verifyType(ParameterType type) const {
-    if (isSafeType(type))
-        return true;
-
-    sead::BufferingPrintFormatter ss;
-    ss << "!!! AGL ERROR !!! Instance ParameterType = %s Resource ParameterType = %s\n"
-       << sParameterTypeNames[u32(getParameterType())] << sParameterTypeNames[u32(type)]
-       << sead::flush;
-    return false;
+bool ParameterBase::verifyType(ParameterType) const {
+    return true;
 }
 
 bool ParameterBase::copy(const ParameterBase& other) {
@@ -150,17 +138,30 @@ bool ParameterBase::copy(const ParameterBase& other) {
 
 void ParameterBase::copyUnsafe(const ParameterBase& other) {
     if (other.getParameterType() == ParameterType::StringRef) {
+#if AGL_VERSION == AGL_VERSION_BOTW
         auto* source = static_cast<const sead::SafeString*>(other.typePtr());
         auto* dest = static_cast<sead::SafeString*>(typePtr());
         *dest = *source;
+#else
+        static_cast<sead::SafeString*>(typePtr())->operator=(
+            *static_cast<const sead::SafeString*>(other.typePtr()));
+#endif
         return;
     }
 
     auto* dest = ptrT<u8>();
     auto* src = other.ptrT<u8>();
     const s32 n = size();
+#if AGL_VERSION == AGL_VERSION_BOTW
     for (s32 i = 0; i < n; ++i)
         *dest++ = *src++;
+#else
+    for (s32 i = 0; i < n; ++i) {
+        *dest = *src;
+        ++dest;
+        ++src;
+    }
+#endif
 }
 
 template <>

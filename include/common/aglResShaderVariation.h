@@ -5,7 +5,7 @@
 namespace agl {
 
 struct ResShaderVariationData {
-    u32 mSize;
+    s32 mSize;
     u32 mNameLen;
     s32 mValueNum;
     u32 mIDLen;
