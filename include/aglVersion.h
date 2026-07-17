@@ -1,0 +1,13 @@
+#pragma once
+
+#define AGL_VERSION_BOTW 1
+#define AGL_VERSION_SMO 2
+#define AGL_VERSION_SPL3 3
+#define AGL_VERSION_TOTK 4
+#define AGL_VERSION_SMBW 5
+#define AGL_VERSION_SMM2 6
+#define AGL_VERSION_CUSTOM 0
+
+#ifndef AGL_VERSION
+#define AGL_VERSION AGL_VERSION_BOTW
+#endif

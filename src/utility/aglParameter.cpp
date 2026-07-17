@@ -1,4 +1,5 @@
 #include "utility/aglParameter.h"
+#include <aglVersion.h>
 #include <codec/seadHashCRC32.h>
 #include <gfx/seadColor.h>
 #include <math/seadQuatCalcCommon.h>
@@ -137,19 +138,30 @@ bool ParameterBase::copy(const ParameterBase& other) {
 
 void ParameterBase::copyUnsafe(const ParameterBase& other) {
     if (other.getParameterType() == ParameterType::StringRef) {
+#if AGL_VERSION == AGL_VERSION_BOTW
+        auto* source = static_cast<const sead::SafeString*>(other.typePtr());
+        auto* dest = static_cast<sead::SafeString*>(typePtr());
+        *dest = *source;
+#else
         static_cast<sead::SafeString*>(typePtr())->operator=(
             *static_cast<const sead::SafeString*>(other.typePtr()));
+#endif
         return;
     }
 
     auto* dest = ptrT<u8>();
     auto* src = other.ptrT<u8>();
     const s32 n = size();
+#if AGL_VERSION == AGL_VERSION_BOTW
+    for (s32 i = 0; i < n; ++i)
+        *dest++ = *src++;
+#else
     for (s32 i = 0; i < n; ++i) {
         *dest = *src;
         ++dest;
         ++src;
     }
+#endif
 }
 
 template <>

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <aglVersion.h>
+
 #ifndef AGL_UTILS_PARAMETER_H_
 #include "utility/aglParameter.h"
 #endif
@@ -136,8 +138,14 @@ inline void ParameterCurve<N>::postApplyResource_(const void*, size_t size) {
                 auto& data = mCurveData[i];
                 if constexpr (N == 1) {
                     mCurves[i].setCurveType(sead::hostio::CurveType(mCurveData[i].curveType));
+#if AGL_VERSION == AGL_VERSION_BOTW
+                    mCurves[i].mFloats = mCurveData[i].f;
+                    mCurves[i].mInfo.numFloats = cUnitCurveParamNum;
+                    mCurves[i].setNumUse(mCurveData[i].numUse);
+#else
                     mCurves[i].setNumUse(mCurveData[i].numUse);
                     mCurves[i].setFloats(&mCurveData[i], cUnitCurveParamNum);
+#endif
                 } else {
                     auto* floats = data.f;
                     const auto type = sead::hostio::CurveType(data.curveType);

@@ -1,4 +1,5 @@
 #include "utility/aglParameterObj.h"
+#include <aglVersion.h>
 #include <basis/seadRawPrint.h>
 #include <prim/seadFormatPrint.h>
 #include "utility/aglParameter.h"
@@ -10,12 +11,24 @@ IParameterObj::IParameterObj() = default;
 void IParameterObj::pushBackListNode(ParameterBase* p_node) {
     SEAD_ASSERT(p_node != nullptr);
 
+#if AGL_VERSION == AGL_VERSION_BOTW
+    ParameterBase** ptr;
+    if (mParamListTail) {
+        ptr = &mParamListTail->mNext;
+    } else {
+        ptr = &mParamListHead;
+        mParamListTail = p_node;
+    }
+
+    *ptr = p_node;
+#else
     if (mParamListTail)
         mParamListTail->mNext = p_node;
     else {
         mParamListHead = p_node;
         mParamListTail = p_node;
     }
+#endif
 
     mParamListTail = p_node;
     ++mParamListSize;
