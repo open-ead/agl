@@ -25,10 +25,17 @@ public:
         driver::NVNtexture_ mTexture;
     };
 
+    // TODO: Rename parameters names
+    static TextureData* create(TextureType type, TextureFormat format, u32 a, u32 b, u32 c, u32 d,
+                               agl::TextureAttribute attribute,
+                               agl::MultiSampleType multiSampleType, bool e) {
+        agl::TextureData* textureData = new agl::TextureData();
+        textureData->initialize_(type, format, a, b, c, d, attribute, multiSampleType, e);
+        return textureData;
+    }
+
     TextureData();
 
-    void setMipLevelNum_(s32, bool);
-    u16 getMinSlice_() const;
     void getTextureFormatName() const;
     u32 calcMipByteSize(u32) const;
     bool isCompressedFormat() const;
@@ -40,7 +47,14 @@ public:
     void setDebugLabel(const sead::SafeString& debug_label);
     void getDebugLabel() const;
 
+    void* get_0() const { return _0; }
+
 private:
+    void initialize_(agl::TextureType, agl::TextureFormat, u32, u32, u32, u32,
+                     agl::TextureAttribute, agl::MultiSampleType, bool);
+    void setMipLevelNum_(s32, bool);
+    u16 getMinSlice_() const;
+
     void* _0;
     u32 _8;
     u32 _c;

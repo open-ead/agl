@@ -80,8 +80,13 @@ enum class TextureFormat {
     cTextureFormat_Num,
 };
 
-enum class TextureAttribute {};
+enum class TextureAttribute {
+    cTextureAttribute_0,
+    cTextureAttribute_1,
+};
 
-enum class MultiSampleType {};
+enum class MultiSampleType {
+    cMultiSampleType_0,
+};
 
 }  // namespace agl

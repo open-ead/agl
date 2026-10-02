@@ -16,7 +16,6 @@ public:
           mMemoryBlock(other.mMemoryBlock) {}
     GPUMemAddrBase(const GPUMemBlockBase& memBlock, u64 offset);
 
-    u32 verify_() const;
     void deleteGPUMemBlock() const;
     void invalidate();
     u32 getAlignmentAddress() const;
@@ -28,11 +27,17 @@ public:
     bool isValid() const { return mMemoryPool != nullptr; }
 
 private:
+    u32 verify_() const;
+
     detail::MemoryPool* mMemoryPool = nullptr;
     int mAlignmentAddr = 0;
     GPUMemBlockBase* mMemoryBlock = nullptr;
 };
 
 template <typename T>
-class GPUMemAddr : public GPUMemAddrBase {};
+class GPUMemAddr : public GPUMemAddrBase {
+public:
+    GPUMemAddr() : GPUMemAddrBase() {}
+    GPUMemAddr(const GPUMemBlockBase& memBlock, u64 offset) : GPUMemAddrBase(memBlock, offset) {}
+};
 }  // namespace agl

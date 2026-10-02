@@ -24,10 +24,6 @@ public:
     void clear();
     void freeBuffer();
     void free();
-    void allocBuffer_(u64, sead::Heap*, s32, MemoryAttribute);
-    bool tryAllocBuffer_(u64, sead::Heap*, s32, MemoryAttribute);
-    void setBuffer_(u64, void*, void*, MemoryAttribute);
-    void setVirtual_(u64, sead::Heap*, MemoryAttribute, GPUMemVoidAddr, s32);
     void initializeGfxMemoryPool(nn::gfx::MemoryPool*) const;
     void addList(GPUMemBlockBase*);
     void setMemoryPool(void*, u64, detail::MemoryPool*);
@@ -36,6 +32,12 @@ public:
     u64 getMemoryPoolType() const;
 
     // TODO: the rest of the methods...
+
+protected:
+    void allocBuffer_(u64, sead::Heap*, s32, MemoryAttribute);
+    bool tryAllocBuffer_(u64, sead::Heap*, s32, MemoryAttribute);
+    void setBuffer_(u64, void*, void*, MemoryAttribute);
+    void setVirtual_(u64, sead::Heap*, MemoryAttribute, GPUMemVoidAddr, s32);
 
 private:
     void* mMemoryBuffer;
@@ -52,6 +54,13 @@ static_assert(sizeof(GPUMemBlockBase) == 0x38);
 template <typename T>
 class GPUMemBlockT : public GPUMemBlockBase {
 public:
+    static GPUMemBlockT<T>* create(s64 size, sead::Heap* heap, s32 alignment,
+                                   MemoryAttribute attribute) {
+        GPUMemBlockT<T>* memBlock = new (heap) GPUMemBlockT<T>;
+        memBlock->allocBuffer_(size, heap, alignment, attribute);
+        return memBlock;
+    }
+
     ~GPUMemBlockT() override { ; }
 };
 
