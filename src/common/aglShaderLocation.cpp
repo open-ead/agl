@@ -20,8 +20,8 @@ void ShaderLocation::setRegisterLocation(ShaderType type, s32 location) {
     mRegisterLocation[type != cShaderType_Vertex] = location;
 }
 
-static s32 getLocation(const UniformBlockLocation& loc, const ShaderProgram& program,
-                       ShaderType type) {
+static s32 findLocation(const UniformBlockLocation& loc, const ShaderProgram& program,
+                        ShaderType type) {
     if (!program.hasStage(type))
         return -1;
 
@@ -58,7 +58,7 @@ static s32 getLocation(const UniformBlockLocation& loc, const ShaderProgram& pro
 void UniformBlockLocation::search(const ShaderProgram& program) {
     for (s32 i = 0; i < cShaderType_Num; ++i) {
         ShaderType type = static_cast<ShaderType>(i);
-        setLocation(type, getLocation(*this, program, type));
+        setLocation(type, findLocation(*this, program, type));
     }
 }
 

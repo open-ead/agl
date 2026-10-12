@@ -11,6 +11,8 @@
 
 namespace agl {
 
+class GPUMemVoidAddr;
+
 namespace detail {
 class MemoryPool;
 class MemoryPoolHeap;
@@ -24,10 +26,6 @@ public:
     void clear();
     void freeBuffer();
     void free();
-    void allocBuffer_(u64, sead::Heap*, s32, MemoryAttribute);
-    bool tryAllocBuffer_(u64, sead::Heap*, s32, MemoryAttribute);
-    void setBuffer_(u64, void*, void*, MemoryAttribute);
-    void setVirtual_(u64, sead::Heap*, MemoryAttribute, GPUMemVoidAddr, s32);
     void initializeGfxMemoryPool(nn::gfx::MemoryPool*) const;
     void addList(GPUMemBlockBase*);
     void setMemoryPool(void*, u64, detail::MemoryPool*);
@@ -36,6 +34,12 @@ public:
     u64 getMemoryPoolType() const;
 
     // TODO: the rest of the methods...
+
+protected:
+    void allocBuffer_(size_t size, sead::Heap* heap, s32 alignment, MemoryAttribute attribute);
+    bool tryAllocBuffer_(size_t size, sead::Heap* heap, s32 alignment, MemoryAttribute attribute);
+    void setBuffer_(u64, void*, void*, MemoryAttribute);
+    void setVirtual_(u64, sead::Heap*, MemoryAttribute, GPUMemVoidAddr, s32);
 
 private:
     void* mMemoryBuffer;
@@ -53,6 +57,11 @@ template <typename T>
 class GPUMemBlockT : public GPUMemBlockBase {
 public:
     ~GPUMemBlockT() override { ; }
+
+    void allocBuffer(size_t count, sead::Heap* heap, s32 alignment = alignof(T),
+                     MemoryAttribute attribute = MemoryAttribute::Default) {
+        allocBuffer_(count * sizeof(T), heap, alignment, attribute);
+    }
 };
 
 // TODO
