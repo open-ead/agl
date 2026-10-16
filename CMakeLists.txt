@@ -27,6 +27,8 @@ add_library(agl OBJECT
   include/common/aglTextureData.h
   include/common/aglTextureDataSerializer.h
   include/common/aglTextureEnum.h
+  include/common/aglUniformBlock.h
+  include/common/aglUniformBlock.hpp
 
   include/detail/aglFileIOMgr.h
   include/detail/aglGPUMemBlockMgr.h
@@ -75,6 +77,7 @@ add_library(agl OBJECT
   include/utility/aglScreenShotMgr.h
 
   src/common/aglShaderLocation.cpp
+  src/common/aglUniformBlock.cpp
   
   src/detail/aglGPUMemBlockMgr.cpp
 

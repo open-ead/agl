@@ -1,6 +1,8 @@
 #pragma once
 
 #include <nvn/nvn.h>
+#include <nvn/nvn_FuncPtrInline.h>
+
 #include <container/seadPtrArray.h>
 #include <heap/seadDisposer.h>
 #include <hostio/seadHostIONode.h>
@@ -8,6 +10,7 @@
 #include <prim/seadBitFlag.h>
 #include <prim/seadTypedBitFlag.h>
 #include <thread/seadCriticalSection.h>
+
 #include "common/aglGPUCommon.hpp"
 
 namespace agl::detail {
@@ -43,6 +46,11 @@ public:
                     const MemoryPool& map_virtual_2, s32 map_virtual_3);
 
     void finalize();
+
+    void* map() const { return nvnMemoryPoolMap(&mDriverPool); }
+
+    NVNmemoryPool* getDriverPool() { return &mDriverPool; }
+    const NVNmemoryPool* getDriverPool() const { return &mDriverPool; }
 
 private:
     NVNmemoryPool mDriverPool;
